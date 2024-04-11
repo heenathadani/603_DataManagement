@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 125339649978324394}
   - component: {fileID: 3398621109286070254}
   m_Layer: 5
-  m_Name: 'Defense_Button '
+  m_Name: 'Shield_Button '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2410,7 +2410,7 @@ GameObject:
   - component: {fileID: 5520424019402624497}
   - component: {fileID: 1529743324240825807}
   m_Layer: 5
-  m_Name: Item Slot
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2916,7 +2916,7 @@ GameObject:
   - component: {fileID: 409355797364302979}
   - component: {fileID: 1551188243656458194}
   m_Layer: 5
-  m_Name: 'Defense_Button '
+  m_Name: 'Shield_Button '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3873,7 +3873,7 @@ GameObject:
   - component: {fileID: 247286867264078645}
   - component: {fileID: 3063589145634727842}
   m_Layer: 5
-  m_Name: Item Slot
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4712,7 +4712,7 @@ GameObject:
   - component: {fileID: 2029940579289239311}
   - component: {fileID: 8110057127797918591}
   m_Layer: 5
-  m_Name: Item Slot
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5024,7 +5024,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Defense
+  m_text: Shield
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6431,7 +6431,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Defense
+  m_text: Shield
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6723,7 +6723,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Defense
+  m_text: Shield
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6805,7 +6805,7 @@ GameObject:
   - component: {fileID: 7312334015309653417}
   - component: {fileID: 8418688339605469437}
   m_Layer: 5
-  m_Name: 'Defense_Button '
+  m_Name: 'Shield_Button '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
