@@ -1,4 +1,4 @@
-public enum ActionTypes
+public enum CombatActionTypes
 {
     Attack,
     Defend,
@@ -7,7 +7,7 @@ public enum ActionTypes
     Escape
 }
 
-public enum ActionTargets
+public enum CombatActionTargets
 {
     Self,
     SingleEnemy,
@@ -16,23 +16,23 @@ public enum ActionTargets
     AllAllies
 }
 
-public static class ActionFactory
+public static class CombatActionFactory
 {
-    public static aAction MakeAction(ActionTypes type, ActionTargets target)
+    public static aCombatAction MakeAction(CombatActionTypes type, CombatActionTargets target)
     {
-        aAction result;
+        aCombatAction result;
         switch (type)
         {
-            case ActionTypes.Attack:
+            case CombatActionTypes.Attack:
                 result = new AttackAction();
                 break;
-            case ActionTypes.Defend:
+            case CombatActionTypes.Defend:
                 result = new DefendAction();
                 break;
-            case ActionTypes.Power:
+            case CombatActionTypes.Power:
                 result = new PowerAction();
                 break;
-            case ActionTypes.Item:
+            case CombatActionTypes.Item:
                 result = new ItemAction();
                 break;
             default:
@@ -44,25 +44,25 @@ public static class ActionFactory
     }
 }
 
-public interface IAction
+public interface ICombatAction
 {
-    public void SetTargetType(ActionTargets targetType);
+    public void SetTargetType(CombatActionTargets targetType);
     public void DoAction();
 }
 
-public abstract class aAction : IAction
+public abstract class aCombatAction : ICombatAction
 {
-    protected ActionTargets _targetType;
+    protected CombatActionTargets _targetType;
 
     protected abstract void DoSingleTarget();
     protected abstract void DoMultiTarget();
     protected abstract void DoSelf();
     public void DoAction()
     {
-        if (_targetType == ActionTargets.Self)
+        if (_targetType == CombatActionTargets.Self)
         {
             DoSelf();
-        } else if (_targetType == ActionTargets.SingleEnemy || _targetType == ActionTargets.SingleAlly)
+        } else if (_targetType == CombatActionTargets.SingleEnemy || _targetType == CombatActionTargets.SingleAlly)
         {
             DoSingleTarget();
         } else
@@ -70,13 +70,13 @@ public abstract class aAction : IAction
             DoMultiTarget();
         }
     }
-    public void SetTargetType(ActionTargets targetType)
+    public void SetTargetType(CombatActionTargets targetType)
     {
         _targetType = targetType;
     }
 }
 
-public class AttackAction : aAction
+public class AttackAction : aCombatAction
 {
     protected override void DoSelf()
     {
@@ -93,7 +93,7 @@ public class AttackAction : aAction
     }
 }
 
-public class DefendAction : aAction
+public class DefendAction : aCombatAction
 {
     protected override void DoSelf()
     {
@@ -110,7 +110,7 @@ public class DefendAction : aAction
     }
 }
 
-public class PowerAction : aAction
+public class PowerAction : aCombatAction
 {
     protected override void DoSelf()
     {
@@ -127,7 +127,7 @@ public class PowerAction : aAction
     }
 }
 
-public class ItemAction : aAction
+public class ItemAction : aCombatAction
 {
     protected override void DoSelf()
     {
@@ -144,7 +144,7 @@ public class ItemAction : aAction
     }
 }
 
-public class EscapeAction : aAction
+public class EscapeAction : aCombatAction
 {
     protected override void DoSelf()
     {
