@@ -89,7 +89,7 @@ public abstract class aCombatAction : ICombatAction
     public void SetActingAgent(aCombatant whoIsDoingThisAction)
     {
         actingAgent = whoIsDoingThisAction;
-    }
+}
 }
 
 public class AttackAction : aCombatAction
@@ -107,7 +107,7 @@ public class AttackAction : aCombatAction
     {
         Debug.Log("I am attacking " + targetInformation.targetUnit.Name);   
     }
-
+        
     protected override void DoSingleBodyPart(CombatTarget targetInformation)
     {
         Debug.Log("I am attacking " + targetInformation.targetUnit.Name + " in one of his parts");
@@ -122,7 +122,7 @@ public class DefendAction : aCombatAction
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
-        
+
     }
 
     protected override void DoSingleTarget(CombatTarget targetInformation)
@@ -144,7 +144,7 @@ public class PowerAction : aCombatAction
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
-        
+
     }
 
     protected override void DoSingleTarget(CombatTarget targetInformation)
@@ -166,7 +166,7 @@ public class ItemAction : aCombatAction
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
-        
+
     }
 
     protected override void DoSingleTarget(CombatTarget targetInformation)
@@ -191,7 +191,7 @@ public class EscapeAction : aCombatAction
     {
         // Have the entire party escape
     }
-
+        
     protected override void DoSingleTarget(CombatTarget targetInformation)
     {
         // Remove target from combat
