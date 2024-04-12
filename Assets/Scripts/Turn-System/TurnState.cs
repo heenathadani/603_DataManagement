@@ -9,6 +9,7 @@ public enum TurnStateType
     ACTION_CANCELLED
 }
 
+// A static factory for creating new states
 public static class StateFactory
 {
     public static aTurnState MakeState(TurnStateType type, TurnStateMachine sm)
@@ -33,6 +34,7 @@ public static class StateFactory
     }
 }
 
+// The abstract class for the States for the turn state machine
 public abstract class aTurnState
 {
     protected TurnStateMachine stateMachine;
@@ -56,6 +58,7 @@ public abstract class aTurnState
     protected abstract void OnCancel(CombatManager manager);
 }
 
+// Entry point to the state machine. Resets everything.
 public class TurnStartState : aTurnState
 {
     public TurnStartState(TurnStateMachine sm)
@@ -87,6 +90,7 @@ public class TurnStartState : aTurnState
     }
 }
 
+// If the player is targeting something other than the active combatant, a specific target needs to be set
 public class SelectTargetState : aTurnState
 {
     public SelectTargetState(TurnStateMachine sm)
@@ -117,6 +121,7 @@ public class SelectTargetState : aTurnState
     }
 }
 
+// Most actions target a specific body part. This is that targeting part of the process.
 public class SelectPartState : aTurnState
 {
     public SelectPartState(TurnStateMachine sm)
@@ -145,6 +150,7 @@ public class SelectPartState : aTurnState
     }
 }
 
+// Once a target is selected, the internal processes of the turn begin.
 public class TargetingCompleteState : aTurnState
 {
     public TargetingCompleteState(TurnStateMachine sm)
@@ -169,6 +175,7 @@ public class TargetingCompleteState : aTurnState
     }
 }
 
+// The actual execution of the action selected by the player happens here.
 public class ExecutingActionState : aTurnState
 {
     public ExecutingActionState(TurnStateMachine sm)
@@ -191,6 +198,7 @@ public class ExecutingActionState : aTurnState
     }
 }
 
+// Once the action has been executed, we transition into a cleanup state.
 public class ActionDoneState : aTurnState
 {
     public ActionDoneState(TurnStateMachine sm)
@@ -212,6 +220,8 @@ public class ActionDoneState : aTurnState
     }
 }
 
+// Actions can be cancelled (think of when the player might choose to stop attacking altogether).
+// This resets the state machine.
 public class CancelAction : aTurnState
 {
     public CancelAction(TurnStateMachine sm)

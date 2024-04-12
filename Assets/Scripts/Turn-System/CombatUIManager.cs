@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// All of this will probably need to be reworked. TBH, this is all a hack while the UI is being designed by Heena and Annie.
 public class CombatUIManager : MonoBehaviour
 {
     // This is dummy data - a better UI approach must be developed for this
@@ -9,7 +10,7 @@ public class CombatUIManager : MonoBehaviour
     public List<Button> enemy2PartButtons;
     public List<Button> enemies;
 
-    // All of this will probably need to be reworked. This is all a hack while the UI is being designed by Heena and Annie.
+   
     public void ShowPartButtons(int enemy)
     {
         if (enemy == 0)

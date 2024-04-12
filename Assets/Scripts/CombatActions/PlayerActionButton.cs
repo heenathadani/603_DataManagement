@@ -2,6 +2,7 @@
 using Combatant;
 using UnityEngine;
 
+// Interim logic for UI. This will likely become deprecated or adapted once Annie and Heena unify their UI.
 public class PlayerActionButton : MonoBehaviour
 {
     public CombatActionTypes actionType;

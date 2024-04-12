@@ -1,5 +1,6 @@
 using System;
 
+// A custom error class. Nothing fancy - just useful for information and debugging later.
 public class CombatRuntimeException : Exception
 {
     public CombatRuntimeException()

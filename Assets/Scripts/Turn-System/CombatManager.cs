@@ -12,6 +12,8 @@ public class CombatManager : MonoBehaviour
     private CombatantType _activeType;
     private CombatTarget targetInformation;
     private aCombatAction currentAction;
+
+    // Have the combat manager treat combat like a state-based process
     private TurnStateMachine stateMachine;
 
     public void DoAction()
@@ -41,6 +43,8 @@ public class CombatManager : MonoBehaviour
             // A cursor, rather than relying on the mouse, would go a long way here.
             throw new CombatRuntimeException("The turn was already started. This action should not have happened.");
         }
+
+        // Set up the target information for the action selected by the player
         targetInformation.sideBeingTargeted = side;
         targetInformation.typeOfTarget = targetType;
         currentAction = action;
@@ -74,7 +78,7 @@ public class CombatManager : MonoBehaviour
         stateMachine = new TurnStateMachine(this);
     }
 
-
+    // Most of the state machine logic relies on having access to what the player is trying to do.
     public CombatTarget GetCombatTargetInformation()
     {
         return targetInformation;
@@ -84,11 +88,14 @@ public class CombatManager : MonoBehaviour
     {
         targetInformation.targetIndex = index;
         targetInformation.targetUnit = CombatantData.enemies[index];
+
+        // We hack the state machine to allow us to transition back into this stage if the player changes targets
         stateMachine.Next(TurnStateType.SELECT_PART);
     }
 
     public void SetPartIndex(int index)
     {
+        // This will likely need updating once Rin's code is done
         targetInformation.partIndex = index;
         stateMachine.Transition();
     }
