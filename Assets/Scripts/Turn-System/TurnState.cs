@@ -198,7 +198,7 @@ public class ExecutingActionState : aTurnState
     }
 }
 
-// Once the action has been executed, we transition into a cleanup state.
+// Once the action has been executed, we transition into a cleanup state. This also marks the end of the turn.
 public class ActionDoneState : aTurnState
 {
     public ActionDoneState(TurnStateMachine sm)
@@ -214,9 +214,10 @@ public class ActionDoneState : aTurnState
     {
         stateMachine.Next(TurnStateType.ACTION_CANCELLED);
     }
+
     protected override void OnExit(CombatManager manager)
     {
-        stateMachine.Next(TurnStateType.TURN_START);
+        manager.DoAction();
     }
 }
 

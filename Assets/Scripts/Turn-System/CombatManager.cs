@@ -26,6 +26,7 @@ public class CombatManager : MonoBehaviour
             Debug.Log("Switching sides!");
         }
         Debug.Log("Current Turn: " + _activeCombatants[_currentTurn++].Name);
+        stateMachine.Next(TurnStateType.TURN_START);
     }
 
     public void ExecuteCombatAction()
