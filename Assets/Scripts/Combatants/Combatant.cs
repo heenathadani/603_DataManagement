@@ -9,7 +9,6 @@ namespace Combatant
     public abstract class aCombatant
     {
         public abstract string Name { get; }
-        public abstract void PickTarget();
     }
 
     public class Protagonist : aCombatant
@@ -28,10 +27,6 @@ namespace Combatant
                 return _name;
             }
         }
-        public override void PickTarget()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 
     public class Enemy : aCombatant
@@ -48,10 +43,6 @@ namespace Combatant
             {
                 return _name;
             }
-        }
-        public override void PickTarget()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
