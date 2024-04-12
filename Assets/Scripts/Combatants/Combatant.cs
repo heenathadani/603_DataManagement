@@ -12,7 +12,6 @@ namespace Combatant
     public abstract class aCombatant
     {
         public abstract string Name { get; }
-        public abstract void PickTarget();
     }
 
     public class Protagonist : aCombatant
@@ -45,11 +44,6 @@ namespace Combatant
                 return _name;
             }
         }
-        public override void PickTarget()
-        {
-            throw new System.NotImplementedException();
-        }
-
 
         //Add body part to an protagonist's inventory -- Rin
         public void AddBodyPart(BodyPart bp)
@@ -93,10 +87,6 @@ namespace Combatant
             {
                 return _name;
             }
-        }
-        public override void PickTarget()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
