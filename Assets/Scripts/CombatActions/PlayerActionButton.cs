@@ -13,5 +13,6 @@ public class PlayerActionButton : MonoBehaviour
     {
         aCombatAction action = CombatActionFactory.MakeAction(actionType, actionTarget);
         GetComponentInParent<CombatManager>().BeginTurn(action, actionTarget, sideThisAffects);
+        Debug.Log("good");
     }
 }
