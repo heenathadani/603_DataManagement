@@ -16,6 +16,9 @@ public class CombatManager : MonoBehaviour
     // Have the combat manager treat combat like a state-based process
     private TurnStateMachine stateMachine;
 
+    //Store the body part data list
+    public List<BodyPartData> _bodyPartDataList;
+
     public void DoAction()
     {
         if (_currentTurn == _activeCombatants.Count)
@@ -64,6 +67,15 @@ public class CombatManager : MonoBehaviour
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1"));
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2"));
 
+        // Temp, Check status update -- Rin
+        Protagonist protagonist = CombatantData.partyCharacters[0] as Protagonist;
+        if (protagonist != null && _bodyPartDataList.Count > 0)
+        {
+            protagonist.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist.UpdateStatus();
+        }
+
         // Set up this controller
         _currentTurn = 0;
         _activeType = CombatantType.ALLIES;
@@ -71,6 +83,9 @@ public class CombatManager : MonoBehaviour
 
         Debug.Log("Data set up!");
     }
+
+
+
 
     private void OnEnable()
     {
