@@ -8,6 +8,7 @@ public class CombatUIManager : MonoBehaviour
     // This is dummy data - a better UI approach must be developed for this
     public List<Button> enemy1PartButtons;
     public List<Button> enemy2PartButtons;
+    public List<Button> enemy3PartButtons;
     public List<Button> enemies;
 
    
@@ -23,26 +24,58 @@ public class CombatUIManager : MonoBehaviour
             {
                 b.gameObject.SetActive(false);
             }
-        } else
-        {
-            foreach(Button b in enemy2PartButtons)
+            foreach (Button b in enemy3PartButtons)
             {
-                b.gameObject.SetActive(true);
+                b.gameObject.SetActive(false);
             }
+        } 
+        else if(enemy == 1)
+        {
             foreach (Button b in enemy1PartButtons)
             {
                 b.gameObject.SetActive(false);
             }
+            foreach (Button b in enemy2PartButtons)
+            {
+                b.gameObject.SetActive(true);
+            }
+            foreach (Button b in enemy3PartButtons)
+            {
+                b.gameObject.SetActive(false);
+            }
+        }
+        else if (enemy == 2)
+        {
+            foreach (Button b in enemy1PartButtons)
+            {
+                b.gameObject.SetActive(false);
+            }
+            foreach (Button b in enemy2PartButtons)
+            {
+                b.gameObject.SetActive(false);
+            }
+            foreach (Button b in enemy3PartButtons)
+            {
+                b.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.LogError("NO!!!! Enemy Index is not available");
         }
     }
 
     public void HidePartButtons()
     {
-        foreach(Button b in enemy2PartButtons)
+        foreach (Button b in enemy1PartButtons)
         {
             b.gameObject.SetActive(false);
         }
-        foreach(Button b in enemy1PartButtons)
+        foreach (Button b in enemy2PartButtons)
+        {
+            b.gameObject.SetActive(false);
+        }
+        foreach (Button b in enemy3PartButtons)
         {
             b.gameObject.SetActive(false);
         }

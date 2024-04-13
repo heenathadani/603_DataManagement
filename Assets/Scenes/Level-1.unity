@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 43917329}
   - component: {fileID: 43917328}
   - component: {fileID: 43917327}
+  - component: {fileID: 43917330}
   m_Layer: 5
   m_Name: Enemy3_SelectButton
   m_TagString: Untagged
@@ -227,7 +228,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 43917328}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 43917330}
+        m_TargetAssemblyTypeName: TargetButton, Assembly-CSharp
+        m_MethodName: DoAction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &43917328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +279,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 43917325}
   m_CullTransparentMesh: 1
+--- !u!114 &43917330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43917325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc5dc2bd9b4494f478cd89abb1b20417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetIndex: 2
+  type: 0
 --- !u!1 &53755535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1491,6 +1518,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: In-Game UI
       objectReference: {fileID: 0}
+    - target: {fileID: 5056123159069327704, guid: b8de35eb8bf451b4c800671986c75798,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056521198528195390, guid: b8de35eb8bf451b4c800671986c75798,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2332,12 +2369,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1023783005}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: TargetButton, Assembly-CSharp
+        m_MethodName: DoAction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5580,9 +5617,14 @@ MonoBehaviour:
   - {fileID: 1689790313}
   - {fileID: 1262098916}
   - {fileID: 321112515}
+  enemy3PartButtons:
+  - {fileID: 625157508}
+  - {fileID: 1023783002}
+  - {fileID: 1261067123}
   enemies:
   - {fileID: 886372105}
   - {fileID: 1084818735}
+  - {fileID: 43917327}
 --- !u!4 &2120665703 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6510413802626986311, guid: a2ecc13deb775d145ab37104e24b055f,

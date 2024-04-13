@@ -63,9 +63,11 @@ public class CombatManager : MonoBehaviour
         // Set the data
         CombatantData.enemies.Add(new Enemy("Test Enemy 1"));
         CombatantData.enemies.Add(new Enemy("Test Enemy 2"));
+        CombatantData.enemies.Add(new Enemy("Test Enemy 3"));
 
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1"));
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2"));
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 3"));
 
         // Temp, Check status update -- Rin
         Protagonist protagonist = CombatantData.partyCharacters[0] as Protagonist;

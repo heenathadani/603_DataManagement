@@ -68,7 +68,7 @@ namespace Combatant
                 //Update shield point
                 _shieldPoint += bd.bodyPartData.shieldPoint;
 
-                Debug.Log("Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+                //Debug.Log("Max HP: " + _maxHp + ", Current HP: " + _currentHp);
             }
         }
     }
