@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class CombatManager : MonoBehaviour
 
     //Store the body part data list
     public List<BodyPartData> _bodyPartDataList;
+    //Store all enemy HP bar
+    public List<Slider> _enemySliderList;
 
     public void DoAction()
     {
@@ -65,18 +68,33 @@ public class CombatManager : MonoBehaviour
         CombatantData.enemies.Add(new Enemy("Test Enemy 2"));
         CombatantData.enemies.Add(new Enemy("Test Enemy 3"));
 
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1"));
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2"));
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 3"));
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1",0));
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2",1));
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 3",2));
 
         // Temp, Check status update -- Rin
-        Protagonist protagonist = CombatantData.partyCharacters[0] as Protagonist;
-        if (protagonist != null && _bodyPartDataList.Count > 0)
+        Protagonist protagonist1 = CombatantData.partyCharacters[0] as Protagonist;
+        if (protagonist1 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist.UpdateStatus();
+            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist1.UpdateStatus();
         }
+        Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
+        if (protagonist2 != null && _bodyPartDataList.Count > 0)
+        {
+            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist2.UpdateStatus();
+        }
+        Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
+        if (protagonist3 != null && _bodyPartDataList.Count > 0)
+        {
+            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist3.UpdateStatus();
+        }
+        //End
 
         // Set up this controller
         _currentTurn = 0;
@@ -85,9 +103,6 @@ public class CombatManager : MonoBehaviour
 
         Debug.Log("Data set up!");
     }
-
-
-
 
     private void OnEnable()
     {

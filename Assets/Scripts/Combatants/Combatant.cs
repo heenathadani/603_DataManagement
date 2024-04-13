@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Combatant
 {
@@ -17,6 +18,7 @@ namespace Combatant
     public class Protagonist : aCombatant
     {
         private string _name;
+        private int _id;
 
         //Below are the combat related attributes -- Rin
 
@@ -33,8 +35,15 @@ namespace Combatant
         public float _shieldPoint;
         //End
 
-        public Protagonist(string name) {
+        //Bind to UI
+        private Slider _hpSlider;
+
+        public Protagonist(string name, int id) {
             _name = name;
+            _id = id;
+
+            CombatUIManager cum = GameObject.FindAnyObjectByType<CombatUIManager>();
+            _hpSlider = cum.characterHpSliderList[id];     
         }
 
         public override string Name
@@ -67,9 +76,12 @@ namespace Combatant
 
                 //Update shield point
                 _shieldPoint += bd.bodyPartData.shieldPoint;
-
-                //Debug.Log("Max HP: " + _maxHp + ", Current HP: " + _currentHp);
             }
+
+            Debug.Log("Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+
+            //Update Slider
+            _hpSlider.value = _currentHp / _maxHp;
         }
     }
 

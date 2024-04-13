@@ -11,7 +11,9 @@ public class CombatUIManager : MonoBehaviour
     public List<Button> enemy3PartButtons;
     public List<Button> enemies;
 
-   
+    //Store all character Hp Sliders
+    public List<Slider> characterHpSliderList;
+
     public void ShowPartButtons(int enemy)
     {
         if (enemy == 0)
