@@ -13,6 +13,7 @@ public class CombatUIManager : MonoBehaviour
 
     //Store all character Hp Sliders
     public List<Slider> characterHpSliderList;
+    public List<Slider> enemyHpSliderList;
 
     public void ShowPartButtons(int enemy)
     {

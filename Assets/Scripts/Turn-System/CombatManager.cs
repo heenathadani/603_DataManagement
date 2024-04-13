@@ -64,9 +64,9 @@ public class CombatManager : MonoBehaviour
     public void DummySetup()
     {
         // Set the data
-        CombatantData.enemies.Add(new Enemy("Test Enemy 1"));
-        CombatantData.enemies.Add(new Enemy("Test Enemy 2"));
-        CombatantData.enemies.Add(new Enemy("Test Enemy 3"));
+        CombatantData.enemies.Add(new Enemy("Test Enemy 1",0));
+        CombatantData.enemies.Add(new Enemy("Test Enemy 2",1));
+        CombatantData.enemies.Add(new Enemy("Test Enemy 3",2));
 
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1",0));
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2",1));
@@ -93,6 +93,28 @@ public class CombatManager : MonoBehaviour
             protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
             protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
             protagonist3.UpdateStatus();
+        }
+
+        Enemy enemy1 = CombatantData.enemies[0] as Enemy;
+        if (enemy1 != null && _bodyPartDataList.Count > 0)
+        {
+            enemy1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            enemy1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            enemy1.UpdateStatus();
+        }
+        Enemy enemy2 = CombatantData.enemies[1] as Enemy;
+        if (enemy2 != null && _bodyPartDataList.Count > 0)
+        {
+            enemy2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            enemy2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            enemy2.UpdateStatus();
+        }
+        Enemy enemy3 = CombatantData.enemies[2] as Enemy;
+        if (enemy3 != null && _bodyPartDataList.Count > 0)
+        {
+            enemy3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            enemy3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            enemy3.UpdateStatus();
         }
         //End
 

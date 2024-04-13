@@ -35,7 +35,7 @@ namespace Combatant
         public float _shieldPoint;
         //End
 
-        //Bind to UI
+        //Bind to UI hp slider
         private Slider _hpSlider;
 
         public Protagonist(string name, int id) {
@@ -60,7 +60,6 @@ namespace Combatant
             _bodyPartsInventory.Add(bp);
         }
 
-
         //Update the status (HP) -- Rin
         public void UpdateStatus()
         {
@@ -78,7 +77,7 @@ namespace Combatant
                 _shieldPoint += bd.bodyPartData.shieldPoint;
             }
 
-            Debug.Log("Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+            Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
             _hpSlider.value = _currentHp / _maxHp;
@@ -88,9 +87,51 @@ namespace Combatant
     public class Enemy : aCombatant
     {
         private string _name;
-        public Enemy(string name)
+        private int _id;
+
+        //Store the body part lists in the inventory -- Rin
+        public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
+
+        //Enemy Attributes -- Rin
+        private float _maxHp;
+        public float _currentHp;
+
+        public float _attackPoint;
+
+        //Bind to UI hp slider -- Rin
+        private Slider _hpSlider;
+
+        public Enemy(string name, int id)
         {
             _name = name;
+            _id = id;
+
+            CombatUIManager cum = GameObject.FindAnyObjectByType<CombatUIManager>();
+            _hpSlider = cum.enemyHpSliderList[id];
+        }
+
+        public void AddBodyPart(BodyPart bp)
+        {
+            _bodyPartsInventory.Add(bp);
+        }
+
+        public void UpdateStatus()
+        {
+            //Calculate status -- Rin
+            foreach (BodyPart bd in _bodyPartsInventory)
+            {
+                //Update Hp
+                _maxHp += bd.bodyPartData.maxHp;
+                _currentHp += bd.currentHp;
+
+                //Update attack point
+                _attackPoint += bd.bodyPartData.attackPoint;
+            }
+
+            Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+
+            //Update Slider
+            _hpSlider.value = _currentHp / _maxHp;
         }
 
         public override string Name
