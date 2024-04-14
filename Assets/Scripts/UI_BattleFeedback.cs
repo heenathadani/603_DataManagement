@@ -27,9 +27,10 @@ public class NewBehaviourScript : MonoBehaviour
         pDamageArray = new TextMeshProUGUI[] { pDamage1, pDamage2, pDamage3 };
 
         //test
-        updateBattleLog(4, "fire", "bot1", "bot2", 0, "p");
-        updateBattleLog(2, "force", "bot2", "bot1", 2, "e");
-        updateBattleLog(8, "slashing", "bot3", "bot2", 0, "p");
+        //updateBattleLog(4, "fire", "bot1", "bot2", 0, "p");
+        //updateBattleLog(2, "force", "bot2", "bot1", 2, "e");
+        //updateBattleLog(8, "slashing", "bot3", "bot2", 0, "p");
+        clearAll();
     }
 
     // Update is called once per frame
@@ -51,6 +52,13 @@ public class NewBehaviourScript : MonoBehaviour
         battleLog.text = returnLog();
 
         hitFeedback(damage, index, targetType);
+    }
+
+    public void clearAll()
+    {
+        battleUpdates.Clear();
+        battleLog.text = "";
+        clearAllFeedback();
     }
 
     private void updateQueueSize()
