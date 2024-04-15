@@ -83,21 +83,22 @@ public class CombatManager : MonoBehaviour
         Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
         if (protagonist2 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
+            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
             protagonist2.UpdateStatus();
         }
         Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
         if (protagonist3 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
+            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
             protagonist3.UpdateStatus();
         }
 
         Enemy enemy1 = CombatantData.enemies[0] as Enemy;
         if (enemy1 != null && _bodyPartDataList.Count > 0)
         {
+            enemy1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
             enemy1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
             enemy1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
             enemy1.UpdateStatus();
@@ -107,11 +108,13 @@ public class CombatManager : MonoBehaviour
         {
             enemy2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
             enemy2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            enemy2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
             enemy2.UpdateStatus();
         }
         Enemy enemy3 = CombatantData.enemies[2] as Enemy;
         if (enemy3 != null && _bodyPartDataList.Count > 0)
         {
+            enemy3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
             enemy3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
             enemy3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
             enemy3.UpdateStatus();

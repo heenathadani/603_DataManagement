@@ -99,6 +99,18 @@ namespace Combatant
                 }
             }
         }
+
+        public void AddBodyPart(BodyPart bp)
+        {
+            _bodyPartsInventory.Add(bp);
+        }
+
+        //Damage on the body part -- Rin
+        public void AffectBodyPart(int index, float value)
+        {
+            _bodyPartsInventory[index].currentHp += value;
+
+        }
     }
 
     public class Protagonist : aCombatant
@@ -130,14 +142,13 @@ namespace Combatant
         }
 
         //Add body part to an protagonist's inventory -- Rin
-        public void AddBodyPart(BodyPart bp)
-        {
-            _bodyPartsInventory.Add(bp);
-        }
+
 
         //Update the status (HP) -- Rin
         public void UpdateStatus()
         {
+            _maxHp = 0;
+            _currentHp = 0;
             //Calculate status -- Rin
             foreach (BodyPart bd in _bodyPartsInventory)
             {
@@ -180,13 +191,11 @@ namespace Combatant
             }
         }
 
-        public void AddBodyPart(BodyPart bp)
-        {
-            _bodyPartsInventory.Add(bp);
-        }
 
         public void UpdateStatus()
         {
+            _maxHp = 0;
+            _currentHp = 0;
             //Calculate status -- Rin
             foreach (BodyPart bd in _bodyPartsInventory)
             {
