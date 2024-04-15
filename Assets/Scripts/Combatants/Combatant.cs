@@ -59,7 +59,23 @@ namespace Combatant
         //Store the body part lists in the inventory 
         public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
 
+        //Store the powers in a list - need to figure out how to populate this
+        public List<Power> _powers = new List<Power>();
+
         protected CombatantType _side;
+
+        public List<Power> FilterPowerByTargetType(CombatActionTargets targetType)
+        {
+            List<Power> powers = new List<Power>();
+            foreach(Power p in _powers)
+            {
+                if (p.targetType == targetType)
+                {
+                    powers.Add(p);
+                }
+            }
+            return powers;
+        }
 
         public CombatStats GetStats()
         {
@@ -69,6 +85,11 @@ namespace Combatant
         public bool isAlive()
         {
             return _currentHp > 0;
+        }
+
+        public bool isCritical()
+        {
+            return _currentHp <= (_maxHp * 0.1);
         }
         public float GetStatByType(StatType type)
         {
