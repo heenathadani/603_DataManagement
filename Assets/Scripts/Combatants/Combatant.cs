@@ -163,7 +163,7 @@ namespace Combatant
                 _shieldPoint += bd.bodyPartData.shieldPoint;
             }
 
-            Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+            //Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
             _hpSlider.value = _currentHp / _maxHp;
@@ -207,7 +207,7 @@ namespace Combatant
                 _attackPoint += bd.bodyPartData.attackPoint;
             }
 
-            Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+            //Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
             _hpSlider.value = _currentHp / _maxHp;
