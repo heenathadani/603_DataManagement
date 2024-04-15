@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class BodyPartData : ScriptableObject
 {
-
+    public BodyPartType type;
     public string bodyPartName;
     //Image show in inventory
     public Sprite bodyPartImage;

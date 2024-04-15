@@ -6,6 +6,7 @@ public struct CombatTarget
     public aCombatant targetUnit;
     public CombatantType sideBeingTargeted;
     public CombatActionTargets typeOfTarget;
+    public Power selectedPower;
     public int targetIndex;
     public int partIndex;
 }

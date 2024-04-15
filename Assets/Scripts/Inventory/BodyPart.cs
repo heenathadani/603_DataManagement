@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BodyPartType
+{
+    Body,
+    Arm,
+    Leg,
+    Head,
+    Back
+}
+
 //Body Part -- Rin
 public class BodyPart
 {
