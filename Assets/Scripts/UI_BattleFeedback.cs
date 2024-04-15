@@ -23,7 +23,7 @@ public class NewBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        eDamageArray = new TextMeshProUGUI[] { eDamage1, eDamage2, eDamage3};
+        eDamageArray = new TextMeshProUGUI[] { eDamage1, eDamage2, eDamage3 };
         pDamageArray = new TextMeshProUGUI[] { pDamage1, pDamage2, pDamage3 };
 
         //test
@@ -63,7 +63,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void updateQueueSize()
     {
-        if(battleUpdates.Count > maxQueueLength-1)
+        if (battleUpdates.Count > maxQueueLength - 1)
         {
             battleUpdates.Dequeue();//removes oldest item in battle log
         }
@@ -73,7 +73,7 @@ public class NewBehaviourScript : MonoBehaviour
     private string returnLog()
     {
         string log = "";
-        foreach(string s in battleUpdates)
+        foreach (string s in battleUpdates)
         {
             log = log + s;
         }
@@ -84,7 +84,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         returnArray(targetType)[i].text = damage.ToString();
     }
-    
+
     private void clearAllFeedback()
     {
         clearFeedbackArray(eDamageArray);
@@ -93,7 +93,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void clearFeedbackArray(TextMeshProUGUI[] feedback)
     {
-        foreach(TextMeshProUGUI f in feedback)
+        foreach (TextMeshProUGUI f in feedback)
         {
             f.text = "";
         }
@@ -101,7 +101,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     private TextMeshProUGUI[] returnArray(string type)
     {
-        if(type == "p")
+        if (type == "p")
         {
             return pDamageArray;
         }
