@@ -114,7 +114,7 @@ public class AttackAction : aCombatAction
         Debug.Log("I am attacking " + targetInformation.targetUnit.Name + " in one of his parts");
 
         //Take Damage -- Rin
-        targetInformation.targetUnit.AffectBodyPart(targetInformation.targetIndex, -CombatantData.partyCharacters[CombatantData.currentPlayerIndex]._attackPoint);
+        targetInformation.targetUnit.AffectBodyPartByIndex(targetInformation.targetIndex, -CombatantData.partyCharacters[CombatantData.currentPlayerIndex]._attackPoint);
 
         //Update Status -- Rin
         if(targetInformation.targetUnit is Protagonist)

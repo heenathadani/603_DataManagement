@@ -106,7 +106,7 @@ namespace Combatant
         }
 
         //Damage on the body part -- Rin
-        public void AffectBodyPart(int index, float value)
+        public void AffectBodyPartByIndex(int index, float value)
         {
             _bodyPartsInventory[index].currentHp += value;
 
