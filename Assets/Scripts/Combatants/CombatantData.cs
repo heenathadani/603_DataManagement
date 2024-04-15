@@ -6,6 +6,8 @@ public static class CombatantData
     public static List<Combatant.aCombatant> partyCharacters = new List<Combatant.aCombatant>();
     public static List<Combatant.aCombatant> enemies = new List<Combatant.aCombatant>();
 
+    public static int currentPlayerIndex = 0;
+
     public static List<Combatant.aCombatant> GetGroup(Combatant.CombatantType whichOne)
     {
         switch (whichOne)

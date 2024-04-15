@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721700d5ae9cf5a4a82db65cc92462aa, type: 3}
   m_Name: Arm1
   m_EditorClassIdentifier: 
+  type: 0
   bodyPartName: Arm1
   bodyPartImage: {fileID: 0}
-  maxHp: 30
-  attackPoint: 40
+  maxHp: 20
+  attackPoint: 10
   shieldPoint: 10

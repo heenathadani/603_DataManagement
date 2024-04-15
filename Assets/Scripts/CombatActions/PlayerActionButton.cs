@@ -17,5 +17,8 @@ public class PlayerActionButton : MonoBehaviour
         combatTarget.typeOfTarget = actionTarget;
         combatTarget.sideBeingTargeted = sideThisAffects;
         GetComponentInParent<CombatManager>().BeginTurn(playerIndex, action, combatTarget);
+
+        //Set player index -- Rin
+        CombatantData.currentPlayerIndex = playerIndex;
     }
 }
