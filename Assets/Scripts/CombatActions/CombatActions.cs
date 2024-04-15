@@ -1,0 +1,205 @@
+using Combatant;
+using UnityEngine;
+
+public enum CombatActionTypes
+{
+    Attack,
+    Defend,
+    Power,
+    Item,
+    Escape
+}
+
+public enum CombatActionTargets
+{
+    Self,
+    SelfBodyPart,
+    SingleEnemyBodyPart,
+    SingeAllyBodyPart,
+    SingleEnemy,
+    SingleAlly,
+    AllEnemies,
+    AllAllies
+}
+
+public static class CombatActionFactory
+{
+    public static aCombatAction MakeAction(CombatActionTypes type, CombatActionTargets target)
+    {
+        aCombatAction result;
+        switch (type)
+        {
+            case CombatActionTypes.Attack:
+                result = new AttackAction();
+                break;
+            case CombatActionTypes.Defend:
+                result = new DefendAction();
+                break;
+            case CombatActionTypes.Power:
+                result = new PowerAction();
+                break;
+            case CombatActionTypes.Item:
+                result = new ItemAction();
+                break;
+            default:
+                result = new EscapeAction();
+                break;
+        }
+        result.SetTargetType(target);
+        return result;
+    }
+}
+
+public interface ICombatAction
+{
+    public void SetTargetType(CombatActionTargets targetType);
+    public void DoAction(CombatTarget targetInformation);
+}
+
+public abstract class aCombatAction : ICombatAction
+{
+    protected CombatActionTargets _targetType;
+    protected aCombatant actingAgent;
+
+    protected abstract void DoSingleTarget(CombatTarget targetInformation);
+    protected abstract void DoMultiTarget(CombatTarget targetInformation);
+    protected abstract void DoSelf(CombatTarget targetInformation);
+    protected abstract void DoSingleBodyPart(CombatTarget targetInformation);
+
+    public void DoAction(CombatTarget targetInformation)
+    {
+        if (_targetType == CombatActionTargets.Self)
+        {
+            DoSelf(targetInformation);
+        } else if (_targetType == CombatActionTargets.SingleEnemy || _targetType == CombatActionTargets.SingleAlly)
+        {
+            DoSingleTarget(targetInformation);
+        } else if (_targetType == CombatActionTargets.SingleEnemyBodyPart || _targetType == CombatActionTargets.SingeAllyBodyPart || _targetType == CombatActionTargets.SelfBodyPart) {
+            DoSingleBodyPart(targetInformation);
+        } else
+        {
+            DoMultiTarget(targetInformation);
+        }
+    }
+    public void SetTargetType(CombatActionTargets targetType)
+    {
+        _targetType = targetType;
+    }
+
+    public void SetActingAgent(aCombatant whoIsDoingThisAction)
+    {
+        actingAgent = whoIsDoingThisAction;
+}
+}
+
+public class AttackAction : aCombatAction
+{
+    protected override void DoSelf(CombatTarget targetInformation)
+    {
+
+    }
+    protected override void DoMultiTarget(CombatTarget targetInformation)
+    {
+        
+    }
+
+    protected override void DoSingleTarget(CombatTarget targetInformation)
+    {
+        Debug.Log("I am attacking " + targetInformation.targetUnit.Name);   
+    }
+        
+    protected override void DoSingleBodyPart(CombatTarget targetInformation)
+    {
+        Debug.Log("I am attacking " + targetInformation.targetUnit.Name + " in one of his parts");
+    }
+}
+
+public class DefendAction : aCombatAction
+{
+    protected override void DoSelf(CombatTarget targetInformation)
+    {
+        Debug.Log("I have defended");
+    }
+    protected override void DoMultiTarget(CombatTarget targetInformation)
+    {
+
+    }
+
+    protected override void DoSingleTarget(CombatTarget targetInformation)
+    {
+        
+    }
+
+    protected override void DoSingleBodyPart(CombatTarget targetInformation)
+    {
+        
+    }
+}
+
+public class PowerAction : aCombatAction
+{
+    protected override void DoSelf(CombatTarget targetInformation)
+    {
+
+    }
+    protected override void DoMultiTarget(CombatTarget targetInformation)
+    {
+
+    }
+
+    protected override void DoSingleTarget(CombatTarget targetInformation)
+    {
+        
+    }
+
+    protected override void DoSingleBodyPart(CombatTarget targetInformation)
+    {
+        
+    }
+}
+
+public class ItemAction : aCombatAction
+{
+    protected override void DoSelf(CombatTarget targetInformation)
+    {
+
+    }
+    protected override void DoMultiTarget(CombatTarget targetInformation)
+    {
+
+    }
+
+    protected override void DoSingleTarget(CombatTarget targetInformation)
+    {
+        
+    }
+
+    protected override void DoSingleBodyPart(CombatTarget targetInformation)
+    {
+        
+    }
+}
+
+public class EscapeAction : aCombatAction
+{
+    protected override void DoSelf(CombatTarget targetInformation)
+    {
+        // Have the acting combatant leave the battlefield
+
+    }
+    protected override void DoMultiTarget(CombatTarget targetInformation)
+    {
+        // Have the entire party escape
+    }
+        
+    protected override void DoSingleTarget(CombatTarget targetInformation)
+    {
+        // Remove target from combat
+    }
+
+    protected override void DoSingleBodyPart(CombatTarget targetInformation)
+    {
+        // N/A, this shouldn't happen.
+        throw new System.NotImplementedException();
+    }
+}
