@@ -31,16 +31,36 @@ namespace Combatant
 
     public enum StatType
     {
-        //Below are the combat related attributes -- Rin
-        protected float _maxHp;
-        public float _currentHp;
-        public float _attackPoint;
-        public float _shieldPoint;
-        public abstract string Name { get; }
+        
         HP,
         Energy,
         Attack,
         Shield
+        
+    }
+
+    public abstract class aCombatant
+    {
+        //Below are the combat related attributes -- Rin
+        protected float _maxHp;
+        public float _currentHp;
+        public float _currentEnergy;
+        public float _maxEnergy;
+        public float _attackPoint;
+        public float _shieldPoint;
+        public abstract string Name { get; }
+        private string _name;
+        private int _id;
+        //Bind to UI hp slider
+        protected Slider _hpSlider;
+
+        //Below are the combat related attributes -- Rin
+
+        //Store the body part lists in the inventory 
+        public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
+
+        protected CombatantType _side;
+
         public CombatStats GetStats()
         {
             return new CombatStats(_maxHp, _currentHp, _attackPoint, _shieldPoint);
@@ -50,30 +70,6 @@ namespace Combatant
         {
             return _currentHp > 0;
         }
-    }
-
-    public abstract class aCombatant
-    {
-        private string _name;
-        private int _id;
-
-        //Below are the combat related attributes -- Rin
-
-        //Store the body part lists in the inventory 
-        public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
-
-        private float _maxHp;
-        protected CombatantType _side;
-        public abstract string Name { get; }
-        public float _attackPoint;
-        public float _shieldPoint;
-        //End
-
-        public Protagonist(string name, int id) {
-            _name = name;
-        public float _attackPoint;
-        public float _shieldPoint;
-
         public float GetStatByType(StatType type)
         {
             switch (type)
@@ -100,7 +96,8 @@ namespace Combatant
                     if (_attackPoint + value < 0)
                     {
                         _attackPoint = 0;
-                    } else
+                    }
+                    else
                     {
                         _attackPoint += value;
                     }
@@ -129,7 +126,7 @@ namespace Combatant
         public void AffectBodyPartByType(BodyPartType part, float value)
         {
             // For now, let's keep it so we can only diminish part HP
-            foreach(BodyPart bodyPart in _bodyPartsInventory)
+            foreach (BodyPart bodyPart in _bodyPartsInventory)
             {
                 if (bodyPart.bodyPartData.type == part)
                 {
@@ -137,24 +134,31 @@ namespace Combatant
                 }
             }
         }
+
     }
 
     public class Protagonist : aCombatant
     {
         private string _name;
         private int _id;
-
-            if (uiManager.enemyHpSliderList.Count > 0)
-            {
-                _hpSlider = uiManager.characterHpSliderList[id];
-            }
-        }
-
         public override string Name
         {
             get 
             {
                 return _name;
+            }
+        }
+
+        public Protagonist(string name, int id)
+        {
+            _name = name;
+            _id = id;
+            _side = CombatantType.ALLIES;
+
+            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
+            if (uiManager.enemyHpSliderList.Count > 0)
+            {
+                _hpSlider = uiManager.characterHpSliderList[id];
             }
         }
 
@@ -193,14 +197,12 @@ namespace Combatant
         private string _name;
         private int _id;
 
-        //Store the body part lists in the inventory -- Rin
-        public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
 
-        //Enemy Attributes -- Rin
-        private float _maxHp;
-        public float _currentHp;
-
-        public float _attackPoint;
+        public Enemy(string name, int id)
+        {
+            _name = name;
+            _id = id;
+            _side = CombatantType.ENEMIES;
 
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
             if (uiManager.enemyHpSliderList.Count > 0)
