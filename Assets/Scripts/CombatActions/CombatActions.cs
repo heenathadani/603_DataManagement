@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Combatant;
 using UnityEngine;
 
@@ -140,21 +141,39 @@ public class PowerAction : aCombatAction
 {
     protected override void DoSelf(CombatTarget targetInformation)
     {
-
+        aCombatant target = targetInformation.targetUnit;
+        target.AffectStatByType(targetInformation.selectedPower.statAffectedByPower, targetInformation.selectedPower.GetTotalEffect(actingAgent));
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
-
+        CombatantType sideBeingTargeted = targetInformation.sideBeingTargeted;
+        List<aCombatant> whoThough;
+        if (actingAgent.GetSide() == sideBeingTargeted)
+        {
+            // This means Allies targeting their own allies or Enemies targeting their enemies. Either way, the party is the target.
+            whoThough = CombatantData.partyCharacters;
+        }
+        else
+        {
+            // This means allies targeting their enemies or enemies targeting their allies. Either way, the enemies are the target
+            whoThough = CombatantData.enemies;
+        }
+        foreach(aCombatant target in whoThough)
+        {
+            target.AffectStatByType(targetInformation.selectedPower.statAffectedByPower, targetInformation.selectedPower.GetTotalEffect(actingAgent));
+        }
     }
 
     protected override void DoSingleTarget(CombatTarget targetInformation)
     {
-        
+        aCombatant target = targetInformation.targetUnit;
+        target.AffectStatByType(targetInformation.selectedPower.statAffectedByPower, targetInformation.selectedPower.GetTotalEffect(actingAgent));
     }
 
     protected override void DoSingleBodyPart(CombatTarget targetInformation)
     {
-        
+        aCombatant target = targetInformation.targetUnit;
+        target.AffectBodyPartByType(targetInformation.selectedPower.bodyPart, targetInformation.selectedPower.GetTotalEffect(actingAgent));
     }
 }
 
