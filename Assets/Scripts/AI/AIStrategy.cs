@@ -43,7 +43,7 @@ namespace Combatant
     {
         protected override int CalculateThreat()
         {
-            
+            int result = 0;
         }
 
         public override aCombatant PickTarget()
