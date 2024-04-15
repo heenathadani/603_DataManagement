@@ -35,11 +35,16 @@ namespace Combatant
     }
 
     public abstract class aAIStrategy : ICombatStrategy {
+        protected abstract int CalculateThreat();
         public abstract aCombatant PickTarget();
     }
 
     public class SupportStrategy : aAIStrategy
     {
+        protected override int CalculateThreat()
+        {
+            
+        }
 
         public override aCombatant PickTarget()
         {
@@ -61,6 +66,8 @@ namespace Combatant
                     otherSideTargets.Add(possibleTarget);
                 }
             }
+
+
 
             return finalTarget;
         }
