@@ -40,7 +40,7 @@ public class CombatManager : MonoBehaviour
         currentAction.DoAction(targetInformation);
     }
 
-    public void BeginTurn(aCombatAction action, CombatActionTargets targetType, CombatantType side)
+    public void BeginTurn(int playerIndex, aCombatAction action, CombatTarget targetInfo)
     {
         if (stateMachine.currentStateType != TurnStateType.TURN_START)
         {
@@ -52,10 +52,10 @@ public class CombatManager : MonoBehaviour
         }
 
         // Set up the target information for the action selected by the player
-        targetInformation.sideBeingTargeted = side;
-        targetInformation.typeOfTarget = targetType;
+        targetInformation = targetInfo;
         currentAction = action;
-        uiManager.ShowByTarget(targetType);
+        action.SetActingAgent(CombatantData.GetGroup(_activeType)[playerIndex]);
+        uiManager.ShowByTarget(targetInformation.typeOfTarget);
         stateMachine.Transition();
     }
 

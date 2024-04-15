@@ -146,6 +146,7 @@ public class PowerAction : aCombatAction
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
+        Debug.Log("Doing multitarget power");
         CombatantType sideBeingTargeted = targetInformation.sideBeingTargeted;
         List<aCombatant> whoThough;
         if (actingAgent.GetSide() == sideBeingTargeted)

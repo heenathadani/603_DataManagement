@@ -77,13 +77,13 @@ public class TurnStartState : aTurnState
     protected override void OnExit(CombatManager manager)
     {
         CombatTarget targetData = manager.GetCombatTargetInformation();
-        if (targetData.typeOfTarget == CombatActionTargets.Self)
+        if (targetData.typeOfTarget == CombatActionTargets.Self || targetData.typeOfTarget == CombatActionTargets.AllEnemies || targetData.typeOfTarget == CombatActionTargets.AllAllies)
         {
             stateMachine.Next(TurnStateType.TARGETING_COMPLETE);
         } else if (targetData.typeOfTarget == CombatActionTargets.SelfBodyPart)
         {
             stateMachine.Next(TurnStateType.SELECT_PART);
-        } else
+        }  else
         {
             stateMachine.Next(TurnStateType.SELECT_TARGET);
         }

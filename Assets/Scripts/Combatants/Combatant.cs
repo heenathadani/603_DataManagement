@@ -115,7 +115,10 @@ namespace Combatant
             _side = CombatantType.ALLIES;
 
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-            _hpSlider = uiManager.characterHpSliderList[id];     
+            if (uiManager.enemyHpSliderList.Count > 0)
+            {
+                _hpSlider = uiManager.characterHpSliderList[id];
+            }
         }
 
         public override string Name
@@ -171,7 +174,10 @@ namespace Combatant
             _side = CombatantType.ENEMIES;
 
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-            _hpSlider = uiManager.enemyHpSliderList[id];
+            if (uiManager.enemyHpSliderList.Count > 0)
+            {
+                _hpSlider = uiManager.enemyHpSliderList[id];
+            }
         }
 
         public void AddBodyPart(BodyPart bp)
