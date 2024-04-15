@@ -3,8 +3,26 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 namespace Combatant
 {
+    public struct CombatStats
+    {
+        public float maxHp;
+        public float currentHp;
+        public float attackValue;
+        public float shieldValue;
+
+        public CombatStats(float mHp, float cHp, float aV, float sV)
+        {
+            maxHp = mHp;
+            currentHp = cHp;
+            attackValue = aV;
+            shieldValue = sV;
+        }
+    }
+
     public enum CombatantType
     {
         ALLIES,
@@ -13,26 +31,46 @@ namespace Combatant
 
     public enum StatType
     {
+        //Below are the combat related attributes -- Rin
+        protected float _maxHp;
+        public float _currentHp;
+        public float _attackPoint;
+        public float _shieldPoint;
+        public abstract string Name { get; }
         HP,
         Energy,
         Attack,
         Shield
+        public CombatStats GetStats()
+        {
+            return new CombatStats(_maxHp, _currentHp, _attackPoint, _shieldPoint);
+        }
+
+        public bool isAlive()
+        {
+            return _currentHp > 0;
+        }
     }
 
     public abstract class aCombatant
     {
-        protected CombatantType _side;
-        public abstract string Name { get; }
+        private string _name;
+        private int _id;
+
+        //Below are the combat related attributes -- Rin
+
         //Store the body part lists in the inventory 
         public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
 
-        //Below are the combat related attributes -- Rin
-        protected float _maxHp;
-        public float _currentHp;
+        private float _maxHp;
+        protected CombatantType _side;
+        public abstract string Name { get; }
+        public float _attackPoint;
+        public float _shieldPoint;
+        //End
 
-        private float _maxEnergy;
-        public float _currentEnergy;
-
+        public Protagonist(string name, int id) {
+            _name = name;
         public float _attackPoint;
         public float _shieldPoint;
 
@@ -106,15 +144,6 @@ namespace Combatant
         private string _name;
         private int _id;
 
-        //Bind to UI hp slider
-        private Slider _hpSlider;
-
-        public Protagonist(string name, int id) {
-            _name = name;
-            _id = id;
-            _side = CombatantType.ALLIES;
-
-            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
             if (uiManager.enemyHpSliderList.Count > 0)
             {
                 _hpSlider = uiManager.characterHpSliderList[id];
@@ -164,14 +193,14 @@ namespace Combatant
         private string _name;
         private int _id;
 
-        //Bind to UI hp slider -- Rin
-        private Slider _hpSlider;
+        //Store the body part lists in the inventory -- Rin
+        public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
 
-        public Enemy(string name, int id)
-        {
-            _name = name;
-            _id = id;
-            _side = CombatantType.ENEMIES;
+        //Enemy Attributes -- Rin
+        private float _maxHp;
+        public float _currentHp;
+
+        public float _attackPoint;
 
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
             if (uiManager.enemyHpSliderList.Count > 0)
