@@ -16,7 +16,7 @@ public enum CombatActionTargets
     Self,
     SelfBodyPart,
     SingleEnemyBodyPart,
-    SingeAllyBodyPart,
+    SingleAllyBodyPart,
     SingleEnemy,
     SingleAlly,
     AllEnemies,
@@ -47,12 +47,14 @@ public static class CombatActionFactory
                 break;
         }
         result.SetTargetType(target);
+        result.type = type;
         return result;
     }
 }
 
 public interface ICombatAction
 {
+    public CombatActionTargets GetActionTarget();
     public void SetTargetType(CombatActionTargets targetType);
     public void DoAction(CombatTarget targetInformation);
 }
@@ -60,6 +62,13 @@ public interface ICombatAction
 public abstract class aCombatAction : ICombatAction
 {
     protected CombatActionTargets _targetType;
+    public CombatActionTypes type;
+
+    public CombatActionTargets GetActionTarget()
+    {
+        return _targetType;
+    }
+
     protected aCombatant actingAgent;
 
     protected abstract void DoSingleTarget(CombatTarget targetInformation);
@@ -75,7 +84,7 @@ public abstract class aCombatAction : ICombatAction
         } else if (_targetType == CombatActionTargets.SingleEnemy || _targetType == CombatActionTargets.SingleAlly)
         {
             DoSingleTarget(targetInformation);
-        } else if (_targetType == CombatActionTargets.SingleEnemyBodyPart || _targetType == CombatActionTargets.SingeAllyBodyPart || _targetType == CombatActionTargets.SelfBodyPart) {
+        } else if (_targetType == CombatActionTargets.SingleEnemyBodyPart || _targetType == CombatActionTargets.SingleAllyBodyPart || _targetType == CombatActionTargets.SelfBodyPart) {
             DoSingleBodyPart(targetInformation);
         } else
         {

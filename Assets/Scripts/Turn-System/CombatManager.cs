@@ -143,6 +143,11 @@ public class CombatManager : MonoBehaviour
         return targetInformation;
     }
 
+    public void SetCombatTarget(CombatTarget targetInfo)
+    {
+        targetInformation = targetInfo;
+    }
+
     public void SetTargetUnit(int index)
     {
         targetInformation.targetIndex = index;

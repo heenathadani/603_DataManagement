@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public enum BodyPartType
 {
     Body,
@@ -28,6 +24,11 @@ public class BodyPart
     public void UpdateCurrentHP(float value)
     {
         currentHp -= value;
+    }
+
+    public float GetMaxHp()
+    {
+        return bodyPartData.maxHp;
     }
 
 }
