@@ -8,7 +8,7 @@ namespace Combatant
         Support,
         Disabler,
         Bruiser,
-        MageHunter
+        ThreatHunter
     }
 
     public static class AIFactory
@@ -18,11 +18,11 @@ namespace Combatant
             switch (type)
             {
                 case AITypes.Disabler:
-                    break;
+                    return new DisablerStrategy();
                 case AITypes.Bruiser:
-                    break;
-                case AITypes.MageHunter:
-                    break;
+                    return new BruiserStrategy();
+                case AITypes.ThreatHunter:
+                    return new ThreatHunterStrategy();
                 default:
                     return new SupportStrategy();
             }
@@ -43,7 +43,7 @@ namespace Combatant
 
         public override aCombatant PickTarget()
         {
-            aCombatant finalTarget;
+            aCombatant finalTarget = null;
             List<aCombatant> sameSideTargets = new List<aCombatant>();
             foreach(aCombatant possibleTarget in CombatantData.enemies)
             {
@@ -63,6 +63,34 @@ namespace Combatant
             }
 
             return finalTarget;
+        }
+    }
+
+    public class BruiserStrategy : aAIStrategy
+    {
+        public override aCombatant PickTarget()
+        {
+            aCombatant target = null;
+            return target;
+        }
+    }
+
+    public class ThreatHunterStrategy : aAIStrategy
+    {
+        public override aCombatant PickTarget()
+        {
+            aCombatant target = null;
+            return target;
+        }
+    }
+
+    public class DisablerStrategy : aAIStrategy
+    {
+        public override aCombatant PickTarget()
+        {
+            aCombatant target = null;
+
+            return target;
         }
     }
 }
