@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Combatant
 {
@@ -192,7 +191,12 @@ namespace Combatant
         }
         protected override CombatActionTypes PickPreferredAction(aCombatant target)
         {
-            if (myself._powers.Count > 0)
+            if (target == null)
+            {
+                return CombatActionTypes.Defend;
+            }
+
+            if (myself._powers.Count > 0 && myself.hasPowersToCast())
             {
                 return CombatActionTypes.Power;
             }
@@ -200,6 +204,10 @@ namespace Combatant
         }
         protected override CombatActionTargets PickActionTarget(CombatActionTypes type)
         {
+            if (type == CombatActionTypes.Defend)
+            {
+                return CombatActionTargets.Self;
+            }
             if (type == CombatActionTypes.Power)
             {
                 CombatActionTargets mostLikelyTarget = CombatActionTargets.SingleAllyBodyPart;
@@ -226,7 +234,7 @@ namespace Combatant
             float result = 0;
             if (candidate.GetSide() == CombatantType.ENEMIES)
             {
-                return result;
+                return -2;
             }
 
             CombatStats candidateStats = candidate.GetStats();

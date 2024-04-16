@@ -16,8 +16,8 @@ MonoBehaviour:
   bodyPart: 0
   powerName: Big Smash
   description: Bruiser does a big smash
-  effectModifier: 20
+  effectModifier: 2
   statAugmentingThisPower: 2
   statAffectedByPower: 0
-  cost: 0
+  cost: 40
   targetRequirement: 1

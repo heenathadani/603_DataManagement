@@ -1,5 +1,7 @@
 using Combatant;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +17,12 @@ public class CombatManager : MonoBehaviour
     public CombatantType _activeType;
     private CombatTarget targetInformation;
     private aCombatAction currentAction;
+
+    private IEnumerator SlowEnemiesDown()
+    {
+        yield return new WaitForSeconds(0.5f);
+        activeEnemies[_currentTurn].TakeTurn();
+    }
 
     // Have the combat manager treat combat like a state-based process
     private TurnStateMachine stateMachine;
@@ -68,8 +76,12 @@ public class CombatManager : MonoBehaviour
 
         // Set the data
         spawnManager.SetEnemiesToSpawn(dummyFormation.enemies.Count);
-        foreach(Enemy e in dummyFormation.enemies)
+        for (int i = 0; i < dummyFormation.enemies.Count; i++)
         {
+
+            Enemy e = dummyFormation.enemies[i].Clone(i);
+            e.SetSlider(uiManager.enemyHpSliderList[i]);
+            e.UpdateStatus();
             CombatantData.enemies.Add(e);
             GameObject spawnedEnemy = spawnManager.SpawnEnemy(e);
             EnemyGameObject eGO = spawnedEnemy.GetComponent<EnemyGameObject>();
@@ -115,11 +127,12 @@ public class CombatManager : MonoBehaviour
 
     private void OnEnable()
     {
+        uiManager = GetComponent<CombatUIManager>();
         stateMachine = new TurnStateMachine(this);
         activeEnemies = new List<EnemyGameObject>();
         DummySetup();
         
-        uiManager = GetComponent<CombatUIManager>();
+        
         stateMachine.Next(TurnStateType.TURN_START);
     }
 
@@ -131,7 +144,8 @@ public class CombatManager : MonoBehaviour
 
     public void StartAITurn()
     {
-        activeEnemies[_currentTurn].TakeTurn();
+        StartCoroutine(SlowEnemiesDown());
+        
     }
     
     public void SetAIAction(aCombatAction action)
@@ -141,6 +155,7 @@ public class CombatManager : MonoBehaviour
 
     public void AITurnEnd()
     {
+
         stateMachine.Next(TurnStateType.ACTION_DONE);
     }
 

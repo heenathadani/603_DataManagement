@@ -115,27 +115,17 @@ public class AttackAction : aCombatAction
 
     protected override void DoSingleTarget(CombatTarget targetInformation)
     {
-        Debug.Log("I am attacking " + targetInformation.targetUnit.Name);   
+        Debug.Log("I am attacking " + targetInformation.targetUnit.Name);
+        targetInformation.targetUnit.UpdateStatus();
     }
         
     protected override void DoSingleBodyPart(CombatTarget targetInformation)
     {
-        Debug.Log("I am attacking " + targetInformation.targetUnit.Name + " in one of his parts");
+        Debug.Log("I "+actingAgent.Name+" am attacking " + targetInformation.targetUnit.Name + " in one of his parts");
 
         //Take Damage -- Rin
         targetInformation.targetUnit.AffectBodyPartByIndex(targetInformation.targetIndex, -CombatantData.partyCharacters[CombatantData.currentPlayerIndex]._attackPoint);
-
-        //Update Status -- Rin
-        if(targetInformation.targetUnit is Protagonist)
-        {
-            Protagonist tProtagonist = targetInformation.targetUnit as Protagonist;
-            tProtagonist.UpdateStatus();
-        }
-        else if(targetInformation.targetUnit is Enemy)
-        {
-            Enemy tEnemy = targetInformation.targetUnit as Enemy;
-            tEnemy.UpdateStatus();
-        }
+        targetInformation.targetUnit.UpdateStatus();
 
     }
 }
@@ -168,6 +158,8 @@ public class PowerAction : aCombatAction
     {
         aCombatant target = targetInformation.targetUnit;
         target.AffectStatByType(targetInformation.selectedPower.statAffectedByPower, targetInformation.selectedPower.GetTotalEffect(actingAgent));
+        target.UpdateStatus();
+        actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
@@ -184,20 +176,31 @@ public class PowerAction : aCombatAction
         }
         foreach(aCombatant target in whoThough)
         {
-            target.AffectStatByType(targetInformation.selectedPower.statAffectedByPower, targetInformation.selectedPower.GetTotalEffect(actingAgent));
+            int perPartDamage = (int) targetInformation.selectedPower.GetTotalEffect(actingAgent) / target._bodyPartsInventory.Count;
+            for (int i = 0; i < target._bodyPartsInventory.Count; i++)
+            {
+                int finalDamage = perPartDamage - (int)target._bodyPartsInventory[i].bodyPartData.shieldPoint;
+                target.AffectBodyPartByIndex(i, -finalDamage);
+            }
+            target.UpdateStatus();
         }
+        actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
     }
 
     protected override void DoSingleTarget(CombatTarget targetInformation)
     {
         aCombatant target = targetInformation.targetUnit;
         target.AffectStatByType(targetInformation.selectedPower.statAffectedByPower, targetInformation.selectedPower.GetTotalEffect(actingAgent));
+        target.UpdateStatus();
+        actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
     }
 
     protected override void DoSingleBodyPart(CombatTarget targetInformation)
     {
         aCombatant target = targetInformation.targetUnit;
         target.AffectBodyPartByType(targetInformation.selectedPower.bodyPart, targetInformation.selectedPower.GetTotalEffect(actingAgent));
+        target.UpdateStatus();
+        actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
     }
 }
 
