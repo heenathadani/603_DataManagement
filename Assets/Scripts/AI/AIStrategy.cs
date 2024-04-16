@@ -205,10 +205,10 @@ namespace Combatant
                 CombatActionTargets mostLikelyTarget = CombatActionTargets.SingleAllyBodyPart;
                 foreach(Power p in myself._powers)
                 {
-                    if (p.targetType == CombatActionTargets.AllEnemies)
+                    if (p.targetType == CombatActionTargets.AllAllies)
                     {
                         mostLikelyTarget = CombatActionTargets.AllAllies;
-                    } else if (p.targetType == CombatActionTargets.SingleEnemy && mostLikelyTarget != CombatActionTargets.AllAllies)
+                    } else if (p.targetType == CombatActionTargets.SingleAlly && mostLikelyTarget != CombatActionTargets.AllAllies)
                     {
                         mostLikelyTarget = CombatActionTargets.SingleAlly;
                     }

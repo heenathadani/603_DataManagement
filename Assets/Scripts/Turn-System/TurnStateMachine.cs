@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class TurnStateMachine
 {
     private CombatManager cm;
@@ -7,7 +9,6 @@ public class TurnStateMachine
     public TurnStateMachine(CombatManager manager)
     {
         cm = manager;
-        Next(TurnStateType.TURN_START);
     }
 
     public void Next(TurnStateType nextState)

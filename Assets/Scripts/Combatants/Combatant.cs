@@ -43,6 +43,7 @@ namespace Combatant
     public abstract class aCombatant
     {
         //Below are the combat related attributes -- Rin
+        [SerializeField]
         protected float _maxHp;
         public float _currentHp;
         public float _currentEnergy;

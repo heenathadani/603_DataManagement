@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70194f2d464f68a479464dd439f70a0b, type: 3}
+  m_Name: BruiserPower
+  m_EditorClassIdentifier: 
+  targetType: 7
+  bodyPart: 0
+  powerName: Big Smash
+  description: Bruiser does a big smash
+  effectModifier: 20
+  statAugmentingThisPower: 2
+  statAffectedByPower: 0
+  cost: 0
+  targetRequirement: 1

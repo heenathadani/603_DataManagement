@@ -174,14 +174,12 @@ public class PowerAction : aCombatAction
         Debug.Log("Doing multitarget power");
         CombatantType sideBeingTargeted = targetInformation.sideBeingTargeted;
         List<aCombatant> whoThough;
-        if (actingAgent.GetSide() == sideBeingTargeted)
+        if (sideBeingTargeted == CombatantType.ALLIES)
         {
-            // This means Allies targeting their own allies or Enemies targeting their enemies. Either way, the party is the target.
             whoThough = CombatantData.partyCharacters;
         }
         else
         {
-            // This means allies targeting their enemies or enemies targeting their allies. Either way, the enemies are the target
             whoThough = CombatantData.enemies;
         }
         foreach(aCombatant target in whoThough)

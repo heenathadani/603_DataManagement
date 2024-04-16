@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class CombatManager : MonoBehaviour
 {
     public EnemyFormation dummyFormation;
-    public GameObject enemyPrefab;
-    private List<GameObject> activeEnemies;
 
+    private List<EnemyGameObject> activeEnemies;
+    public EnemySpawnManager spawnManager;
     private CombatUIManager uiManager;
     private List<aCombatant> _activeCombatants;
     public int _currentTurn;
@@ -26,14 +26,14 @@ public class CombatManager : MonoBehaviour
 
     public void DoAction()
     {
-        if (_currentTurn == _activeCombatants.Count - 1)
+        _currentTurn++;
+        if (_currentTurn == _activeCombatants.Count)
         {
+            Debug.Log("Switch sides");
             _activeType = CombatantData.GetNext(_activeType);
             _activeCombatants = CombatantData.GetGroup(_activeType);
             _currentTurn = 0;
-            Debug.Log("Switching sides!");
         }
-        Debug.Log("Current Turn: " + _activeCombatants[_currentTurn++].Name);
         stateMachine.Next(TurnStateType.TURN_START);
     }
 
@@ -67,11 +67,14 @@ public class CombatManager : MonoBehaviour
     {
 
         // Set the data
+        spawnManager.SetEnemiesToSpawn(dummyFormation.enemies.Count);
         foreach(Enemy e in dummyFormation.enemies)
         {
             CombatantData.enemies.Add(e);
-            GameObject enemyObject = Instantiate(enemyPrefab, transform);
-
+            GameObject spawnedEnemy = spawnManager.SpawnEnemy(e);
+            EnemyGameObject eGO = spawnedEnemy.GetComponent<EnemyGameObject>();
+            eGO.SetManager(this);
+            activeEnemies.Add(eGO);
         }
 
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1",0));
@@ -129,23 +132,35 @@ public class CombatManager : MonoBehaviour
 
         // Set up this controller
         _currentTurn = 0;
-        _activeType = CombatantType.ALLIES;
+        _activeType = CombatantType.ENEMIES;
         _activeCombatants = CombatantData.GetGroup(_activeType);
 
-        Debug.Log("Data set up!");
     }
 
     private void OnEnable()
     {
-        DummySetup();
-        uiManager = GetComponent<CombatUIManager>();
         stateMachine = new TurnStateMachine(this);
+        activeEnemies = new List<EnemyGameObject>();
+        DummySetup();
+        
+        uiManager = GetComponent<CombatUIManager>();
+        stateMachine.Next(TurnStateType.TURN_START);
     }
 
     // Most of the state machine logic relies on having access to what the player is trying to do.
     public CombatTarget GetCombatTargetInformation()
     {
         return targetInformation;
+    }
+
+    public void StartAITurn()
+    {
+        activeEnemies[_currentTurn].TakeTurn();
+    }
+    
+    public void SetAIAction(aCombatAction action)
+    {
+        currentAction = action;
     }
 
     public void AITurnEnd()
