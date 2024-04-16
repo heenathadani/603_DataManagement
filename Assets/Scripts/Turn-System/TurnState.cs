@@ -91,7 +91,7 @@ public class TurnStartState : aTurnState
         }
         else if (manager._activeType == Combatant.CombatantType.ENEMIES)
         {
-            Debug.Log("????");
+            Debug.Log("Enemy Turn");
             uiManager.ShowPlayerActionButtons(10);
         }
 
