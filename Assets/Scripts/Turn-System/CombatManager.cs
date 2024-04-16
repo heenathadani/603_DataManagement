@@ -21,11 +21,11 @@ public class CombatManager : MonoBehaviour
 
     //Store the body part data list
     public List<BodyPartData> _bodyPartDataList;
-    //Store all enemy HP bar
-    public List<Slider> _enemySliderList;
+
 
     public void DoAction()
     {
+
         _currentTurn++;
         if (_currentTurn == _activeCombatants.Count)
         {
