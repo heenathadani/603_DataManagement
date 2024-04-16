@@ -1,17 +1,37 @@
 using Combatant;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
+    public EnemyFormation dummyFormation;
+
+    private List<EnemyGameObject> activeEnemies;
+    public EnemySpawnManager spawnManager;
     private CombatUIManager uiManager;
     private List<aCombatant> _activeCombatants;
-    private int _currentTurn;
-    private CombatantType _activeType;
+    public int _currentTurn;
+    public CombatantType _activeType;
     private CombatTarget targetInformation;
     private aCombatAction currentAction;
+
+    private IEnumerator SlowEnemiesDown()
+    {
+        yield return new WaitForSeconds(2.0f);
+        Debug.Log("Huh");
+        if (activeEnemies[_currentTurn]._combatantData.isAlive())
+        {
+            activeEnemies[_currentTurn].TakeTurn();
+        }
+        else
+        {
+            AITurnEnd();
+        }
+    }
 
     // Have the combat manager treat combat like a state-based process
     private TurnStateMachine stateMachine;
@@ -19,16 +39,22 @@ public class CombatManager : MonoBehaviour
     //Store the body part data list
     public List<BodyPartData> _bodyPartDataList;
 
+    public void SwitchSides()
+    {
+        _activeType = CombatantData.GetNext(_activeType);
+        _activeCombatants = CombatantData.GetGroup(_activeType);
+        _currentTurn = 0;
+    }
+
     public void DoAction()
     {
+
+        _currentTurn++;
         if (_currentTurn == _activeCombatants.Count)
         {
-            _activeType = CombatantData.GetNext(_activeType);
-            _activeCombatants = CombatantData.GetGroup(_activeType);
-            _currentTurn = 0;
-            Debug.Log("Switching sides!");
+            Debug.Log("Switch sides");
+            SwitchSides();
         }
-        Debug.Log("Current Turn: " + _activeCombatants[_currentTurn++].Name);
         stateMachine.Next(TurnStateType.TURN_START);
     }
 
@@ -37,7 +63,7 @@ public class CombatManager : MonoBehaviour
         currentAction.DoAction(targetInformation);
     }
 
-    public void BeginTurn(aCombatAction action, CombatActionTargets targetType, CombatantType side)
+    public void BeginTurn(int playerIndex, aCombatAction action, CombatTarget targetInfo)
     {
         if (stateMachine.currentStateType != TurnStateType.TURN_START)
         {
@@ -49,10 +75,10 @@ public class CombatManager : MonoBehaviour
         }
 
         // Set up the target information for the action selected by the player
-        targetInformation.sideBeingTargeted = side;
-        targetInformation.typeOfTarget = targetType;
+        targetInformation = targetInfo;
         currentAction = action;
-        uiManager.ShowByTarget(targetType);
+        action.SetActingAgent(CombatantData.GetGroup(_activeType)[playerIndex]);
+        uiManager.ShowByTarget(targetInformation.typeOfTarget);
         stateMachine.Transition();
     }
 
@@ -60,44 +86,114 @@ public class CombatManager : MonoBehaviour
     // to a better system to setup combat initiation
     public void DummySetup()
     {
-        // Set the data
-        CombatantData.enemies.Add(new Enemy("Test Enemy 1"));
-        CombatantData.enemies.Add(new Enemy("Test Enemy 2"));
 
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1"));
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2"));
+        // Set the data
+        spawnManager.SetEnemiesToSpawn(dummyFormation.enemies.Count);
+        for (int i = 0; i < dummyFormation.enemies.Count; i++)
+        {
+
+            Enemy e = dummyFormation.enemies[i].Clone(i);
+            e.SetSlider(uiManager.enemyHpSliderList[i]);
+            e.UpdateStatus();
+            CombatantData.enemies.Add(e);
+            GameObject spawnedEnemy = spawnManager.SpawnEnemy(e);
+            EnemyGameObject eGO = spawnedEnemy.GetComponent<EnemyGameObject>();
+            eGO.SetManager(this);
+            activeEnemies.Add(eGO);
+        }
+
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1",0));
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2",1));
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 3",2));
 
         // Temp, Check status update -- Rin
-        Protagonist protagonist = CombatantData.partyCharacters[0] as Protagonist;
-        if (protagonist != null && _bodyPartDataList.Count > 0)
+        Protagonist protagonist1 = CombatantData.partyCharacters[0] as Protagonist;
+        if (protagonist1 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist.UpdateStatus();
+            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist1.UpdateStatus();
         }
+        Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
+        if (protagonist2 != null && _bodyPartDataList.Count > 0)
+        {
+            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
+            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
+            protagonist2.UpdateStatus();
+        }
+        Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
+        if (protagonist3 != null && _bodyPartDataList.Count > 0)
+        {
+            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
+            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
+            protagonist3.UpdateStatus();
+        }
+
+
+        //End
 
         // Set up this controller
         _currentTurn = 0;
-        _activeType = CombatantType.ALLIES;
+        _activeType = CombatantType.ENEMIES;
         _activeCombatants = CombatantData.GetGroup(_activeType);
 
-        Debug.Log("Data set up!");
     }
-
-
-
 
     private void OnEnable()
     {
-        DummySetup();
         uiManager = GetComponent<CombatUIManager>();
         stateMachine = new TurnStateMachine(this);
+        activeEnemies = new List<EnemyGameObject>();
+        DummySetup();
+        
+        
+        stateMachine.Next(TurnStateType.TURN_START);
     }
 
     // Most of the state machine logic relies on having access to what the player is trying to do.
     public CombatTarget GetCombatTargetInformation()
     {
         return targetInformation;
+    }
+
+
+    //Pass the turn
+    public void StartAITurn()
+    {
+        StartCoroutine(SlowEnemiesDown());
+        
+        
+    }
+    
+    public void SetAIAction(aCombatAction action)
+    {
+        currentAction = action;
+    }
+
+    public void AITurnEnd()
+    {
+        // Check if all players are dead
+        bool allPlayersDead = true;
+        foreach(aCombatant protagonist in CombatantData.partyCharacters)
+        {
+            if (protagonist.isAlive())
+            {
+                allPlayersDead = false;
+            }
+        }
+        if (allPlayersDead)
+        {
+            Debug.Log("All players are dead");
+        } else
+        {
+            stateMachine.Next(TurnStateType.ACTION_DONE);
+        }
+        
+    }
+
+    public void SetCombatTarget(CombatTarget targetInfo)
+    {
+        targetInformation = targetInfo;
     }
 
     public void SetTargetUnit(int index)

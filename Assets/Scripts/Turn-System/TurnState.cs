@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public enum TurnStateType
 {
     TURN_START,
@@ -17,6 +19,7 @@ public static class StateFactory
         switch (type)
         {
             case TurnStateType.SELECT_TARGET:
+
                 return new SelectTargetState(sm);
             case TurnStateType.SELECT_PART:
                 return new SelectPartState(sm);
@@ -69,6 +72,46 @@ public class TurnStartState : aTurnState
     protected override void OnEnter(CombatManager manager)
     {
         manager.ClearTarget();
+        // Show player action buttons
+        CombatUIManager uiManager = manager.gameObject.GetComponent<CombatUIManager>();
+        if (manager._activeType == Combatant.CombatantType.ALLIES)
+        {
+            Debug.Log("Ally turn");
+            //Check if character dies, if dies, pass
+            if(!CombatantData.partyCharacters[manager._currentTurn].isAlive())
+            {
+                Debug.Log("Ally " + manager._currentTurn.ToString() + " is dead");
+                manager._currentTurn += 1;
+                if (manager._currentTurn > CombatantData.partyCharacters.Count - 1)
+                {
+                    manager.SwitchSides();
+                }
+
+                OnEnter(manager);
+                return;
+                
+            }
+
+            switch (manager._currentTurn)
+            {
+                case 0:
+                    uiManager.ShowPlayerActionButtons(0);
+                    break;
+                case 1:
+                    uiManager.ShowPlayerActionButtons(1);
+                    break;
+                case 2:
+                    uiManager.ShowPlayerActionButtons(2);
+                    break;
+            }
+        }
+        else if (manager._activeType == Combatant.CombatantType.ENEMIES)
+        {
+            uiManager.ShowPlayerActionButtons(10);
+            manager.StartAITurn();
+        }
+
+
     }
     protected override void OnCancel(CombatManager manager)
     {
@@ -77,13 +120,13 @@ public class TurnStartState : aTurnState
     protected override void OnExit(CombatManager manager)
     {
         CombatTarget targetData = manager.GetCombatTargetInformation();
-        if (targetData.typeOfTarget == CombatActionTargets.Self)
+        if (targetData.typeOfTarget == CombatActionTargets.Self || targetData.typeOfTarget == CombatActionTargets.AllEnemies || targetData.typeOfTarget == CombatActionTargets.AllAllies)
         {
             stateMachine.Next(TurnStateType.TARGETING_COMPLETE);
         } else if (targetData.typeOfTarget == CombatActionTargets.SelfBodyPart)
         {
             stateMachine.Next(TurnStateType.SELECT_PART);
-        } else
+        }  else
         {
             stateMachine.Next(TurnStateType.SELECT_TARGET);
         }
@@ -103,6 +146,8 @@ public class SelectTargetState : aTurnState
         // Show available targets
         CombatUIManager uiManager = manager.gameObject.GetComponent<CombatUIManager>();
         uiManager.ShowEnemies();
+        //Hide all player action buttons
+        uiManager.ShowPlayerActionButtons(10);
     }
     protected override void OnCancel(CombatManager manager)
     {
@@ -111,7 +156,7 @@ public class SelectTargetState : aTurnState
     protected override void OnExit(CombatManager manager)
     {
         CombatTarget targetInformation = manager.GetCombatTargetInformation();
-        if (targetInformation.typeOfTarget == CombatActionTargets.SingleEnemyBodyPart || targetInformation.typeOfTarget == CombatActionTargets.SingeAllyBodyPart)
+        if (targetInformation.typeOfTarget == CombatActionTargets.SingleEnemyBodyPart || targetInformation.typeOfTarget == CombatActionTargets.SingleAllyBodyPart)
         {
             stateMachine.Next(TurnStateType.SELECT_PART);
         } else
@@ -138,6 +183,8 @@ public class SelectPartState : aTurnState
         {
             uiManager.ShowPartButtons(manager.GetCombatTargetInformation().targetIndex);
         }
+
+        uiManager.ShowPlayerActionButtons(10);
     }
     protected override void OnCancel(CombatManager manager)
     {
@@ -187,6 +234,7 @@ public class ExecutingActionState : aTurnState
     {
         manager.ExecuteCombatAction();
         Exit(manager);
+
     }
     protected override void OnCancel(CombatManager manager)
     {
@@ -203,11 +251,29 @@ public class ActionDoneState : aTurnState
 {
     public ActionDoneState(TurnStateMachine sm)
     {
+
         stateMachine = sm;
     }
 
     protected override void OnEnter(CombatManager manager)
     {
+        CombatUIManager uiManager = manager.gameObject.GetComponent<CombatUIManager>();
+        if (manager._activeType == Combatant.CombatantType.ALLIES)
+        {
+            switch (manager._currentTurn)
+            {
+                case 0:
+                    uiManager.ShowPlayerActionButtons(1);
+                    break;
+                case 1:
+                    uiManager.ShowPlayerActionButtons(2);
+                    break;
+                case 2:
+                    uiManager.ShowPlayerActionButtons(0);
+                    break;
+            }
+        }
+        
         Exit(manager);
     }
     protected override void OnCancel(CombatManager manager)

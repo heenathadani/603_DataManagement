@@ -1,8 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
+
+public enum BodyPartType
+{
+    Body,
+    Arm,
+    Leg,
+    Head,
+    Back
+}
 
 //Body Part -- Rin
+[Serializable]
 public class BodyPart
 {
 
@@ -21,4 +29,14 @@ public class BodyPart
         currentHp -= value;
     }
 
+    public float GetMaxHp()
+    {
+        return bodyPartData.maxHp;
+    }
+    
+    public BodyPart Clone()
+    {
+        BodyPart bp = new BodyPart(bodyPartData);
+        return bp;
+    }
 }
