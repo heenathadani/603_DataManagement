@@ -1,10 +1,29 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 namespace Combatant
 {
+    public struct CombatStats
+    {
+        public float maxHp;
+        public float currentHp;
+        public float attackValue;
+        public float shieldValue;
+
+        public CombatStats(float mHp, float cHp, float aV, float sV)
+        {
+            maxHp = mHp;
+            currentHp = cHp;
+            attackValue = aV;
+            shieldValue = sV;
+        }
+    }
+
     public enum CombatantType
     {
         ALLIES,
@@ -13,29 +32,68 @@ namespace Combatant
 
     public enum StatType
     {
+        
         HP,
         Energy,
         Attack,
         Shield
+        
     }
 
     public abstract class aCombatant
     {
-        protected CombatantType _side;
-        public abstract string Name { get; }
-        //Store the body part lists in the inventory 
-        public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
-
         //Below are the combat related attributes -- Rin
+        [SerializeField]
         protected float _maxHp;
         public float _currentHp;
-
-        private float _maxEnergy;
         public float _currentEnergy;
-
+        public float _maxEnergy;
         public float _attackPoint;
         public float _shieldPoint;
+        public abstract string Name { get; }
 
+        [SerializeField]
+        protected string _name;
+        protected int _id;
+        //Bind to UI hp slider
+        protected Slider _hpSlider;
+
+        //Store the body part lists in the inventory 
+        [SerializeField]
+        public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
+
+        //Store the powers in a list - need to figure out how to populate this
+        public List<Power> _powers = new List<Power>();
+
+        protected CombatantType _side;
+
+        public List<Power> FilterPowerByTargetType(CombatActionTargets targetType)
+        {
+            List<Power> powers = new List<Power>();
+            foreach(Power p in _powers)
+            {
+                if (p.targetType == targetType)
+                {
+                    powers.Add(p);
+                }
+            }
+            return powers;
+        }
+
+        public CombatStats GetStats()
+        {
+            return new CombatStats(_maxHp, _currentHp, _attackPoint, _shieldPoint);
+        }
+
+        public bool isAlive()
+        {
+            return _currentHp > 0;
+        }
+
+        public bool isCritical()
+        {
+            return _currentHp <= (_maxHp * 0.1);
+        }
         public float GetStatByType(StatType type)
         {
             switch (type)
@@ -62,7 +120,8 @@ namespace Combatant
                     if (_attackPoint + value < 0)
                     {
                         _attackPoint = 0;
-                    } else
+                    }
+                    else
                     {
                         _attackPoint += value;
                     }
@@ -91,7 +150,7 @@ namespace Combatant
         public void AffectBodyPartByType(BodyPartType part, float value)
         {
             // For now, let's keep it so we can only diminish part HP
-            foreach(BodyPart bodyPart in _bodyPartsInventory)
+            foreach (BodyPart bodyPart in _bodyPartsInventory)
             {
                 if (bodyPart.bodyPartData.type == part)
                 {
@@ -102,6 +161,7 @@ namespace Combatant
 
         public void AddBodyPart(BodyPart bp)
         {
+            Debug.Log(_bodyPartsInventory);
             _bodyPartsInventory.Add(bp);
         }
 
@@ -115,13 +175,16 @@ namespace Combatant
 
     public class Protagonist : aCombatant
     {
-        private string _name;
-        private int _id;
+        public override string Name
+        {
+            get 
+            {
+                return _name;
+            }
+        }
 
-        //Bind to UI hp slider
-        private Slider _hpSlider;
-
-        public Protagonist(string name, int id) {
+        public Protagonist(string name, int id)
+        {
             _name = name;
             _id = id;
             _side = CombatantType.ALLIES;
@@ -130,14 +193,6 @@ namespace Combatant
             if (uiManager.enemyHpSliderList.Count > 0)
             {
                 _hpSlider = uiManager.characterHpSliderList[id];
-            }
-        }
-
-        public override string Name
-        {
-            get 
-            {
-                return _name;
             }
         }
 
@@ -166,17 +221,19 @@ namespace Combatant
             //Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
-            _hpSlider.value = _currentHp / _maxHp;
+            if (_hpSlider != null)
+            {
+                _hpSlider.value = _currentHp / _maxHp;
+            }
+            
         }
     }
 
+    [Serializable]
     public class Enemy : aCombatant
     {
-        private string _name;
-        private int _id;
-
-        //Bind to UI hp slider -- Rin
-        private Slider _hpSlider;
+        [SerializeField]
+        public AITypes aiType;
 
         public Enemy(string name, int id)
         {
@@ -210,7 +267,10 @@ namespace Combatant
             //Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
-            _hpSlider.value = _currentHp / _maxHp;
+            if (_hpSlider != null)
+            {
+                _hpSlider.value = _currentHp / _maxHp;
+            }
         }
 
         public override string Name

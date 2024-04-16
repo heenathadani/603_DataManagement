@@ -16,7 +16,7 @@ public enum CombatActionTargets
     Self,
     SelfBodyPart,
     SingleEnemyBodyPart,
-    SingeAllyBodyPart,
+    SingleAllyBodyPart,
     SingleEnemy,
     SingleAlly,
     AllEnemies,
@@ -47,12 +47,14 @@ public static class CombatActionFactory
                 break;
         }
         result.SetTargetType(target);
+        result.type = type;
         return result;
     }
 }
 
 public interface ICombatAction
 {
+    public CombatActionTargets GetActionTarget();
     public void SetTargetType(CombatActionTargets targetType);
     public void DoAction(CombatTarget targetInformation);
 }
@@ -60,6 +62,13 @@ public interface ICombatAction
 public abstract class aCombatAction : ICombatAction
 {
     protected CombatActionTargets _targetType;
+    public CombatActionTypes type;
+
+    public CombatActionTargets GetActionTarget()
+    {
+        return _targetType;
+    }
+
     protected aCombatant actingAgent;
 
     protected abstract void DoSingleTarget(CombatTarget targetInformation);
@@ -75,7 +84,7 @@ public abstract class aCombatAction : ICombatAction
         } else if (_targetType == CombatActionTargets.SingleEnemy || _targetType == CombatActionTargets.SingleAlly)
         {
             DoSingleTarget(targetInformation);
-        } else if (_targetType == CombatActionTargets.SingleEnemyBodyPart || _targetType == CombatActionTargets.SingeAllyBodyPart || _targetType == CombatActionTargets.SelfBodyPart) {
+        } else if (_targetType == CombatActionTargets.SingleEnemyBodyPart || _targetType == CombatActionTargets.SingleAllyBodyPart || _targetType == CombatActionTargets.SelfBodyPart) {
             DoSingleBodyPart(targetInformation);
         } else
         {
@@ -165,14 +174,12 @@ public class PowerAction : aCombatAction
         Debug.Log("Doing multitarget power");
         CombatantType sideBeingTargeted = targetInformation.sideBeingTargeted;
         List<aCombatant> whoThough;
-        if (actingAgent.GetSide() == sideBeingTargeted)
+        if (sideBeingTargeted == CombatantType.ALLIES)
         {
-            // This means Allies targeting their own allies or Enemies targeting their enemies. Either way, the party is the target.
             whoThough = CombatantData.partyCharacters;
         }
         else
         {
-            // This means allies targeting their enemies or enemies targeting their allies. Either way, the enemies are the target
             whoThough = CombatantData.enemies;
         }
         foreach(aCombatant target in whoThough)

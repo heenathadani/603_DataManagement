@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 public enum BodyPartType
 {
@@ -12,6 +10,7 @@ public enum BodyPartType
 }
 
 //Body Part -- Rin
+[Serializable]
 public class BodyPart
 {
 
@@ -28,6 +27,11 @@ public class BodyPart
     public void UpdateCurrentHP(float value)
     {
         currentHp -= value;
+    }
+
+    public float GetMaxHp()
+    {
+        return bodyPartData.maxHp;
     }
 
 }

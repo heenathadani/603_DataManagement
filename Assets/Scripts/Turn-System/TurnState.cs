@@ -91,8 +91,8 @@ public class TurnStartState : aTurnState
         }
         else if (manager._activeType == Combatant.CombatantType.ENEMIES)
         {
-            Debug.Log("Enemy Turn");
             uiManager.ShowPlayerActionButtons(10);
+            manager.StartAITurn();
         }
 
 
@@ -140,7 +140,7 @@ public class SelectTargetState : aTurnState
     protected override void OnExit(CombatManager manager)
     {
         CombatTarget targetInformation = manager.GetCombatTargetInformation();
-        if (targetInformation.typeOfTarget == CombatActionTargets.SingleEnemyBodyPart || targetInformation.typeOfTarget == CombatActionTargets.SingeAllyBodyPart)
+        if (targetInformation.typeOfTarget == CombatActionTargets.SingleEnemyBodyPart || targetInformation.typeOfTarget == CombatActionTargets.SingleAllyBodyPart)
         {
             stateMachine.Next(TurnStateType.SELECT_PART);
         } else
@@ -241,22 +241,23 @@ public class ActionDoneState : aTurnState
 
     protected override void OnEnter(CombatManager manager)
     {
-        //Debug.Log("One turn over");
         CombatUIManager uiManager = manager.gameObject.GetComponent<CombatUIManager>();
-
-        switch (manager._currentTurn)
+        if (manager._activeType == Combatant.CombatantType.ALLIES)
         {
-            case 0:
-                uiManager.ShowPlayerActionButtons(1);
-                break;
-            case 1:
-                uiManager.ShowPlayerActionButtons(2);
-                break;
-            case 2:
-                uiManager.ShowPlayerActionButtons(0);
-                break;
-
+            switch (manager._currentTurn)
+            {
+                case 0:
+                    uiManager.ShowPlayerActionButtons(1);
+                    break;
+                case 1:
+                    uiManager.ShowPlayerActionButtons(2);
+                    break;
+                case 2:
+                    uiManager.ShowPlayerActionButtons(0);
+                    break;
+            }
         }
+        
         Exit(manager);
     }
     protected override void OnCancel(CombatManager manager)
