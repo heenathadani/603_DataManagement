@@ -63,6 +63,7 @@ namespace Combatant
             CombatManager cm = GetComponentInParent<CombatManager>();
             cm.SetCombatTarget(targetInformation);
             cm.ExecuteCombatAction();
+            cm.AITurnEnd();
         }
 
         private void OnEnable()

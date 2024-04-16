@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -49,8 +50,10 @@ namespace Combatant
         public float _attackPoint;
         public float _shieldPoint;
         public abstract string Name { get; }
-        private string _name;
-        private int _id;
+
+        [SerializeField]
+        protected string _name;
+        protected int _id;
         //Bind to UI hp slider
         protected Slider _hpSlider;
 
@@ -171,8 +174,6 @@ namespace Combatant
 
     public class Protagonist : aCombatant
     {
-        private string _name;
-        private int _id;
         public override string Name
         {
             get 
@@ -223,11 +224,11 @@ namespace Combatant
         }
     }
 
+    [Serializable]
     public class Enemy : aCombatant
     {
-        private string _name;
-        private int _id;
-
+        [SerializeField]
+        public AITypes aiType;
 
         public Enemy(string name, int id)
         {

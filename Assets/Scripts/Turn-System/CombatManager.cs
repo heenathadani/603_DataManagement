@@ -1,12 +1,14 @@
 using Combatant;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
+    public EnemyFormation dummyFormation;
+    public GameObject enemyPrefab;
+    private List<GameObject> activeEnemies;
+
     private CombatUIManager uiManager;
     private List<aCombatant> _activeCombatants;
     public int _currentTurn;
@@ -24,7 +26,6 @@ public class CombatManager : MonoBehaviour
 
     public void DoAction()
     {
-        Debug.Log(_currentTurn);
         if (_currentTurn == _activeCombatants.Count - 1)
         {
             _activeType = CombatantData.GetNext(_activeType);
@@ -64,10 +65,14 @@ public class CombatManager : MonoBehaviour
     // to a better system to setup combat initiation
     public void DummySetup()
     {
+
         // Set the data
-        CombatantData.enemies.Add(new Enemy("Test Enemy 1",0));
-        CombatantData.enemies.Add(new Enemy("Test Enemy 2",1));
-        CombatantData.enemies.Add(new Enemy("Test Enemy 3",2));
+        foreach(Enemy e in dummyFormation.enemies)
+        {
+            CombatantData.enemies.Add(e);
+            GameObject enemyObject = Instantiate(enemyPrefab, transform);
+
+        }
 
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1",0));
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2",1));
@@ -141,6 +146,11 @@ public class CombatManager : MonoBehaviour
     public CombatTarget GetCombatTargetInformation()
     {
         return targetInformation;
+    }
+
+    public void AITurnEnd()
+    {
+        stateMachine.Next(TurnStateType.ACTION_DONE);
     }
 
     public void SetCombatTarget(CombatTarget targetInfo)

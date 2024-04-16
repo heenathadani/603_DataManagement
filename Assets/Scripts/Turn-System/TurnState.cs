@@ -140,7 +140,7 @@ public class SelectTargetState : aTurnState
     protected override void OnExit(CombatManager manager)
     {
         CombatTarget targetInformation = manager.GetCombatTargetInformation();
-        if (targetInformation.typeOfTarget == CombatActionTargets.SingleEnemyBodyPart || targetInformation.typeOfTarget == CombatActionTargets.SingeAllyBodyPart)
+        if (targetInformation.typeOfTarget == CombatActionTargets.SingleEnemyBodyPart || targetInformation.typeOfTarget == CombatActionTargets.SingleAllyBodyPart)
         {
             stateMachine.Next(TurnStateType.SELECT_PART);
         } else
