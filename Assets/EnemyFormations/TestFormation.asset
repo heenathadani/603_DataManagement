@@ -14,44 +14,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - _maxHp: 90
-    _currentHp: 50
+    _currentHp: 90
     _currentEnergy: 60
     _maxEnergy: 60
-    _attackPoint: 80
+    _attackPoint: 0
     _shieldPoint: 5
     _name: Bruiser 1
     _bodyPartsInventory:
     - bodyPartData: {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
-      currentHp: -20
+      currentHp: 20
     - bodyPartData: {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
       currentHp: 50
-    - bodyPartData: {fileID: 11400000, guid: 434665235acec1d4a8963c294a2b228d, type: 2}
-      currentHp: 20
+    - bodyPartData: {fileID: 11400000, guid: 094a72e30c523c8499c4f37cc31d2dbc, type: 2}
+      currentHp: 50
     _powers:
     - {fileID: 11400000, guid: f84521a2b6192b94b91283a8e94cc541, type: 2}
     aiType: 2
   - _maxHp: 90
-    _currentHp: 50
+    _currentHp: 90
     _currentEnergy: 60
     _maxEnergy: 60
-    _attackPoint: 80
+    _attackPoint: 0
     _shieldPoint: 5
     _name: Bruiser 2
     _bodyPartsInventory:
     - bodyPartData: {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
       currentHp: 20
     - bodyPartData: {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
-      currentHp: 10
-    - bodyPartData: {fileID: 11400000, guid: 434665235acec1d4a8963c294a2b228d, type: 2}
-      currentHp: 20
+      currentHp: 50
+    - bodyPartData: {fileID: 11400000, guid: 094a72e30c523c8499c4f37cc31d2dbc, type: 2}
+      currentHp: 50
     _powers:
     - {fileID: 11400000, guid: f84521a2b6192b94b91283a8e94cc541, type: 2}
     aiType: 2
-  - _maxHp: 60
-    _currentHp: 60
+  - _maxHp: 90
+    _currentHp: 90
     _currentEnergy: 60
     _maxEnergy: 60
-    _attackPoint: 20
+    _attackPoint: 0
     _shieldPoint: 5
     _name: Bruiser 3
     _bodyPartsInventory:
@@ -59,8 +59,8 @@ MonoBehaviour:
       currentHp: 20
     - bodyPartData: {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
       currentHp: 50
-    - bodyPartData: {fileID: 11400000, guid: 434665235acec1d4a8963c294a2b228d, type: 2}
-      currentHp: 20
+    - bodyPartData: {fileID: 11400000, guid: 094a72e30c523c8499c4f37cc31d2dbc, type: 2}
+      currentHp: 50
     _powers:
     - {fileID: 11400000, guid: f84521a2b6192b94b91283a8e94cc541, type: 2}
     aiType: 2

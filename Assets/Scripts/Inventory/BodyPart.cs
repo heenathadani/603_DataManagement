@@ -33,5 +33,10 @@ public class BodyPart
     {
         return bodyPartData.maxHp;
     }
-
+    
+    public BodyPart Clone()
+    {
+        BodyPart bp = new BodyPart(bodyPartData);
+        return bp;
+    }
 }

@@ -12,15 +12,19 @@ namespace Combatant
     {
         public float maxHp;
         public float currentHp;
+        public float maxEnergy;
+        public float currentEnergy;
         public float attackValue;
         public float shieldValue;
 
-        public CombatStats(float mHp, float cHp, float aV, float sV)
+        public CombatStats(float mHp, float cHp, float aV, float sV, float mE, float cE)
         {
             maxHp = mHp;
             currentHp = cHp;
             attackValue = aV;
             shieldValue = sV;
+            maxEnergy = mE;
+            currentEnergy = cE;
         }
     }
 
@@ -82,7 +86,17 @@ namespace Combatant
 
         public CombatStats GetStats()
         {
-            return new CombatStats(_maxHp, _currentHp, _attackPoint, _shieldPoint);
+            return new CombatStats(_maxHp, _currentHp, _attackPoint, _shieldPoint, _maxEnergy, _currentEnergy);
+        }
+
+        public void SetStats(CombatStats values)
+        {
+            _maxHp = values.maxHp;
+            _currentHp = values.currentHp;
+            _attackPoint = values.attackValue;
+            _shieldPoint = values.shieldValue;
+            _currentEnergy = values.currentEnergy;
+            _maxEnergy = values.maxEnergy;
         }
 
         public bool isAlive()
@@ -93,6 +107,19 @@ namespace Combatant
         public bool isCritical()
         {
             return _currentHp <= (_maxHp * 0.1);
+        }
+
+        public bool hasPowersToCast()
+        {
+            bool result = false;
+            foreach(Power p in _powers){
+                if (p.cost < _currentHp)
+                {
+                    return true;
+                }
+            }
+
+            return result;
         }
         public float GetStatByType(StatType type)
         {
@@ -161,7 +188,6 @@ namespace Combatant
 
         public void AddBodyPart(BodyPart bp)
         {
-            Debug.Log(_bodyPartsInventory);
             _bodyPartsInventory.Add(bp);
         }
 
@@ -171,6 +197,13 @@ namespace Combatant
             _bodyPartsInventory[index].currentHp += value;
 
         }
+
+        public void SetSlider(Slider s)
+        {
+            _hpSlider = s;
+        }
+
+        public abstract void UpdateStatus();
     }
 
     public class Protagonist : aCombatant
@@ -200,7 +233,7 @@ namespace Combatant
 
 
         //Update the status (HP) -- Rin
-        public void UpdateStatus()
+        public override void UpdateStatus()
         {
             _maxHp = 0;
             _currentHp = 0;
@@ -217,8 +250,6 @@ namespace Combatant
                 //Update shield point
                 _shieldPoint += bd.bodyPartData.shieldPoint;
             }
-
-            //Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
             if (_hpSlider != null)
@@ -249,7 +280,7 @@ namespace Combatant
         }
 
 
-        public void UpdateStatus()
+        public override void UpdateStatus()
         {
             _maxHp = 0;
             _currentHp = 0;
@@ -264,13 +295,41 @@ namespace Combatant
                 _attackPoint += bd.bodyPartData.attackPoint;
             }
 
-            //Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
-
             //Update Slider
             if (_hpSlider != null)
             {
                 _hpSlider.value = _currentHp / _maxHp;
             }
+        }
+
+        public void Reset()
+        {
+            foreach (BodyPart bd in _bodyPartsInventory)
+            {
+                //Update Hp
+                bd.currentHp = bd.GetMaxHp();
+            }
+        }
+
+        public Enemy Clone(int id)
+        {
+            Enemy e = new Enemy(_name, id);
+            e._side = CombatantType.ENEMIES;
+            e.aiType = aiType;
+            e.SetStats(GetStats());
+            e._bodyPartsInventory = new List<BodyPart>();
+            e._powers = new List<Power>();
+            foreach(BodyPart part in _bodyPartsInventory)
+            {
+                e._bodyPartsInventory.Add(part.Clone());
+            }
+
+            foreach(Power p in _powers)
+            {
+                e._powers.Add(p);
+            }
+
+            return e;
         }
 
         public override string Name
