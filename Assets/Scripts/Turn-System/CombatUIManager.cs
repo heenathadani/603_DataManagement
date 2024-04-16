@@ -11,6 +11,10 @@ public class CombatUIManager : MonoBehaviour
     public List<Button> enemy3PartButtons;
     public List<Button> enemies;
 
+    public List<Button> character1ActionButtons;
+    public List<Button> character2ActionButtons;
+    public List<Button> character3ActionButtons;
+
     //Store all character Hp Sliders
     public List<Slider> characterHpSliderList;
     public List<Slider> enemyHpSliderList;
@@ -113,6 +117,74 @@ public class CombatUIManager : MonoBehaviour
                 return;
             default:
                 return;
+        }
+    }
+
+    public void ShowPlayerActionButtons(int playerIndex)
+    {
+        switch(playerIndex)
+        {
+            case 0:
+                foreach (Button b in character1ActionButtons)
+                {
+                    b.gameObject.SetActive(true);
+                }
+                foreach (Button b in character2ActionButtons)
+                {
+                    b.gameObject.SetActive(false);
+                }
+                foreach (Button b in character3ActionButtons)
+                {
+                    b.gameObject.SetActive(false);
+                }
+                break;
+
+            case 1:
+                foreach (Button b in character1ActionButtons)
+                {
+                    b.gameObject.SetActive(false);
+                }
+                foreach (Button b in character2ActionButtons)
+                {
+                    b.gameObject.SetActive(true);
+                }
+                foreach (Button b in character3ActionButtons)
+                {
+                    b.gameObject.SetActive(false);
+                }
+                break;
+
+            case 2:
+                foreach (Button b in character1ActionButtons)
+                {
+                    b.gameObject.SetActive(false);
+                }
+                foreach (Button b in character2ActionButtons)
+                {
+                    b.gameObject.SetActive(false);
+                }
+                foreach (Button b in character3ActionButtons)
+                {
+                    b.gameObject.SetActive(true);
+                }
+                break;
+
+            default:
+                // Just hide all buttons -- Rin
+                foreach (Button b in character1ActionButtons)
+                {
+                    b.gameObject.SetActive(false);
+                }
+                foreach (Button b in character2ActionButtons)
+                {
+                    b.gameObject.SetActive(false);
+                }
+                foreach (Button b in character3ActionButtons)
+                {
+                    b.gameObject.SetActive(false);
+                }
+
+                break;
         }
     }
 }

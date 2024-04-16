@@ -9,8 +9,8 @@ public class CombatManager : MonoBehaviour
 {
     private CombatUIManager uiManager;
     private List<aCombatant> _activeCombatants;
-    private int _currentTurn;
-    private CombatantType _activeType;
+    public int _currentTurn;
+    public CombatantType _activeType;
     private CombatTarget targetInformation;
     private aCombatAction currentAction;
 
@@ -24,7 +24,8 @@ public class CombatManager : MonoBehaviour
 
     public void DoAction()
     {
-        if (_currentTurn == _activeCombatants.Count)
+        Debug.Log(_currentTurn);
+        if (_currentTurn == _activeCombatants.Count - 1)
         {
             _activeType = CombatantData.GetNext(_activeType);
             _activeCombatants = CombatantData.GetGroup(_activeType);
