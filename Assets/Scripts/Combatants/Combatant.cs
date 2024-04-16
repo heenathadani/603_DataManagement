@@ -339,5 +339,10 @@ namespace Combatant
                 return _name;
             }
         }
+
+        public void EnemyDie()
+        {
+
+        }
     }
 }
