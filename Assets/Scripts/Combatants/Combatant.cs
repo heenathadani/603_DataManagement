@@ -258,6 +258,28 @@ namespace Combatant
             }
             
         }
+
+
+        public void CharacterDie()
+        {
+            // Hide character Ui -- Rin
+            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
+            uiManager.characterHpSliderList[_id].gameObject.SetActive(false);
+
+            bool ifEnd = true;
+            // Check Combat End
+            foreach (Protagonist e in CombatantData.partyCharacters)
+            {
+                if (e.isAlive())
+                {
+                    ifEnd = false;
+                }
+            }
+            if (ifEnd)
+            {
+                Debug.Log("Game Over");
+            }
+        }
     }
 
     [Serializable]
@@ -345,13 +367,9 @@ namespace Combatant
         // When the enemy dies
         public void EnemyDie()
         {
-
-            isAlive = false;
-
+            // Hide enemy Ui -- Rin
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-
-            uiManager.enemies[_id] = null;
-
+            uiManager.enemyHpSliderList[_id].gameObject.SetActive(false);
 
             bool ifEnd = true;
             //Check Combat End
@@ -365,7 +383,7 @@ namespace Combatant
 
             if(ifEnd)
             {
-                Debug.Log("xxxxx");
+                Debug.Log("Player Wins");
             }
         }
     }

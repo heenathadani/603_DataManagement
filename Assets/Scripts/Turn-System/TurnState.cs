@@ -76,6 +76,21 @@ public class TurnStartState : aTurnState
         CombatUIManager uiManager = manager.gameObject.GetComponent<CombatUIManager>();
         if (manager._activeType == Combatant.CombatantType.ALLIES)
         {
+
+            //Check if character dies, if dies, pass
+            if(!CombatantData.partyCharacters[manager._currentTurn].isAlive())
+            {
+                manager._currentTurn += 1;
+                if (manager._currentTurn > CombatantData.partyCharacters.Count - 1)
+                {
+                    manager._currentTurn = 0;
+                }
+
+                OnEnter(manager);
+                return;
+                
+            }
+
             switch (manager._currentTurn)
             {
                 case 0:

@@ -157,7 +157,6 @@ public class CombatManager : MonoBehaviour
         {
             AITurnEnd();
         }
-
         
     }
     
