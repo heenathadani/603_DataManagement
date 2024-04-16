@@ -295,6 +295,8 @@ namespace Combatant
                 _attackPoint += bd.bodyPartData.attackPoint;
             }
 
+            Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+
             //Update Slider
             if (_hpSlider != null)
             {
@@ -351,7 +353,20 @@ namespace Combatant
             uiManager.enemies[_id] = null;
 
 
-            uiManager.enemyHpSliderList[_id].gameObject.SetActive(false);
+            bool ifEnd = true;
+            //Check Combat End
+            foreach(Enemy e in CombatantData.enemies)
+            {
+                if(e.isAlive())
+                {
+                    ifEnd = false;
+                }
+            }
+
+            if(ifEnd)
+            {
+                Debug.Log("xxxxx");
+            }
         }
     }
 }

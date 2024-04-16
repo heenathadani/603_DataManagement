@@ -142,9 +142,22 @@ public class CombatManager : MonoBehaviour
         return targetInformation;
     }
 
+
+    //Pass the turn
     public void StartAITurn()
     {
         StartCoroutine(SlowEnemiesDown());
+        
+    }
+        if(activeEnemies[_currentTurn]._combatantData.isAlive())
+        {
+            activeEnemies[_currentTurn].TakeTurn();
+        }
+        else
+        {
+            AITurnEnd();
+        }
+
         
     }
     
