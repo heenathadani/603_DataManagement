@@ -21,8 +21,16 @@ public class CombatManager : MonoBehaviour
 
     private IEnumerator SlowEnemiesDown()
     {
-        yield return new WaitForSeconds(2f);
-        activeEnemies[_currentTurn].TakeTurn();
+        yield return new WaitForSeconds(2.0f);
+        Debug.Log("Huh");
+        if (activeEnemies[_currentTurn]._combatantData.isAlive())
+        {
+            activeEnemies[_currentTurn].TakeTurn();
+        }
+        else
+        {
+            AITurnEnd();
+        }
     }
 
     // Have the combat manager treat combat like a state-based process
@@ -153,15 +161,7 @@ public class CombatManager : MonoBehaviour
     public void StartAITurn()
     {
         StartCoroutine(SlowEnemiesDown());
-        Debug.Log("Huh");
-        if(activeEnemies[_currentTurn]._combatantData.isAlive())
-        {
-            activeEnemies[_currentTurn].TakeTurn();
-        }
-        else
-        {
-            AITurnEnd();
-        }
+        
         
     }
     
