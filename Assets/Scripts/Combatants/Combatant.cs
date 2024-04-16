@@ -58,9 +58,8 @@ namespace Combatant
         //Bind to UI hp slider
         protected Slider _hpSlider;
 
-        //Below are the combat related attributes -- Rin
-
         //Store the body part lists in the inventory 
+        [SerializeField]
         public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
 
         //Store the powers in a list - need to figure out how to populate this
@@ -162,6 +161,7 @@ namespace Combatant
 
         public void AddBodyPart(BodyPart bp)
         {
+            Debug.Log(_bodyPartsInventory);
             _bodyPartsInventory.Add(bp);
         }
 
@@ -221,7 +221,11 @@ namespace Combatant
             //Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
-            _hpSlider.value = _currentHp / _maxHp;
+            if (_hpSlider != null)
+            {
+                _hpSlider.value = _currentHp / _maxHp;
+            }
+            
         }
     }
 
@@ -263,7 +267,10 @@ namespace Combatant
             //Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
-            _hpSlider.value = _currentHp / _maxHp;
+            if (_hpSlider != null)
+            {
+                _hpSlider.value = _currentHp / _maxHp;
+            }
         }
 
         public override string Name

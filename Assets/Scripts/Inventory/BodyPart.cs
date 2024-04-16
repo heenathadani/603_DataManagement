@@ -1,3 +1,5 @@
+using System;
+
 public enum BodyPartType
 {
     Body,
@@ -8,6 +10,7 @@ public enum BodyPartType
 }
 
 //Body Part -- Rin
+[Serializable]
 public class BodyPart
 {
 

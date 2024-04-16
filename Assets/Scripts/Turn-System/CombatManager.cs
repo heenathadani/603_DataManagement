@@ -104,30 +104,6 @@ public class CombatManager : MonoBehaviour
             protagonist3.UpdateStatus();
         }
 
-        Enemy enemy1 = CombatantData.enemies[0] as Enemy;
-        if (enemy1 != null && _bodyPartDataList.Count > 0)
-        {
-            enemy1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            enemy1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            enemy1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            enemy1.UpdateStatus();
-        }
-        Enemy enemy2 = CombatantData.enemies[1] as Enemy;
-        if (enemy2 != null && _bodyPartDataList.Count > 0)
-        {
-            enemy2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            enemy2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            enemy2.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            enemy2.UpdateStatus();
-        }
-        Enemy enemy3 = CombatantData.enemies[2] as Enemy;
-        if (enemy3 != null && _bodyPartDataList.Count > 0)
-        {
-            enemy3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            enemy3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            enemy3.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            enemy3.UpdateStatus();
-        }
         //End
 
         // Set up this controller
