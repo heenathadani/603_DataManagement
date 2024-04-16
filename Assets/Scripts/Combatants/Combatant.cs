@@ -282,6 +282,7 @@ namespace Combatant
             if (ifEnd)
             {
                 Debug.Log("Game Over");
+                uiManager.GameOver();
             }
         }
     }
@@ -405,6 +406,7 @@ namespace Combatant
             if(ifEnd)
             {
                 Debug.Log("Player Wins");
+                uiManager.GameOver();
             }
         }
 
