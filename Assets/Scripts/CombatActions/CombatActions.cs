@@ -179,7 +179,7 @@ public class PowerAction : aCombatAction
             int perPartDamage = (int) targetInformation.selectedPower.GetTotalEffect(actingAgent) / target._bodyPartsInventory.Count;
             for (int i = 0; i < target._bodyPartsInventory.Count; i++)
             {
-                int finalDamage = perPartDamage - (int)target._bodyPartsInventory[i].bodyPartData.shieldPoint;
+                int finalDamage = Mathf.Max(perPartDamage - (int)target._bodyPartsInventory[i].bodyPartData.shieldPoint,0);
                 target.AffectBodyPartByIndex(i, -finalDamage);
             }
             target.UpdateStatus();

@@ -47,8 +47,8 @@ namespace Combatant
     public abstract class aCombatant
     {
         //Below are the combat related attributes -- Rin
-        [SerializeField]
         protected float _maxHp;
+        [HideInInspector]
         public float _currentHp;
         public float _currentEnergy;
         public float _maxEnergy;
@@ -238,6 +238,8 @@ namespace Combatant
         {
             _maxHp = 0;
             _currentHp = 0;
+            _shieldPoint = 0;
+            _attackPoint = 0;
             //Calculate status -- Rin
             foreach (BodyPart bd in _bodyPartsInventory)
             {
@@ -261,7 +263,6 @@ namespace Combatant
             }
             
         }
-
 
         public void CharacterDie()
         {
@@ -317,6 +318,8 @@ namespace Combatant
 
             _maxHp = 0;
             _currentHp = 0;
+            _shieldPoint = 0;
+            _attackPoint = 0;
             //Calculate status -- Rin
             foreach (BodyPart bd in _bodyPartsInventory)
             {
@@ -326,6 +329,7 @@ namespace Combatant
 
                 //Update attack point
                 _attackPoint += bd.bodyPartData.attackPoint;
+                _shieldPoint += bd.bodyPartData.shieldPoint;
             }
 
             //Enemy Dies
@@ -334,7 +338,7 @@ namespace Combatant
                 EnemyDie();
             }
 
-            Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+            //Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
             if (_hpSlider != null)
@@ -357,7 +361,6 @@ namespace Combatant
             Enemy e = new Enemy(_name, id);
             e._side = CombatantType.ENEMIES;
             e.aiType = aiType;
-            e.SetStats(GetStats());
             e._bodyPartsInventory = new List<BodyPart>();
             e._powers = new List<Power>();
             foreach(BodyPart part in _bodyPartsInventory)
