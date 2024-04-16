@@ -340,9 +340,18 @@ namespace Combatant
             }
         }
 
+        // When the enemy dies
         public void EnemyDie()
         {
 
+            isAlive = false;
+
+            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
+
+            uiManager.enemies[_id] = null;
+
+
+            uiManager.enemyHpSliderList[_id].gameObject.SetActive(false);
         }
     }
 }
