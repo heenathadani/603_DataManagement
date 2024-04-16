@@ -47,8 +47,8 @@ namespace Combatant
     public abstract class aCombatant
     {
         //Below are the combat related attributes -- Rin
-        [SerializeField]
         protected float _maxHp;
+        [HideInInspector]
         public float _currentHp;
         public float _currentEnergy;
         public float _maxEnergy;
@@ -58,9 +58,10 @@ namespace Combatant
 
         [SerializeField]
         protected string _name;
-        protected int _id;
+        public int _id;
         //Bind to UI hp slider
         protected Slider _hpSlider;
+
 
         //Store the body part lists in the inventory 
         [SerializeField]
@@ -237,6 +238,8 @@ namespace Combatant
         {
             _maxHp = 0;
             _currentHp = 0;
+            _shieldPoint = 0;
+            _attackPoint = 0;
             //Calculate status -- Rin
             foreach (BodyPart bd in _bodyPartsInventory)
             {
@@ -251,12 +254,35 @@ namespace Combatant
                 _shieldPoint += bd.bodyPartData.shieldPoint;
             }
 
+            Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+
             //Update Slider
             if (_hpSlider != null)
             {
                 _hpSlider.value = _currentHp / _maxHp;
             }
             
+        }
+
+        public void CharacterDie()
+        {
+            // Hide character Ui -- Rin
+            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
+            uiManager.characterHpSliderList[_id].gameObject.SetActive(false);
+
+            bool ifEnd = true;
+            // Check Combat End
+            foreach (Protagonist e in CombatantData.partyCharacters)
+            {
+                if (e.isAlive())
+                {
+                    ifEnd = false;
+                }
+            }
+            if (ifEnd)
+            {
+                Debug.Log("Game Over");
+            }
         }
     }
 
@@ -282,8 +308,18 @@ namespace Combatant
 
         public override void UpdateStatus()
         {
+
+            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
+            if (uiManager.enemyHpSliderList.Count > 0)
+            {
+                _hpSlider = uiManager.enemyHpSliderList[_id];
+            }
+
+
             _maxHp = 0;
             _currentHp = 0;
+            _shieldPoint = 0;
+            _attackPoint = 0;
             //Calculate status -- Rin
             foreach (BodyPart bd in _bodyPartsInventory)
             {
@@ -293,7 +329,16 @@ namespace Combatant
 
                 //Update attack point
                 _attackPoint += bd.bodyPartData.attackPoint;
+                _shieldPoint += bd.bodyPartData.shieldPoint;
             }
+
+            //Enemy Dies
+            if(_currentHp <= 0)
+            {
+                EnemyDie();
+            }
+
+            //Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
             if (_hpSlider != null)
@@ -316,7 +361,6 @@ namespace Combatant
             Enemy e = new Enemy(_name, id);
             e._side = CombatantType.ENEMIES;
             e.aiType = aiType;
-            e.SetStats(GetStats());
             e._bodyPartsInventory = new List<BodyPart>();
             e._powers = new List<Power>();
             foreach(BodyPart part in _bodyPartsInventory)
@@ -338,6 +382,36 @@ namespace Combatant
             {
                 return _name;
             }
+        }
+
+        // When the enemy dies
+        public void EnemyDie()
+        {
+            // Hide enemy Ui -- Rin
+            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
+            uiManager.enemyHpSliderList[_id].gameObject.SetActive(false);
+            uiManager.enemies[_id].gameObject.GetComponent<Button>().enabled = false;
+
+            bool ifEnd = true;
+            //Check Combat End
+            foreach(Enemy e in CombatantData.enemies)
+            {
+                if(e.isAlive())
+                {
+                    ifEnd = false;
+                }
+            }
+
+            if(ifEnd)
+            {
+                Debug.Log("Player Wins");
+            }
+        }
+
+
+        public void InitializeBodyPart()
+        {
+
         }
     }
 }

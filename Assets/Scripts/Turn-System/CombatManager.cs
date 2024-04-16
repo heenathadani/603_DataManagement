@@ -1,6 +1,7 @@
 using Combatant;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,8 +21,16 @@ public class CombatManager : MonoBehaviour
 
     private IEnumerator SlowEnemiesDown()
     {
-        yield return new WaitForSeconds(0.5f);
-        activeEnemies[_currentTurn].TakeTurn();
+        yield return new WaitForSeconds(2.0f);
+        Debug.Log("Huh");
+        if (activeEnemies[_currentTurn]._combatantData.isAlive())
+        {
+            activeEnemies[_currentTurn].TakeTurn();
+        }
+        else
+        {
+            AITurnEnd();
+        }
     }
 
     // Have the combat manager treat combat like a state-based process
@@ -30,6 +39,12 @@ public class CombatManager : MonoBehaviour
     //Store the body part data list
     public List<BodyPartData> _bodyPartDataList;
 
+    public void SwitchSides()
+    {
+        _activeType = CombatantData.GetNext(_activeType);
+        _activeCombatants = CombatantData.GetGroup(_activeType);
+        _currentTurn = 0;
+    }
 
     public void DoAction()
     {
@@ -38,9 +53,7 @@ public class CombatManager : MonoBehaviour
         if (_currentTurn == _activeCombatants.Count)
         {
             Debug.Log("Switch sides");
-            _activeType = CombatantData.GetNext(_activeType);
-            _activeCombatants = CombatantData.GetGroup(_activeType);
-            _currentTurn = 0;
+            SwitchSides();
         }
         stateMachine.Next(TurnStateType.TURN_START);
     }
@@ -116,6 +129,7 @@ public class CombatManager : MonoBehaviour
             protagonist3.UpdateStatus();
         }
 
+
         //End
 
         // Set up this controller
@@ -142,9 +156,12 @@ public class CombatManager : MonoBehaviour
         return targetInformation;
     }
 
+
+    //Pass the turn
     public void StartAITurn()
     {
         StartCoroutine(SlowEnemiesDown());
+        
         
     }
     
@@ -155,8 +172,23 @@ public class CombatManager : MonoBehaviour
 
     public void AITurnEnd()
     {
-
-        stateMachine.Next(TurnStateType.ACTION_DONE);
+        // Check if all players are dead
+        bool allPlayersDead = true;
+        foreach(aCombatant protagonist in CombatantData.partyCharacters)
+        {
+            if (protagonist.isAlive())
+            {
+                allPlayersDead = false;
+            }
+        }
+        if (allPlayersDead)
+        {
+            Debug.Log("All players are dead");
+        } else
+        {
+            stateMachine.Next(TurnStateType.ACTION_DONE);
+        }
+        
     }
 
     public void SetCombatTarget(CombatTarget targetInfo)

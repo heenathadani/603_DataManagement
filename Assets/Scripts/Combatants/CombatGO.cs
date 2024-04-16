@@ -5,7 +5,7 @@ namespace Combatant
 {
     public abstract class aCombatObject : MonoBehaviour
     {
-        protected aCombatant _combatantData;
+        public aCombatant _combatantData;
         protected bool _isActive = false;
 
         // Animation Handle

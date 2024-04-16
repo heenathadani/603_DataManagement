@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Combatant
 {
@@ -240,7 +241,7 @@ namespace Combatant
             CombatStats candidateStats = candidate.GetStats();
             result += 10 * (1 - (candidateStats.currentHp / candidateStats.maxHp));
             result += candidateStats.attackValue;
-            result -= candidateStats.shieldValue;
+            result -= candidateStats.shieldValue * 0.1f;
             return result;
         }
     }

@@ -92,7 +92,10 @@ public class CombatUIManager : MonoBehaviour
     {
         foreach(Button b in enemies)
         {
-            b.gameObject.SetActive(true);
+            if(b != null)
+            {
+                b.gameObject.SetActive(true);
+            } 
         }
     }
 
@@ -100,7 +103,11 @@ public class CombatUIManager : MonoBehaviour
     {
         foreach(Button b in enemies)
         {
-            b.gameObject.SetActive(false);
+            if (b != null)
+            {
+                b.gameObject.SetActive(false);
+            }
+            
         }
         HidePartButtons();
     }
