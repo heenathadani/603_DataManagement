@@ -20,6 +20,7 @@ MonoBehaviour:
     _attackPoint: 0
     _shieldPoint: 5
     _name: Bruiser 1
+    _id: 0
     _bodyPartsInventory:
     - bodyPartData: {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
       currentHp: 20
@@ -37,6 +38,7 @@ MonoBehaviour:
     _attackPoint: 0
     _shieldPoint: 5
     _name: Bruiser 2
+    _id: 1
     _bodyPartsInventory:
     - bodyPartData: {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
       currentHp: 20
@@ -54,6 +56,7 @@ MonoBehaviour:
     _attackPoint: 0
     _shieldPoint: 5
     _name: Bruiser 3
+    _id: 2
     _bodyPartsInventory:
     - bodyPartData: {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
       currentHp: 20

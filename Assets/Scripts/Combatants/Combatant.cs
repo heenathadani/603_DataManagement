@@ -58,9 +58,10 @@ namespace Combatant
 
         [SerializeField]
         protected string _name;
-        protected int _id;
+        public int _id;
         //Bind to UI hp slider
         protected Slider _hpSlider;
+
 
         //Store the body part lists in the inventory 
         [SerializeField]
@@ -251,6 +252,8 @@ namespace Combatant
                 _shieldPoint += bd.bodyPartData.shieldPoint;
             }
 
+            Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+
             //Update Slider
             if (_hpSlider != null)
             {
@@ -304,6 +307,14 @@ namespace Combatant
 
         public override void UpdateStatus()
         {
+
+            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
+            if (uiManager.enemyHpSliderList.Count > 0)
+            {
+                _hpSlider = uiManager.enemyHpSliderList[_id];
+            }
+
+
             _maxHp = 0;
             _currentHp = 0;
             //Calculate status -- Rin
@@ -315,6 +326,12 @@ namespace Combatant
 
                 //Update attack point
                 _attackPoint += bd.bodyPartData.attackPoint;
+            }
+
+            //Enemy Dies
+            if(_currentHp <= 0)
+            {
+                EnemyDie();
             }
 
             Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
@@ -370,6 +387,7 @@ namespace Combatant
             // Hide enemy Ui -- Rin
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
             uiManager.enemyHpSliderList[_id].gameObject.SetActive(false);
+            uiManager.enemies[_id].gameObject.GetComponent<Button>().enabled = false;
 
             bool ifEnd = true;
             //Check Combat End
@@ -385,6 +403,12 @@ namespace Combatant
             {
                 Debug.Log("Player Wins");
             }
+        }
+
+
+        public void InitializeBodyPart()
+        {
+
         }
     }
 }
