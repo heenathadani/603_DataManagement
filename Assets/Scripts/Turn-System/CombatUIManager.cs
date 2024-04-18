@@ -1,19 +1,16 @@
+using Combatant;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// All of this will probably need to be reworked. TBH, this is all a hack while the UI is being designed by Heena and Annie.
+
 public class CombatUIManager : MonoBehaviour
 {
+    public float playerUIOffset;
+    public float enemyOffset;
     // This is dummy data - a better UI approach must be developed for this
-    public List<Button> enemy1PartButtons;
-    public List<Button> enemy2PartButtons;
-    public List<Button> enemy3PartButtons;
-    public List<Button> enemies;
-
-    public List<Button> character1ActionButtons;
-    public List<Button> character2ActionButtons;
-    public List<Button> character3ActionButtons;
+    private List<CombatEntityUI> playerUIs;
+    private List<CombatEntityUI> enemyUIs;
 
     //Store all character Hp Sliders
     public List<Slider> characterHpSliderList;
@@ -22,6 +19,31 @@ public class CombatUIManager : MonoBehaviour
     //Temp need to have ui system after playtest1 -- Rin
     public GameObject endScreen;
 
+    private void OnEnable()
+    {
+        playerUIs = new List<CombatEntityUI>();
+        enemyUIs = new List<CombatEntityUI>();
+    }
+
+    public void AddCombatEntityUI(CombatantType whichSide, CombatEntityUI whatToAdd)
+    {
+        if (whichSide == CombatantType.ALLIES)
+        {
+            RectTransform rt = whatToAdd.GetComponent<RectTransform>();
+            float x = rt.localPosition.x + playerUIs.Count * playerUIOffset;
+            playerUIs.Add(whatToAdd);
+            // Locate the UI thingy
+            rt.localPosition = new Vector3(x, rt.localPosition.y, rt.localPosition.z);
+
+        } else
+        {
+            RectTransform rt = whatToAdd.GetComponent<RectTransform>();
+            float x = rt.localPosition.x + enemyUIs.Count * enemyOffset;
+            enemyUIs.Add(whatToAdd);
+            // Locate the UI thingy
+            rt.localPosition = new Vector3(x, rt.localPosition.y, rt.localPosition.z);
+        }
+    }
 
     // Temp for end screen in playtest 1
     public void GameOver()
@@ -31,95 +53,32 @@ public class CombatUIManager : MonoBehaviour
 
     public void ShowPartButtons(int enemy)
     {
-        if (enemy == 0)
-        {
-            foreach(Button b in enemy1PartButtons)
-            {
-                b.gameObject.SetActive(true);
-            }
-            foreach(Button b in enemy2PartButtons)
-            {
-                b.gameObject.SetActive(false);
-            }
-            foreach (Button b in enemy3PartButtons)
-            {
-                b.gameObject.SetActive(false);
-            }
-        } 
-        else if(enemy == 1)
-        {
-            foreach (Button b in enemy1PartButtons)
-            {
-                b.gameObject.SetActive(false);
-            }
-            foreach (Button b in enemy2PartButtons)
-            {
-                b.gameObject.SetActive(true);
-            }
-            foreach (Button b in enemy3PartButtons)
-            {
-                b.gameObject.SetActive(false);
-            }
-        }
-        else if (enemy == 2)
-        {
-            foreach (Button b in enemy1PartButtons)
-            {
-                b.gameObject.SetActive(false);
-            }
-            foreach (Button b in enemy2PartButtons)
-            {
-                b.gameObject.SetActive(false);
-            }
-            foreach (Button b in enemy3PartButtons)
-            {
-                b.gameObject.SetActive(true);
-            }
-        }
-        else
-        {
-            Debug.LogError("NO!!!! Enemy Index is not available");
-        }
+        enemyUIs[enemy].ShowOptions();
     }
 
     public void HidePartButtons()
     {
-        foreach (Button b in enemy1PartButtons)
+        foreach(CombatEntityUI ui in enemyUIs)
         {
-            b.gameObject.SetActive(false);
-        }
-        foreach (Button b in enemy2PartButtons)
-        {
-            b.gameObject.SetActive(false);
-        }
-        foreach (Button b in enemy3PartButtons)
-        {
-            b.gameObject.SetActive(false);
+            ui.HideOptions();
         }
     }
     
     public void ShowEnemies()
     {
-        foreach(Button b in enemies)
+        foreach(CombatEntityUI enemy in enemyUIs)
         {
-            if(b != null)
-            {
-                b.gameObject.SetActive(true);
-            } 
+            enemy.ShowButtons();
         }
     }
 
     public void HideAll()
     {
-        foreach(Button b in enemies)
+        foreach(CombatEntityUI ui in enemyUIs)
         {
-            if (b != null)
-            {
-                b.gameObject.SetActive(false);
-            }
-            
+            ui.HideButtons();
+            ui.HideOptions();
         }
-        HidePartButtons();
     }
 
     public void ShowByTarget(CombatActionTargets targetType)
@@ -139,67 +98,32 @@ public class CombatUIManager : MonoBehaviour
 
     public void ShowPlayerActionButtons(int playerIndex)
     {
+
         switch(playerIndex)
         {
+
             case 0:
-                foreach (Button b in character1ActionButtons)
-                {
-                    b.gameObject.SetActive(true);
-                }
-                foreach (Button b in character2ActionButtons)
-                {
-                    b.gameObject.SetActive(false);
-                }
-                foreach (Button b in character3ActionButtons)
-                {
-                    b.gameObject.SetActive(false);
-                }
+                playerUIs[0].ShowButtons();
+                playerUIs[1].HideButtons();
+                playerUIs[2].HideButtons();
                 break;
 
             case 1:
-                foreach (Button b in character1ActionButtons)
-                {
-                    b.gameObject.SetActive(false);
-                }
-                foreach (Button b in character2ActionButtons)
-                {
-                    b.gameObject.SetActive(true);
-                }
-                foreach (Button b in character3ActionButtons)
-                {
-                    b.gameObject.SetActive(false);
-                }
+                playerUIs[0].HideButtons();
+                playerUIs[1].ShowButtons();
+                playerUIs[2].HideButtons();
                 break;
 
             case 2:
-                foreach (Button b in character1ActionButtons)
-                {
-                    b.gameObject.SetActive(false);
-                }
-                foreach (Button b in character2ActionButtons)
-                {
-                    b.gameObject.SetActive(false);
-                }
-                foreach (Button b in character3ActionButtons)
-                {
-                    b.gameObject.SetActive(true);
-                }
+                playerUIs[0].HideButtons();
+                playerUIs[1].HideButtons();
+                playerUIs[2].ShowButtons();
                 break;
 
             default:
-                // Just hide all buttons -- Rin
-                foreach (Button b in character1ActionButtons)
-                {
-                    b.gameObject.SetActive(false);
-                }
-                foreach (Button b in character2ActionButtons)
-                {
-                    b.gameObject.SetActive(false);
-                }
-                foreach (Button b in character3ActionButtons)
-                {
-                    b.gameObject.SetActive(false);
-                }
+                playerUIs[0].HideButtons();
+                playerUIs[1].HideButtons();
+                playerUIs[2].HideButtons();
 
                 break;
         }

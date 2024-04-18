@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,6 +54,7 @@ namespace Combatant
         public float _attackPoint;
         public float _shieldPoint;
         public abstract string Name { get; }
+        public CombatEntityUI combatantUI;
 
         [SerializeField]
         protected string _name;
@@ -185,6 +185,7 @@ namespace Combatant
                     bodyPart.UpdateCurrentHP(value);
                 }
             }
+            combatantUI.DisplayDamage((int)value);
         }
 
         public void AddBodyPart(BodyPart bp)
@@ -391,7 +392,7 @@ namespace Combatant
             // Hide enemy Ui -- Rin
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
             uiManager.enemyHpSliderList[_id].gameObject.SetActive(false);
-            uiManager.enemies[_id].gameObject.GetComponent<Button>().enabled = false;
+            combatantUI.Disable();
 
             bool ifEnd = true;
             //Check Combat End

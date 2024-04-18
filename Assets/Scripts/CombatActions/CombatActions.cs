@@ -99,7 +99,15 @@ public abstract class aCombatAction : ICombatAction
     public void SetActingAgent(aCombatant whoIsDoingThisAction)
     {
         actingAgent = whoIsDoingThisAction;
-}
+    }
+
+    protected void ShowActionFeedback(CombatTarget targetInformation, bool isDamage, int actionEffectValue)
+    {
+        if (isDamage)
+        {
+            targetInformation.targetUnit.combatantUI.DisplayDamage(actionEffectValue);
+        }
+    }
 }
 
 public class AttackAction : aCombatAction
@@ -124,9 +132,10 @@ public class AttackAction : aCombatAction
         Debug.Log("I "+actingAgent.Name+" am attacking " + targetInformation.targetUnit.Name + " in one of his parts");
 
         //Take Damage -- Rin
-        targetInformation.targetUnit.AffectBodyPartByIndex(targetInformation.targetIndex, -CombatantData.partyCharacters[CombatantData.currentPlayerIndex]._attackPoint);
+        int attackDamage = (int)-CombatantData.partyCharacters[CombatantData.currentPlayerIndex]._attackPoint;
+        targetInformation.targetUnit.AffectBodyPartByIndex(targetInformation.targetIndex, attackDamage);
         targetInformation.targetUnit.UpdateStatus();
-
+        ShowActionFeedback(targetInformation, true, -attackDamage);
     }
 }
 
@@ -176,12 +185,15 @@ public class PowerAction : aCombatAction
         }
         foreach(aCombatant target in whoThough)
         {
+            int summedTotal = 0;
             int perPartDamage = (int) targetInformation.selectedPower.GetTotalEffect(actingAgent) / target._bodyPartsInventory.Count;
             for (int i = 0; i < target._bodyPartsInventory.Count; i++)
             {
                 int finalDamage = Mathf.Max(perPartDamage - (int)target._bodyPartsInventory[i].bodyPartData.shieldPoint,0);
+                finalDamage += summedTotal;
                 target.AffectBodyPartByIndex(i, -finalDamage);
             }
+            ShowActionFeedback(targetInformation, true, summedTotal);
             target.UpdateStatus();
         }
         actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
@@ -190,16 +202,20 @@ public class PowerAction : aCombatAction
     protected override void DoSingleTarget(CombatTarget targetInformation)
     {
         aCombatant target = targetInformation.targetUnit;
-        target.AffectStatByType(targetInformation.selectedPower.statAffectedByPower, targetInformation.selectedPower.GetTotalEffect(actingAgent));
+        int damage = (int) targetInformation.selectedPower.GetTotalEffect(actingAgent);
+        target.AffectStatByType(targetInformation.selectedPower.statAffectedByPower, -damage);
         target.UpdateStatus();
+        ShowActionFeedback(targetInformation, true, damage);
         actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
     }
 
     protected override void DoSingleBodyPart(CombatTarget targetInformation)
     {
         aCombatant target = targetInformation.targetUnit;
-        target.AffectBodyPartByType(targetInformation.selectedPower.bodyPart, targetInformation.selectedPower.GetTotalEffect(actingAgent));
+        int totalEffect = (int) targetInformation.selectedPower.GetTotalEffect(actingAgent);
+        target.AffectBodyPartByType(targetInformation.selectedPower.bodyPart, -totalEffect);
         target.UpdateStatus();
+        ShowActionFeedback(targetInformation, true, totalEffect);
         actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
     }
 }
