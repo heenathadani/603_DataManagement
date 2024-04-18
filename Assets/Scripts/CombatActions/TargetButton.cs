@@ -17,9 +17,4 @@ public class TargetButton : MonoBehaviour
         }
         
     }
-
-    public void bodyPartTakeDamage()
-    {
-
-    }
 }

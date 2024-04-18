@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CombatEntityUI : MonoBehaviour
 {
     public float moveSpeed;
+    public Slider hpBar;
     public int damageNumberIterationCycles;
     public TextMeshProUGUI DamageNumbers;
     private Vector3 damageNumbersOriginalPosition;
@@ -24,7 +26,7 @@ public class CombatEntityUI : MonoBehaviour
         {
             DamageNumbers.color = Color.green;
         }
-        DamageNumbers.text = value.ToString();
+        DamageNumbers.text = Mathf.Abs(value).ToString();
         StartCoroutine(FloatDamageNumber());
     }
 
@@ -34,7 +36,8 @@ public class CombatEntityUI : MonoBehaviour
         {
             float x = DamageNumbers.rectTransform.localPosition.x;
             float z = DamageNumbers.rectTransform.localPosition.z;
-            float y = damageNumbersOriginalPosition.y + moveSpeed * i * Time.deltaTime;
+            float y = damageNumbersOriginalPosition.y + moveSpeed * i;
+            Debug.Log(y);
             DamageNumbers.rectTransform.localPosition = new Vector3(x, y, z);
             yield return new WaitForSeconds(0.1f);
         }
@@ -43,9 +46,15 @@ public class CombatEntityUI : MonoBehaviour
         DamageNumbers.gameObject.SetActive(false);
     }
 
+    public void UpdateHPBar(float value)
+    {
+        hpBar.value = value;
+    }
+
     public virtual void ShowButtons() { }
     public virtual void HideButtons() { }
     public virtual void ShowOptions() { }
     public virtual void HideOptions() { }
     public virtual void Disable(){}
+    public virtual void SetUp(int i) { }
 }

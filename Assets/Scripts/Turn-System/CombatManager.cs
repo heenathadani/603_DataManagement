@@ -91,7 +91,6 @@ public class CombatManager : MonoBehaviour
 
             Enemy e = dummyFormation.enemies[i].Clone(i);
             e.SetSlider(uiManager.enemyHpSliderList[i]);
-            e.UpdateStatus();
             CombatantData.enemies.Add(e);
             GameObject spawnedEnemy = spawnManager.SpawnEnemy(e);
             EnemyGameObject eGO = spawnedEnemy.GetComponent<EnemyGameObject>();
@@ -108,7 +107,6 @@ public class CombatManager : MonoBehaviour
             CombatEntityUI entityUI = enemyUICanvasObject.GetComponent<CombatEntityUI>();
             enemy._combatantData.combatantUI = entityUI;
             uiManager.AddCombatEntityUI(CombatantType.ENEMIES, entityUI);
-            // Relocate the canvas object
         }
 
         for (int i = 0; i < CombatantData.partyCharacters.Count; i++)
@@ -117,7 +115,6 @@ public class CombatManager : MonoBehaviour
             CombatEntityUI entityUI = playerUICanvasObject.GetComponent<CombatEntityUI>();
             CombatantData.partyCharacters[i].combatantUI = entityUI;
             uiManager.AddCombatEntityUI(CombatantType.ALLIES, entityUI);
-            // Relocate this canvas object
         }
     }
 
@@ -132,22 +129,19 @@ public class CombatManager : MonoBehaviour
         if (protagonist1 != null && _bodyPartDataList.Count > 0)
         {
             protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist1.UpdateStatus();
+            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));   
         }
         Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
         if (protagonist2 != null && _bodyPartDataList.Count > 0)
         {
             protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
             protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
-            protagonist2.UpdateStatus();
         }
         Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
         if (protagonist3 != null && _bodyPartDataList.Count > 0)
         {
             protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
             protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
-            protagonist3.UpdateStatus();
         }
     }
 
@@ -159,6 +153,16 @@ public class CombatManager : MonoBehaviour
         SpawnCharacters();
         SpawnEnemies();
         SetUPUI();
+        
+        foreach(aCombatant combatant in CombatantData.partyCharacters)
+        {
+            combatant.UpdateStatus();
+        }
+        foreach (aCombatant combatant in CombatantData.enemies)
+        {
+            combatant.UpdateStatus();
+        }
+
 
         // Set up this controller
         _currentTurn = 0;

@@ -32,15 +32,16 @@ public class CombatUIManager : MonoBehaviour
             RectTransform rt = whatToAdd.GetComponent<RectTransform>();
             float x = rt.localPosition.x + playerUIs.Count * playerUIOffset;
             playerUIs.Add(whatToAdd);
-            // Locate the UI thingy
+            // Place the UI thingy
             rt.localPosition = new Vector3(x, rt.localPosition.y, rt.localPosition.z);
 
         } else
         {
             RectTransform rt = whatToAdd.GetComponent<RectTransform>();
+            whatToAdd.SetUp(enemyUIs.Count);
             float x = rt.localPosition.x + enemyUIs.Count * enemyOffset;
             enemyUIs.Add(whatToAdd);
-            // Locate the UI thingy
+            // Place the UI thingy
             rt.localPosition = new Vector3(x, rt.localPosition.y, rt.localPosition.z);
         }
     }
@@ -53,7 +54,9 @@ public class CombatUIManager : MonoBehaviour
 
     public void ShowPartButtons(int enemy)
     {
+        foreach(EnemyEntityUI enemyEntity in enemyUIs) { enemyEntity.HideOptions(); }   
         enemyUIs[enemy].ShowOptions();
+
     }
 
     public void HidePartButtons()

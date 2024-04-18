@@ -1,28 +1,38 @@
 
+using UnityEngine;
+using UnityEngine.UI;
+
 public class EnemyEntityUI : CombatEntityUI
 {
+    public GameObject enemySelectButton;
+    public GameObject targetButtons;
     public override void HideButtons()
     {
-        base.HideButtons();
+        enemySelectButton.SetActive(false);
     }
 
     public override void ShowButtons()
     {
-        base.ShowButtons();
+        enemySelectButton.SetActive(true);
     }
 
     public override void ShowOptions()
     {
-        base.ShowOptions();
+        targetButtons.SetActive(true);
     }
 
     public override void HideOptions()
     {
-        base.HideOptions();
+        targetButtons.SetActive(false);
     }
 
     public override void Disable()
     {
         base.Disable();
+    }
+
+    public override void SetUp(int i)
+    {
+        enemySelectButton.GetComponent<TargetButton>().targetIndex = i;
     }
 }

@@ -32,5 +32,10 @@ public class PlayerEntityUI : CombatEntityUI
             b.enabled = false;
         }
     }
+
+    public override void SetUp(int i)
+    {
+        base.SetUp(i);
+    }
 }
 

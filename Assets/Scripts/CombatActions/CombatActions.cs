@@ -190,10 +190,10 @@ public class PowerAction : aCombatAction
             for (int i = 0; i < target._bodyPartsInventory.Count; i++)
             {
                 int finalDamage = Mathf.Max(perPartDamage - (int)target._bodyPartsInventory[i].bodyPartData.shieldPoint,0);
-                finalDamage += summedTotal;
+                summedTotal += finalDamage;
                 target.AffectBodyPartByIndex(i, -finalDamage);
             }
-            ShowActionFeedback(targetInformation, true, summedTotal);
+            target.combatantUI.DisplayDamage(summedTotal);
             target.UpdateStatus();
         }
         actingAgent._currentEnergy -= targetInformation.selectedPower.cost;

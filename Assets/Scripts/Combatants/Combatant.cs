@@ -224,11 +224,6 @@ namespace Combatant
             _id = id;
             _side = CombatantType.ALLIES;
 
-            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-            if (uiManager.enemyHpSliderList.Count > 0)
-            {
-                _hpSlider = uiManager.characterHpSliderList[id];
-            }
         }
 
         //Add body part to an protagonist's inventory -- Rin
@@ -255,14 +250,14 @@ namespace Combatant
                 _shieldPoint += bd.bodyPartData.shieldPoint;
             }
 
-            Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+            //Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
-            if (_hpSlider != null)
+            if(combatantUI != null)
             {
-                _hpSlider.value = _currentHp / _maxHp;
+                combatantUI.UpdateHPBar(_currentHp / _maxHp);
             }
-            
+
         }
 
         public void CharacterDie()
@@ -343,10 +338,11 @@ namespace Combatant
             //Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
-            if (_hpSlider != null)
+            if(combatantUI != null)
             {
-                _hpSlider.value = _currentHp / _maxHp;
+                combatantUI.UpdateHPBar(_currentHp / _maxHp);
             }
+            
         }
 
         public void Reset()
@@ -406,7 +402,6 @@ namespace Combatant
 
             if(ifEnd)
             {
-                Debug.Log("Player Wins");
                 uiManager.GameOver();
             }
         }
