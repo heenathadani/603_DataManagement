@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,6 +54,7 @@ namespace Combatant
         public float _attackPoint;
         public float _shieldPoint;
         public abstract string Name { get; }
+        public CombatEntityUI combatantUI;
 
         [SerializeField]
         protected string _name;
@@ -185,6 +185,7 @@ namespace Combatant
                     bodyPart.UpdateCurrentHP(value);
                 }
             }
+            combatantUI.DisplayDamage((int)value);
         }
 
         public void AddBodyPart(BodyPart bp)
@@ -223,11 +224,6 @@ namespace Combatant
             _id = id;
             _side = CombatantType.ALLIES;
 
-            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-            if (uiManager.enemyHpSliderList.Count > 0)
-            {
-                _hpSlider = uiManager.characterHpSliderList[id];
-            }
         }
 
         //Add body part to an protagonist's inventory -- Rin
@@ -254,14 +250,14 @@ namespace Combatant
                 _shieldPoint += bd.bodyPartData.shieldPoint;
             }
 
-            Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
+            //Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
-            if (_hpSlider != null)
+            if(combatantUI != null)
             {
-                _hpSlider.value = _currentHp / _maxHp;
+                combatantUI.UpdateHPBar(_currentHp / _maxHp);
             }
-            
+
         }
 
         public void CharacterDie()
@@ -342,10 +338,11 @@ namespace Combatant
             //Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
-            if (_hpSlider != null)
+            if(combatantUI != null)
             {
-                _hpSlider.value = _currentHp / _maxHp;
+                combatantUI.UpdateHPBar(_currentHp / _maxHp);
             }
+            
         }
 
         public void Reset()
@@ -391,7 +388,7 @@ namespace Combatant
             // Hide enemy Ui -- Rin
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
             uiManager.enemyHpSliderList[_id].gameObject.SetActive(false);
-            uiManager.enemies[_id].gameObject.GetComponent<Button>().enabled = false;
+            combatantUI.Disable();
 
             bool ifEnd = true;
             //Check Combat End
@@ -405,7 +402,6 @@ namespace Combatant
 
             if(ifEnd)
             {
-                Debug.Log("Player Wins");
                 uiManager.GameOver();
             }
         }

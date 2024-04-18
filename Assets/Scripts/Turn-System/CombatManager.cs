@@ -14,6 +14,9 @@ public class CombatManager : MonoBehaviour
     public EnemySpawnManager spawnManager;
     private CombatUIManager uiManager;
     private List<aCombatant> _activeCombatants;
+    public GameObject CharacterUIPrefab;
+    public GameObject EnemyUIPrefab;
+    
     public int _currentTurn;
     public CombatantType _activeType;
     private CombatTarget targetInformation;
@@ -21,8 +24,7 @@ public class CombatManager : MonoBehaviour
 
     private IEnumerator SlowEnemiesDown()
     {
-        yield return new WaitForSeconds(2.0f);
-        Debug.Log("Huh");
+        yield return new WaitForSeconds(1.0f);
         if (activeEnemies[_currentTurn]._combatantData.isAlive())
         {
             activeEnemies[_currentTurn].TakeTurn();
@@ -52,7 +54,6 @@ public class CombatManager : MonoBehaviour
         _currentTurn++;
         if (_currentTurn == _activeCombatants.Count)
         {
-            Debug.Log("Switch sides");
             SwitchSides();
         }
         stateMachine.Next(TurnStateType.TURN_START);
@@ -82,61 +83,66 @@ public class CombatManager : MonoBehaviour
         stateMachine.Transition();
     }
 
-    // This function is temporary and should go away once we transition
-    // to a better system to setup combat initiation
-    public void DummySetup()
+    private void SpawnEnemies()
     {
-
-        // Set the data
         spawnManager.SetEnemiesToSpawn(dummyFormation.enemies.Count);
         for (int i = 0; i < dummyFormation.enemies.Count; i++)
         {
 
             Enemy e = dummyFormation.enemies[i].Clone(i);
             e.SetSlider(uiManager.enemyHpSliderList[i]);
-            e.UpdateStatus();
             CombatantData.enemies.Add(e);
             GameObject spawnedEnemy = spawnManager.SpawnEnemy(e);
             EnemyGameObject eGO = spawnedEnemy.GetComponent<EnemyGameObject>();
             eGO.SetManager(this);
             activeEnemies.Add(eGO);
         }
+    }
 
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1",0));
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2",1));
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 3",2));
+    private void SetUPUI()
+    {
+        foreach(EnemyGameObject enemy in activeEnemies)
+        {
+            GameObject enemyUICanvasObject = Instantiate(EnemyUIPrefab, transform);
+            CombatEntityUI entityUI = enemyUICanvasObject.GetComponent<CombatEntityUI>();
+            enemy._combatantData.combatantUI = entityUI;
+            uiManager.AddCombatEntityUI(CombatantType.ENEMIES, entityUI);
+        }
+
+        for (int i = 0; i < CombatantData.partyCharacters.Count; i++)
+        {
+            GameObject playerUICanvasObject = Instantiate(CharacterUIPrefab, transform);
+            CombatEntityUI entityUI = playerUICanvasObject.GetComponent<CombatEntityUI>();
+            CombatantData.partyCharacters[i].combatantUI = entityUI;
+            uiManager.AddCombatEntityUI(CombatantType.ALLIES, entityUI);
+        }
+    }
+
+    public void SpawnCharacters()
+    {
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1", 0));
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2", 1));
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 3", 2));
 
         // Temp, Check status update -- Rin
         Protagonist protagonist1 = CombatantData.partyCharacters[0] as Protagonist;
         if (protagonist1 != null && _bodyPartDataList.Count > 0)
         {
             protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist1.UpdateStatus();
+            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));   
         }
         Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
         if (protagonist2 != null && _bodyPartDataList.Count > 0)
         {
             protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
             protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
-            protagonist2.UpdateStatus();
         }
         Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
         if (protagonist3 != null && _bodyPartDataList.Count > 0)
         {
             protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
             protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
-            protagonist3.UpdateStatus();
         }
-
-
-        //End
-
-        // Set up this controller
-        _currentTurn = 0;
-        _activeType = CombatantType.ENEMIES;
-        _activeCombatants = CombatantData.GetGroup(_activeType);
-
     }
 
     private void OnEnable()
@@ -144,9 +150,25 @@ public class CombatManager : MonoBehaviour
         uiManager = GetComponent<CombatUIManager>();
         stateMachine = new TurnStateMachine(this);
         activeEnemies = new List<EnemyGameObject>();
-        DummySetup();
+        SpawnCharacters();
+        SpawnEnemies();
+        SetUPUI();
         
-        
+        foreach(aCombatant combatant in CombatantData.partyCharacters)
+        {
+            combatant.UpdateStatus();
+        }
+        foreach (aCombatant combatant in CombatantData.enemies)
+        {
+            combatant.UpdateStatus();
+        }
+
+
+        // Set up this controller
+        _currentTurn = 0;
+        _activeType = CombatantType.ALLIES;
+        _activeCombatants = CombatantData.GetGroup(_activeType);
+
         stateMachine.Next(TurnStateType.TURN_START);
     }
 
