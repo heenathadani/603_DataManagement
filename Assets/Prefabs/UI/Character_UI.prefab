@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7840006815987501848}
   - component: {fileID: 752846517546757686}
   - component: {fileID: 9135194074933568380}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 4586967064778898868}
   - component: {fileID: 3422895897184118501}
   - component: {fileID: 2237716858576319701}
+  - component: {fileID: 4181875705737628130}
   m_Layer: 5
   m_Name: 'Shield_Button '
   m_TagString: Untagged
@@ -211,6 +212,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4181875705737628130}
+        m_TargetAssemblyTypeName: Tooltippable, Assembly-CSharp
+        m_MethodName: Hide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2237716858576319701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +240,19 @@ MonoBehaviour:
   actionType: 1
   actionTarget: 0
   sideThisAffects: 0
+--- !u!114 &4181875705737628130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738301827755092714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ed6bebd12728346bf3c22736f2b27b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: Defend yourself
 --- !u!1 &1094839984268577710
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +399,7 @@ GameObject:
   - component: {fileID: 2482534658419886254}
   - component: {fileID: 248550521686701543}
   - component: {fileID: 4042683653804322516}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,6 +476,7 @@ GameObject:
   - component: {fileID: 8825902584049728050}
   - component: {fileID: 8546144026622792902}
   - component: {fileID: 3403808316068779256}
+  - component: {fileID: 116012638470980887}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -560,6 +587,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &116012638470980887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119659918687016111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ed6bebd12728346bf3c22736f2b27b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: Open your inventory
 --- !u!1 &2170509707395811531
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,7 +610,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1013507747262615023}
   - component: {fileID: 867323305736477173}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EnergyBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -659,7 +699,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3425367431080677223}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -912,7 +952,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6070961833767564934}
   - component: {fileID: 3857774535984237317}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1004,6 +1044,7 @@ GameObject:
   - component: {fileID: 8596610333694055116}
   - component: {fileID: 6728825010520763624}
   - component: {fileID: 7580850146286245425}
+  - component: {fileID: 8151564815158848939}
   m_Layer: 5
   m_Name: 'Special_Button '
   m_TagString: Untagged
@@ -1113,7 +1154,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6728825010520763624}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8151564815158848939}
+        m_TargetAssemblyTypeName: Tooltippable, Assembly-CSharp
+        m_MethodName: Hide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8151564815158848939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3925571302353276749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ed6bebd12728346bf3c22736f2b27b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: Use a power
 --- !u!1 &4315299064744306271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,7 +1328,7 @@ GameObject:
   - component: {fileID: 5546983410444177267}
   - component: {fileID: 7914230341685038105}
   - component: {fileID: 3325571792925195779}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1337,7 +1403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2694461240439800019}
   - component: {fileID: 4935597110339490530}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Character_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1398,6 +1464,7 @@ GameObject:
   - component: {fileID: 5825309853055764285}
   - component: {fileID: 7390287307984852201}
   - component: {fileID: 916883611185109726}
+  - component: {fileID: 3342928175928279858}
   m_Layer: 5
   m_Name: Attack_Button
   m_TagString: Untagged
@@ -1520,6 +1587,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3342928175928279858}
+        m_TargetAssemblyTypeName: Tooltippable, Assembly-CSharp
+        m_MethodName: Hide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &916883611185109726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1536,6 +1615,19 @@ MonoBehaviour:
   actionType: 0
   actionTarget: 2
   sideThisAffects: 1
+--- !u!114 &3342928175928279858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5013634360682806373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ed6bebd12728346bf3c22736f2b27b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: Attack an enemy's body parts
 --- !u!1 &5552531205629037487
 GameObject:
   m_ObjectHideFlags: 0
@@ -1545,7 +1637,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3389877543956804561}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1582,7 +1674,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2214362987845196524}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CharacterInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1831,7 +1923,7 @@ GameObject:
   - component: {fileID: 2090074730959691934}
   - component: {fileID: 6387968682679668202}
   - component: {fileID: 1039191393177322387}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2201,7 +2293,7 @@ GameObject:
   - component: {fileID: 1392153371527436240}
   - component: {fileID: 7850105506897578256}
   - component: {fileID: 6938864446648908474}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
