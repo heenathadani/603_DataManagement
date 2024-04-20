@@ -66,10 +66,10 @@ namespace Combatant
         //Store the body part lists in the inventory 
         [SerializeField]
         public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
+        protected List<ConditionData> _conditions = new List<ConditionData>();
 
         //Store the powers in a list - need to figure out how to populate this
         public List<Power> _powers = new List<Power>();
-
         protected CombatantType _side;
 
         public List<Power> FilterPowerByTargetType(CombatActionTargets targetType)
@@ -204,8 +204,43 @@ namespace Combatant
         {
             _hpSlider = s;
         }
-
         public abstract void UpdateStatus();
+
+        // Conditions stuff
+        public void AddCondition(ConditionType condition)
+        {
+
+            _conditions.Add(ConditionManager.CreateConditionData(condition));
+        }
+
+        public void ApplyConditions()
+        {
+            // For every condition, apply its effect to the player
+            for (int i = 0; i < _conditions.Count; i++)
+            {
+                ConditionManager.ApplyConditionEffect(this, _conditions[i]);
+            }
+        }
+
+        public void UpdateActiveConditions()
+        {
+            // Evaluate which conditions have expired and should no longer affect a combatant
+            List<int> expiredConditions = new List<int>();
+            for (int i = 0; i < _conditions.Count; i++)
+            {
+                _conditions[i].currentDuration++;
+                if (_conditions[i].currentDuration == _conditions[i].maxDuration)
+                {
+                    expiredConditions.Add(i);
+                }
+            }
+            foreach(int i in expiredConditions)
+            {
+                // Conditions might modify a character's stats. We need to reset those stats when the condition is done
+                ConditionManager.CleanUpCondition(this, _conditions[i]);
+                _conditions.RemoveAt(i);
+            }
+        }
     }
 
     public class Protagonist : aCombatant
