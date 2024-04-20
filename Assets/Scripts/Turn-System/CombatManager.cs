@@ -56,7 +56,7 @@ public class CombatManager : MonoBehaviour
         {
             SwitchSides();
         }
-        stateMachine.Next(TurnStateType.TURN_START);
+        stateMachine.Next(TurnStateType.UPDATE_CONDITIONS);
     }
 
     public void ExecuteCombatAction()
@@ -79,6 +79,10 @@ public class CombatManager : MonoBehaviour
         targetInformation = targetInfo;
         currentAction = action;
         action.SetActingAgent(CombatantData.GetGroup(_activeType)[playerIndex]);
+        if (action.GetActionTarget() == CombatActionTargets.Self)
+        {
+            targetInformation.targetUnit = _activeCombatants[_currentTurn];
+        }
         uiManager.ShowByTarget(targetInformation.typeOfTarget);
         stateMachine.Transition();
     }

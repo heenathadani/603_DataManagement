@@ -143,7 +143,8 @@ public class DefendAction : aCombatAction
 {
     protected override void DoSelf(CombatTarget targetInformation)
     {
-        Debug.Log("I have defended");
+        // The defend action gives the defend condition
+        targetInformation.targetUnit.AddCondition(ConditionType.Defend);
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
@@ -172,7 +173,6 @@ public class PowerAction : aCombatAction
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
-        Debug.Log("Doing multitarget power");
         CombatantType sideBeingTargeted = targetInformation.sideBeingTargeted;
         List<aCombatant> whoThough;
         if (sideBeingTargeted == CombatantType.ALLIES)
