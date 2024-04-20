@@ -215,6 +215,7 @@ namespace Combatant
 
         public void ApplyConditions()
         {
+            // For every condition, apply its effect to the player
             for (int i = 0; i < _conditions.Count; i++)
             {
                 ConditionManager.ApplyConditionEffect(this, _conditions[i]);
@@ -223,6 +224,7 @@ namespace Combatant
 
         public void UpdateActiveConditions()
         {
+            // Evaluate which conditions have expired and should no longer affect a combatant
             List<int> expiredConditions = new List<int>();
             for (int i = 0; i < _conditions.Count; i++)
             {
@@ -234,6 +236,7 @@ namespace Combatant
             }
             foreach(int i in expiredConditions)
             {
+                // Conditions might modify a character's stats. We need to reset those stats when the condition is done
                 ConditionManager.CleanUpCondition(this, _conditions[i]);
                 _conditions.RemoveAt(i);
             }

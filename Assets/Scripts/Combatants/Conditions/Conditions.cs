@@ -15,6 +15,8 @@ public class ConditionData
     public aCondition conditionBehavior;
 }
 
+// A static class that handles everything related to conditions.
+// This keeps code execution encapsulated within this domain
 public static class ConditionManager
 {
     public static void ApplyConditionEffect(aCombatant who, ConditionData data)
@@ -46,12 +48,16 @@ public static class ConditionManager
     }
 }
 
+// The abstract representation of a condition
 public abstract class aCondition
 {
     public abstract void ApplyConditionEffect(aCombatant who);
     public abstract void CleanUp(aCombatant who);
 }
 
+// Example condition - Defend.
+// Adds a bonus to armor while active
+// Removes that bonus on clean up
 public class DefendCondition : aCondition
 {
     public override void ApplyConditionEffect(aCombatant who)
