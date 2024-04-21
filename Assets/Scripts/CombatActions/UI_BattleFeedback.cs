@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class UI_BattleFeedback : MonoBehaviour
 {
     public TextMeshProUGUI battleLog;
 
-    public TextMeshProUGUI eDamage1;
+    /*public TextMeshProUGUI eDamage1;
     public TextMeshProUGUI eDamage2;
     public TextMeshProUGUI eDamage3;
     public TextMeshProUGUI pDamage1;
     public TextMeshProUGUI pDamage2;
-    public TextMeshProUGUI pDamage3;
+    public TextMeshProUGUI pDamage3;*/
 
     public int maxQueueLength = 2;
 
@@ -23,8 +23,8 @@ public class NewBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        eDamageArray = new TextMeshProUGUI[] { eDamage1, eDamage2, eDamage3 };
-        pDamageArray = new TextMeshProUGUI[] { pDamage1, pDamage2, pDamage3 };
+        //eDamageArray = new TextMeshProUGUI[] { eDamage1, eDamage2, eDamage3 };
+        //pDamageArray = new TextMeshProUGUI[] { pDamage1, pDamage2, pDamage3 };
 
         //test
         //updateBattleLog(4, "fire", "bot1", "bot2", 0, "p");
@@ -41,24 +41,24 @@ public class NewBehaviourScript : MonoBehaviour
 
     //could be called from the battle hander to update the combat log ui
     //this is just one way that this could work and can be changed when we have a better idea of how we're doing things
-    public void updateBattleLog(int damage, string damageType, string damagerName, string damagedName, int index, string targetType)
+    public void updateBattleLog(int damage, string damageType, string damagerName, string damagedName/*, int index, string targetType*/)
     {
         updateQueueSize();
-        clearAllFeedback();
+        //clearAllFeedback();
 
         //Console.Log(Name.hit(target:name, type:type, points:int))
         battleUpdates.Enqueue("Console.Log(" + damagerName + ".hit(target:" + damagedName + ", type:" + damageType + ", points:" + damage.ToString() + "))\n");
 
         battleLog.text = returnLog();
 
-        hitFeedback(damage, index, targetType);
+        //hitFeedback(damage, index, targetType);
     }
 
     public void clearAll()
     {
         battleUpdates.Clear();
         battleLog.text = "";
-        clearAllFeedback();
+        //clearAllFeedback();
     }
 
     private void updateQueueSize()
@@ -82,7 +82,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void hitFeedback(int damage, int i, string targetType)
     {
-        returnArray(targetType)[i].text = damage.ToString();
+        //returnArray(targetType)[i].text = damage.ToString();
     }
 
     private void clearAllFeedback()
