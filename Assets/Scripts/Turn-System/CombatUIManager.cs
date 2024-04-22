@@ -17,7 +17,8 @@ public class CombatUIManager : MonoBehaviour
     public List<Slider> enemyHpSliderList;
 
     //Temp need to have ui system after playtest1 -- Rin
-    public GameObject endScreen;
+    public GameObject gameOverScreen;
+    public GameObject victoryScreen;
     public Tooltip tooltip;
 
     private void OnEnable()
@@ -48,9 +49,14 @@ public class CombatUIManager : MonoBehaviour
     }
 
     // Temp for end screen in playtest 1
-    public void GameOver()
+    public void ShowGameOver()
     {
-        endScreen.SetActive(true);
+        gameOverScreen.SetActive(true);
+    }
+
+    public void ShowVictory()
+    {
+        victoryScreen.SetActive(true);
     }
 
     public void ShowPartButtons(int enemy)

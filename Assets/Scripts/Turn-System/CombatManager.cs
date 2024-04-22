@@ -187,8 +187,6 @@ public class CombatManager : MonoBehaviour
     public void StartAITurn()
     {
         StartCoroutine(SlowEnemiesDown());
-        
-        
     }
     
     public void SetAIAction(aCombatAction action)
