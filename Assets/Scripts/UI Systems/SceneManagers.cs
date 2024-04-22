@@ -23,6 +23,18 @@ public class SceneManagers : MonoBehaviour
         SceneManager.LoadScene(sceneIndex);
     }
 
+    public void LoadMainMenu()
+    {
+        CombatantData.Reset();
+        ExplorationData.Reset();
+        SceneManager.LoadScene(0);
+    }
+
+    public void ReturnToExploration()
+    {
+        SceneManager.LoadScene(ExplorationData.GetLastExploredScene());
+    }
+
     public static void StaticLoad(int sceneIndex)
     {
         _currentLevel = sceneIndex;
