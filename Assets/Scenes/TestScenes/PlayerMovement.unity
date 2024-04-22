@@ -873,6 +873,11 @@ MonoBehaviour:
   optionList:
   - Yes, go to hell
   - No, Im kind
+  dialogueAfterOptionList:
+  - kill u
+  - hahha you are kind
+  enemyFormation: {fileID: 11400000, guid: 5e673f19ee80d1e4280f421410abbed3, type: 2}
+  combatOptionId: 0
 --- !u!212 &1223724283
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1074,6 +1079,12 @@ MonoBehaviour:
   continueButton: {fileID: 1213217718}
   currentDialogueList: []
   currentOptionList: []
+  currentDialogueAfterOptionList: []
+  currentEnemyFormation: {fileID: 0}
+  combatOptionId: 0
+  currentTalkingNPC: {fileID: 0}
+  ifFinishDialogue: 0
+  ifCombat: 0
 --- !u!114 &1577461584 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8337010652049729823, guid: 17c60ae26a5d4194b87cbe75cd194957,
@@ -1235,6 +1246,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueUI
       objectReference: {fileID: 0}
+    - target: {fileID: 6606484194537853516, guid: 17c60ae26a5d4194b87cbe75cd194957,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1546509802}
     - target: {fileID: 7305800060228574633, guid: 17c60ae26a5d4194b87cbe75cd194957,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1345,6 +1361,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9124484180902976419, guid: 17c60ae26a5d4194b87cbe75cd194957,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1546509802}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

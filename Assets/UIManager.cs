@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -26,6 +27,18 @@ public class UIManager : MonoBehaviour
     private int currentDialogueIndex;
     [HideInInspector]
     public List<string> currentOptionList;
+    [HideInInspector]
+    public List<string> currentDialogueAfterOptionList;
+    [HideInInspector]
+    public EnemyFormation currentEnemyFormation;
+    [HideInInspector]
+    public int combatOptionId;
+    [HideInInspector]
+    public GameObject currentTalkingNPC;
+    [HideInInspector]
+    public bool ifFinishDialogue;
+    [HideInInspector]
+    public bool ifCombat;
 
 
 
@@ -64,7 +77,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateDialogue()
     {
-        if(currentDialogueIndex != currentDialogueList.Count - 1)
+        if(currentDialogueIndex != currentDialogueList.Count - 1 && !ifFinishDialogue)
         {
             continueButton.SetActive(true);
             option1Button.SetActive(false);
@@ -72,7 +85,7 @@ public class UIManager : MonoBehaviour
             dialogueContent.text = currentDialogueList[currentDialogueIndex];
             currentDialogueIndex++;
         }
-        else
+        else if(!ifFinishDialogue)
         {
             continueButton.SetActive(false);
             option1Button.SetActive(true);
@@ -80,7 +93,53 @@ public class UIManager : MonoBehaviour
             dialogueContent.text = currentDialogueList[currentDialogueIndex];
             option1Content.text = currentOptionList[0];
             option2Content.text = currentOptionList[1];
+            ifFinishDialogue = true;
         }
+        else
+        {
+            if(ifCombat)
+            {
+                CombatantData.SetFormation(currentEnemyFormation);
+                SceneManager.LoadScene("Level-1");
+                DestroyCurrentNPC();
+            }
+            else
+            {
+                HideDialogue();
+                DestroyCurrentNPC();
+            }
+        }
+    }
+
+
+    public void GoToEndDialogue(int buttonId)
+    {
+        // Combat! -- Rin
+        if (buttonId == combatOptionId)
+        {
+            ifCombat = true;
+
+        }
+        // The player is good to go -- Rin
+        else
+        {
+            ifCombat = false;
+        }
+
+        dialogueContent.text = currentDialogueAfterOptionList[buttonId];
+        option1Button.SetActive(false);
+        option2Button.SetActive(false);
+        continueButton.SetActive(true);
+    }
+
+    public void BackToDialogue(int button)
+    {
+
+    }
+
+    public void DestroyCurrentNPC()
+    {
+        Destroy(currentTalkingNPC);
     }
 
 }

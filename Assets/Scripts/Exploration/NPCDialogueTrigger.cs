@@ -10,6 +10,11 @@ public class NPCDialogueTrigger : MonoBehaviour
     public string characterName;
     public List<string> dialogueList;
     public List<string> optionList;
+    public List<string> dialogueAfterOptionList;
+
+    public EnemyFormation enemyFormation;
+
+    public int combatOptionId;
     
 
     private void Start()
@@ -24,7 +29,12 @@ public class NPCDialogueTrigger : MonoBehaviour
             //Starts dialogue
             uiManager.currentDialogueList = dialogueList;
             uiManager.currentOptionList = optionList;
-            uiManager.ShowDialogue(characterName);             
+            uiManager.currentEnemyFormation = enemyFormation;
+            uiManager.combatOptionId = combatOptionId;
+            uiManager.currentDialogueAfterOptionList = dialogueAfterOptionList;
+            uiManager.currentTalkingNPC = this.gameObject;
+            uiManager.ifFinishDialogue = false;
+            uiManager.ShowDialogue(characterName);
         }
     }
     // Start is called before the first frame update
