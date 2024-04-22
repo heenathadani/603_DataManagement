@@ -89,11 +89,16 @@ public class CombatManager : MonoBehaviour
 
     private void SpawnEnemies()
     {
-        spawnManager.SetEnemiesToSpawn(dummyFormation.enemies.Count);
-        for (int i = 0; i < dummyFormation.enemies.Count; i++)
+        EnemyFormation spawnFormation = dummyFormation;
+        if (CombatantData.enemyCombatFormation != null)
+        {
+            spawnFormation = CombatantData.enemyCombatFormation;
+        }
+        spawnManager.SetEnemiesToSpawn(spawnFormation.enemies.Count);
+        for (int i = 0; i < spawnFormation.enemies.Count; i++)
         {
 
-            Enemy e = dummyFormation.enemies[i].Clone(i);
+            Enemy e = spawnFormation.enemies[i].Clone(i);
             e.SetSlider(uiManager.enemyHpSliderList[i]);
             CombatantData.enemies.Add(e);
             GameObject spawnedEnemy = spawnManager.SpawnEnemy(e);
