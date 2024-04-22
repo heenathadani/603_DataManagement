@@ -84,7 +84,6 @@ public class TurnStartState : aTurnState
             //Check if character dies, if dies, pass
             if(!CombatantData.partyCharacters[manager._currentTurn].isAlive())
             {
-                Debug.Log("Ally " + manager._currentTurn.ToString() + " is dead");
                 manager._currentTurn += 1;
                 if (manager._currentTurn > CombatantData.partyCharacters.Count - 1)
                 {

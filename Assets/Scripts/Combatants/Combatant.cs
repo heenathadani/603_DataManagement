@@ -287,8 +287,13 @@ namespace Combatant
 
             //Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
+            if (_currentHp <= 0)
+            {
+                CharacterDie();
+            }
+
             //Update Slider
-            if(combatantUI != null)
+            if (combatantUI != null)
             {
                 combatantUI.UpdateHPBar(_currentHp / _maxHp);
             }
@@ -312,8 +317,7 @@ namespace Combatant
             }
             if (ifEnd)
             {
-                Debug.Log("Game Over");
-                uiManager.GameOver();
+                uiManager.ShowGameOver();
             }
         }
     }
@@ -437,7 +441,7 @@ namespace Combatant
 
             if(ifEnd)
             {
-                uiManager.GameOver();
+                uiManager.ShowVictory();
             }
         }
 
