@@ -4,6 +4,7 @@ public static class CombatantData
 {
 
     public static List<Combatant.aCombatant> partyCharacters = new List<Combatant.aCombatant>();
+    public static EnemyFormation enemyCombatFormation = null;
     public static List<Combatant.aCombatant> enemies = new List<Combatant.aCombatant>();
 
     //Check player index
@@ -31,9 +32,15 @@ public static class CombatantData
         }
     }
 
+    public static void SetFormation(EnemyFormation formation)
+    {
+        enemyCombatFormation = formation;
+    }
+
     public static void Reset()
     {
         partyCharacters.Clear();
         enemies.Clear();
+        enemyCombatFormation = null;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Combatant;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum CombatActionTypes
@@ -63,6 +64,7 @@ public abstract class aCombatAction : ICombatAction
 {
     protected CombatActionTargets _targetType;
     public CombatActionTypes type;
+    protected UI_BattleFeedback battleLog;//Carrie: reference to the BattleFeedback script
 
     public CombatActionTargets GetActionTarget()
     {
@@ -103,9 +105,16 @@ public abstract class aCombatAction : ICombatAction
 
     protected void ShowActionFeedback(CombatTarget targetInformation, bool isDamage, int actionEffectValue)
     {
+        if(battleLog.IsUnityNull())//Carrie: gets a reference to the battle log if it doesn't already have one
+        {
+            battleLog = GameObject.FindGameObjectWithTag("BattleLog").GetComponent<UI_BattleFeedback>();
+        }
+
         if (isDamage)
         {
             targetInformation.targetUnit.combatantUI.DisplayDamage(actionEffectValue);
+
+            battleLog.updateBattleLog(actionEffectValue, type.ToString(), actingAgent.Name, targetInformation.targetUnit.Name);//Carrie: updates the battlelog
         }
     }
 }
@@ -143,7 +152,8 @@ public class DefendAction : aCombatAction
 {
     protected override void DoSelf(CombatTarget targetInformation)
     {
-        Debug.Log("I have defended");
+        // The defend action gives the defend condition
+        targetInformation.targetUnit.AddCondition(ConditionType.Defend);
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
@@ -172,7 +182,6 @@ public class PowerAction : aCombatAction
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
-        Debug.Log("Doing multitarget power");
         CombatantType sideBeingTargeted = targetInformation.sideBeingTargeted;
         List<aCombatant> whoThough;
         if (sideBeingTargeted == CombatantType.ALLIES)

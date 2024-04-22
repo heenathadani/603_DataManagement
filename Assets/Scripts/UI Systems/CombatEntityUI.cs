@@ -37,7 +37,6 @@ public class CombatEntityUI : MonoBehaviour
             float x = DamageNumbers.rectTransform.localPosition.x;
             float z = DamageNumbers.rectTransform.localPosition.z;
             float y = damageNumbersOriginalPosition.y + moveSpeed * i;
-            Debug.Log(y);
             DamageNumbers.rectTransform.localPosition = new Vector3(x, y, z);
             yield return new WaitForSeconds(0.1f);
         }

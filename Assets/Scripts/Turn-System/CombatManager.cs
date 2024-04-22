@@ -56,7 +56,7 @@ public class CombatManager : MonoBehaviour
         {
             SwitchSides();
         }
-        stateMachine.Next(TurnStateType.TURN_START);
+        stateMachine.Next(TurnStateType.UPDATE_CONDITIONS);
     }
 
     public void ExecuteCombatAction()
@@ -79,17 +79,26 @@ public class CombatManager : MonoBehaviour
         targetInformation = targetInfo;
         currentAction = action;
         action.SetActingAgent(CombatantData.GetGroup(_activeType)[playerIndex]);
+        if (action.GetActionTarget() == CombatActionTargets.Self)
+        {
+            targetInformation.targetUnit = _activeCombatants[_currentTurn];
+        }
         uiManager.ShowByTarget(targetInformation.typeOfTarget);
         stateMachine.Transition();
     }
 
     private void SpawnEnemies()
     {
-        spawnManager.SetEnemiesToSpawn(dummyFormation.enemies.Count);
-        for (int i = 0; i < dummyFormation.enemies.Count; i++)
+        EnemyFormation spawnFormation = dummyFormation;
+        if (CombatantData.enemyCombatFormation != null)
+        {
+            spawnFormation = CombatantData.enemyCombatFormation;
+        }
+        spawnManager.SetEnemiesToSpawn(spawnFormation.enemies.Count);
+        for (int i = 0; i < spawnFormation.enemies.Count; i++)
         {
 
-            Enemy e = dummyFormation.enemies[i].Clone(i);
+            Enemy e = spawnFormation.enemies[i].Clone(i);
             e.SetSlider(uiManager.enemyHpSliderList[i]);
             CombatantData.enemies.Add(e);
             GameObject spawnedEnemy = spawnManager.SpawnEnemy(e);

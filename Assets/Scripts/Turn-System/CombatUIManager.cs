@@ -18,6 +18,7 @@ public class CombatUIManager : MonoBehaviour
 
     //Temp need to have ui system after playtest1 -- Rin
     public GameObject endScreen;
+    public Tooltip tooltip;
 
     private void OnEnable()
     {

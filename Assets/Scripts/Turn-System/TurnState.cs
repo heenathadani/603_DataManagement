@@ -1,7 +1,10 @@
+using Combatant;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum TurnStateType
 {
+    UPDATE_CONDITIONS,
     TURN_START,
     SELECT_TARGET,
     SELECT_PART,
@@ -19,7 +22,6 @@ public static class StateFactory
         switch (type)
         {
             case TurnStateType.SELECT_TARGET:
-
                 return new SelectTargetState(sm);
             case TurnStateType.SELECT_PART:
                 return new SelectPartState(sm);
@@ -31,6 +33,8 @@ public static class StateFactory
                 return new ExecutingActionState(sm);
             case TurnStateType.ACTION_DONE:
                 return new ActionDoneState(sm);
+            case TurnStateType.UPDATE_CONDITIONS:
+                return new UpdateConditionState(sm);
             default:
                 return new TurnStartState(sm);
         }
@@ -257,6 +261,10 @@ public class ActionDoneState : aTurnState
 
     protected override void OnEnter(CombatManager manager)
     {
+        // Apply the effects of any active conditions
+        aCombatant who = CombatantData.GetGroup(manager._activeType)[manager._currentTurn];
+        who.ApplyConditions();
+
         CombatUIManager uiManager = manager.gameObject.GetComponent<CombatUIManager>();
         if (manager._activeType == Combatant.CombatantType.ALLIES)
         {
@@ -304,6 +312,29 @@ public class CancelAction : aTurnState
     protected override void OnCancel(CombatManager manager)
     {
 
+    }
+    protected override void OnExit(CombatManager manager)
+    {
+        stateMachine.Next(TurnStateType.TURN_START);
+    }
+}
+
+public class UpdateConditionState : aTurnState
+{
+    public UpdateConditionState(TurnStateMachine sm)
+    {
+        stateMachine = sm;
+    }
+
+    protected override void OnEnter(CombatManager manager)
+    {
+        List<aCombatant> who = CombatantData.GetGroup(manager._activeType);
+        who[manager._currentTurn].UpdateActiveConditions();
+        Exit(manager);
+    }
+    protected override void OnCancel(CombatManager manager)
+    {
+        // This step can't be cancelled and happens automatically
     }
     protected override void OnExit(CombatManager manager)
     {
