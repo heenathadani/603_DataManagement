@@ -21,7 +21,7 @@ public class CombatUIManager : MonoBehaviour
     public GameObject victoryScreen;
     public Tooltip tooltip;
 
-    private void OnEnable()
+    public void Setup()
     {
         playerUIs = new List<CombatEntityUI>();
         enemyUIs = new List<CombatEntityUI>();

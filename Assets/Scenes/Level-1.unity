@@ -426,10 +426,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4610102103032403014, guid: b8de35eb8bf451b4c800671986c75798,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610102103032403014, guid: b8de35eb8bf451b4c800671986c75798,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610102103032403014, guid: b8de35eb8bf451b4c800671986c75798,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 431.8601
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610102103032403014, guid: b8de35eb8bf451b4c800671986c75798,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 127.31509
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610102103032403014, guid: b8de35eb8bf451b4c800671986c75798,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 215.93005
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610102103032403014, guid: b8de35eb8bf451b4c800671986c75798,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -63.657543
+      objectReference: {fileID: 0}
     - target: {fileID: 5028514164486557670, guid: b8de35eb8bf451b4c800671986c75798,
         type: 3}
       propertyPath: m_Name
       value: In-Game UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421400808205661610, guid: b8de35eb8bf451b4c800671986c75798,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

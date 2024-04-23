@@ -158,6 +158,7 @@ public class CombatManager : MonoBehaviour
     private void OnEnable()
     {
         uiManager = GetComponent<CombatUIManager>();
+        uiManager.Setup();
         stateMachine = new TurnStateMachine(this);
         activeEnemies = new List<EnemyGameObject>();
         SpawnCharacters();
