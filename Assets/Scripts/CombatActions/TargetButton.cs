@@ -10,6 +10,7 @@ public class TargetButton : MonoBehaviour
     {
         if(type == CombatActionTargets.SingleEnemyBodyPart)
         {
+            Debug.Log("On Click Index" + targetIndex.ToString());
             GetComponentInParent<CombatManager>().SetPartIndex(targetIndex);
         } else
         {

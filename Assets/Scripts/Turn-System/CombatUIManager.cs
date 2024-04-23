@@ -66,6 +66,7 @@ public class CombatUIManager : MonoBehaviour
         List<Button> buttonOptions = enemyUIs[enemy].GetButtons();
         for (int i = 0; i < unit._bodyPartsInventory.Count; i++)
         {
+            //Debug.Log(unit._bodyPartsInventory[i].bodyPartData.bodyPartName + " " + unit._bodyPartsInventory[i].currentHp);
             if (unit._bodyPartsInventory[i].currentHp <= 0)
             {
                 buttonOptions[i].gameObject.SetActive(false);

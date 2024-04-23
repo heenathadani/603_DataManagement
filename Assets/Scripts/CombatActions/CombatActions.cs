@@ -145,9 +145,9 @@ public class AttackAction : aCombatAction
         int attackDamage = (int)-targetInformation.actingUnit._attackPoint;
         aCombatant target = targetInformation.targetUnit;
         attackDamage = Mathf.Min(0, attackDamage + (int)target._bodyPartsInventory[partIndex].bodyPartData.shieldPoint);
-        targetInformation.targetUnit.AffectBodyPartByIndex(partIndex, attackDamage);
+        float finalDamage = targetInformation.targetUnit.AffectBodyPartByIndex(partIndex, attackDamage);
         targetInformation.targetUnit.UpdateStatus();
-        ShowActionFeedback(targetInformation, true, -attackDamage);
+        ShowActionFeedback(targetInformation, true, (int)-finalDamage);
     }
 }
 

@@ -53,6 +53,7 @@ namespace Combatant
         public float _maxEnergy;
         public float _attackPoint;
         public float _shieldPoint;
+        protected float _shieldDecrease;
         public abstract string Name { get; }
         public CombatEntityUI combatantUI;
 
@@ -194,10 +195,16 @@ namespace Combatant
         }
 
         //Damage on the body part -- Rin
-        public void AffectBodyPartByIndex(int index, float value)
+        public float AffectBodyPartByIndex(int index, float value)
         {
-            _bodyPartsInventory[index].currentHp += value;
-
+            float finalVal = value;
+            BodyPart bp = _bodyPartsInventory[index];
+            if (bp.bodyPartData.type == BodyPartType.Body)
+            {
+                finalVal -= _shieldDecrease;
+            }
+            bp.currentHp += finalVal;
+            return finalVal;
         }
 
         public void SetSlider(Slider s)
@@ -356,6 +363,7 @@ namespace Combatant
             _currentHp = 0;
             _shieldPoint = 0;
             _attackPoint = 0;
+            _shieldDecrease = 0;
             //Calculate status -- Rin
             foreach (BodyPart bd in _bodyPartsInventory)
             {
@@ -363,6 +371,7 @@ namespace Combatant
                 {
                     _maxHp += bd.GetMaxHp();
                     _currentHp += bd.currentHp;
+                    _shieldDecrease += (int)bd.bodyPartData.shieldPoint;
                     continue;
                 }
 
@@ -388,6 +397,8 @@ namespace Combatant
             {
                 combatantUI.UpdateHPBar(_currentHp / _maxHp);
             }
+
+            
             
         }
 
