@@ -132,14 +132,11 @@ public class UIManager : MonoBehaviour
         continueButton.SetActive(true);
     }
 
-    public void BackToDialogue(int button)
-    {
-
-    }
 
     public void DestroyCurrentNPC()
     {
         Destroy(currentTalkingNPC);
     }
+
 
 }
