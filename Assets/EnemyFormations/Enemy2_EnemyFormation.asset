@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa3e95ad33f6f4548a32a60c0045f11f, type: 3}
+  m_Name: Enemy2_EnemyFormation
+  m_EditorClassIdentifier: 
+  enemies:
+  - _currentHp: 0
+    _currentEnergy: 0
+    _maxEnergy: 100
+    _attackPoint: 0
+    _shieldPoint: 0
+    combatantUI: {fileID: 0}
+    _name: Bruiser 1
+    _id: 0
+    _bodyPartsInventory:
+    - bodyPartData: {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
+      currentHp: 0
+    - bodyPartData: {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
+      currentHp: 0
+    - bodyPartData: {fileID: 11400000, guid: 094a72e30c523c8499c4f37cc31d2dbc, type: 2}
+      currentHp: 0
+    _powers: []
+    aiType: 2
+  - _currentHp: 0
+    _currentEnergy: 0
+    _maxEnergy: 100
+    _attackPoint: 0
+    _shieldPoint: 0
+    combatantUI: {fileID: 0}
+    _name: Bruiser 2
+    _id: 1
+    _bodyPartsInventory:
+    - bodyPartData: {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
+      currentHp: 0
+    - bodyPartData: {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
+      currentHp: 0
+    - bodyPartData: {fileID: 11400000, guid: 434665235acec1d4a8963c294a2b228d, type: 2}
+      currentHp: 0
+    _powers: []
+    aiType: 2
+  - _currentHp: 0
+    _currentEnergy: 0
+    _maxEnergy: 100
+    _attackPoint: 0
+    _shieldPoint: 0
+    combatantUI: {fileID: 0}
+    _name: Bruiser 3
+    _id: 2
+    _bodyPartsInventory:
+    - bodyPartData: {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
+      currentHp: 0
+    - bodyPartData: {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
+      currentHp: 0
+    - bodyPartData: {fileID: 11400000, guid: 094a72e30c523c8499c4f37cc31d2dbc, type: 2}
+      currentHp: 0
+    _powers: []
+    aiType: 2

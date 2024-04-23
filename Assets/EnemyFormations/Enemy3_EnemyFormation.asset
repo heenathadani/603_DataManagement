@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa3e95ad33f6f4548a32a60c0045f11f, type: 3}
-  m_Name: Character1_EnemyFormation
+  m_Name: Enemy3_EnemyFormation
   m_EditorClassIdentifier: 
   enemies:
   - _currentHp: 0
@@ -32,7 +32,7 @@ MonoBehaviour:
     aiType: 2
   - _currentHp: 0
     _currentEnergy: 0
-    _maxEnergy: 0
+    _maxEnergy: 100
     _attackPoint: 0
     _shieldPoint: 0
     combatantUI: {fileID: 0}
@@ -43,13 +43,13 @@ MonoBehaviour:
       currentHp: 0
     - bodyPartData: {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
       currentHp: 0
-    - bodyPartData: {fileID: 11400000, guid: 434665235acec1d4a8963c294a2b228d, type: 2}
+    - bodyPartData: {fileID: 11400000, guid: 094a72e30c523c8499c4f37cc31d2dbc, type: 2}
       currentHp: 0
     _powers: []
     aiType: 2
   - _currentHp: 0
     _currentEnergy: 0
-    _maxEnergy: 0
+    _maxEnergy: 100
     _attackPoint: 0
     _shieldPoint: 0
     combatantUI: {fileID: 0}

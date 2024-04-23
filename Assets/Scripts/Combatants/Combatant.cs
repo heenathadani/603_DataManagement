@@ -304,7 +304,7 @@ namespace Combatant
         {
             // Hide character Ui -- Rin
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-            uiManager.characterHpSliderList[_id].gameObject.SetActive(false);
+            //uiManager.characterHpSliderList[_id].gameObject.SetActive(false);
 
             bool ifEnd = true;
             // Check Combat End
@@ -426,7 +426,7 @@ namespace Combatant
         {
             // Hide enemy Ui -- Rin
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-            uiManager.enemyHpSliderList[_id].gameObject.SetActive(false);
+            //uiManager.enemyHpSliderList[_id].gameObject.SetActive(false);
             combatantUI.Disable();
 
             bool ifEnd = true;
