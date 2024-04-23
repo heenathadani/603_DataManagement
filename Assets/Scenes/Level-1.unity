@@ -1659,6 +1659,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5477325140303055257, guid: f9855c0a323c7ff49a371d873243fafc,
+        type: 3}
+      propertyPath: instructions.Array.data[0]
+      value: "user<V1R.91-L> Systems.Party.Connect(\u201C0-VD\u201D); user<V1R.91-L>
+        Systems.Party.Connect.(\u201CHR.4c3\u201D); user<V1R.91-L> Systems.Party.SetMission(Find(\u201CB33-TR1S\u201D));
+        Master Boot Record Recovered "
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477325140303055257, guid: f9855c0a323c7ff49a371d873243fafc,
+        type: 3}
+      propertyPath: instructions.Array.data[1]
+      value: user<V1R.91-L> Systems.SetPersonality(V1R.91-L);
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477325140303055257, guid: f9855c0a323c7ff49a371d873243fafc,
+        type: 3}
+      propertyPath: instructions.Array.data[2]
+      value: user<V1R.91-L> Query(Systems.Combat.SelectTARGET_LFT_CLCK.isOnline);
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477325140303055257, guid: f9855c0a323c7ff49a371d873243fafc,
+        type: 3}
+      propertyPath: instructions.Array.data[3]
+      value: user<V1R.91-L> Systems.Combat.Target.Select(TargetComponents.isActive());
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477325140303055257, guid: f9855c0a323c7ff49a371d873243fafc,
+        type: 3}
+      propertyPath: instructions.Array.data[4]
+      value: user<V1R.91-L> Query(Systems.Combat.Defend_LFT_CLCK.isOnline);
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477325140303055257, guid: f9855c0a323c7ff49a371d873243fafc,
+        type: 3}
+      propertyPath: instructions.Array.data[5]
+      value: user<V1R.91-L> Systems.Party.Next();
+      objectReference: {fileID: 0}
     - target: {fileID: 5761669526459507521, guid: f9855c0a323c7ff49a371d873243fafc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
