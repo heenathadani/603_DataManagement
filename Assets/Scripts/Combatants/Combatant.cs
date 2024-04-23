@@ -359,6 +359,13 @@ namespace Combatant
             //Calculate status -- Rin
             foreach (BodyPart bd in _bodyPartsInventory)
             {
+                if (bd.currentHp <= 0)
+                {
+                    _maxHp += bd.GetMaxHp();
+                    _currentHp += bd.currentHp;
+                    continue;
+                }
+
                 //Update Hp
                 _maxHp += bd.bodyPartData.maxHp;
                 _currentHp += bd.currentHp;
@@ -371,10 +378,10 @@ namespace Combatant
             //Enemy Dies
             if(_currentHp <= 0)
             {
+                Debug.Log("Enemy is dead");
                 EnemyDie();
             }
 
-            //Debug.Log("Enermy Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
 
             //Update Slider
             if(combatantUI != null)

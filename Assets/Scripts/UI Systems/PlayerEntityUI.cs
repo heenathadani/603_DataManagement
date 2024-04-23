@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,11 @@ public class PlayerEntityUI : CombatEntityUI
     public override void HideOptions()
     {
         base.HideOptions();
+    }
+
+    public override List<Button> GetButtons()
+    {
+        return base.GetButtons();
     }
 
     public override void Disable()

@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,5 +35,15 @@ public class EnemyEntityUI : CombatEntityUI
     public override void SetUp(int i)
     {
         enemySelectButton.GetComponent<TargetButton>().targetIndex = i;
+    }
+
+    public override List<Button> GetButtons()
+    {
+        List<Button> buttons = new List<Button>();
+        foreach(Transform child in targetButtons.transform)
+        {
+            buttons.Add(child.gameObject.GetComponent<Button>());
+        }
+        return buttons;
     }
 }

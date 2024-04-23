@@ -80,7 +80,6 @@ public class TurnStartState : aTurnState
         CombatUIManager uiManager = manager.gameObject.GetComponent<CombatUIManager>();
         if (manager._activeType == Combatant.CombatantType.ALLIES)
         {
-            Debug.Log("Ally turn");
             //Check if character dies, if dies, pass
             if(!CombatantData.partyCharacters[manager._currentTurn].isAlive())
             {
@@ -184,7 +183,7 @@ public class SelectPartState : aTurnState
         CombatTarget targetInformation = manager.GetCombatTargetInformation();
         if (targetInformation.sideBeingTargeted == Combatant.CombatantType.ENEMIES)
         {
-            uiManager.ShowPartButtons(manager.GetCombatTargetInformation().targetIndex);
+            uiManager.ShowPartButtons(targetInformation.targetIndex, targetInformation.targetUnit);
         }
 
         uiManager.ShowPlayerActionButtons(10);
@@ -290,7 +289,7 @@ public class ActionDoneState : aTurnState
 
     protected override void OnExit(CombatManager manager)
     {
-        manager.DoAction();
+        manager.EndTurn();
     }
 }
 

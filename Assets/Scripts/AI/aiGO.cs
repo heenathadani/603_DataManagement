@@ -13,6 +13,7 @@ public class EnemyGameObject : aCombatObject
         // Pick who I want to target
         CombatTarget targetInformation = new();
         aCombatant target = strategy.PickTarget();
+        targetInformation.actingUnit = _combatantData;
         targetInformation.targetUnit = target;
         targetInformation.sideBeingTargeted = target.GetSide();
 
