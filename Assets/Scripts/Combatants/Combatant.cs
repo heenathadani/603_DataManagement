@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,7 +67,7 @@ namespace Combatant
 
         //Store the body part lists in the inventory 
         [SerializeField]
-        public List<BodyPart> _bodyPartsInventory = new List<BodyPart>();
+        public Dictionary<BodyPartType, BodyPart> _equipment = new Dictionary<BodyPartType, BodyPart>();
         protected List<ConditionData> _conditions = new List<ConditionData>();
 
         //Store the powers in a list - need to figure out how to populate this
@@ -123,95 +124,16 @@ namespace Combatant
 
             return result;
         }
-        public float GetStatByType(StatType type)
-        {
-            switch (type)
-            {
-                case StatType.Energy:
-                    return _currentEnergy;
-                case StatType.Attack:
-                    return _attackPoint;
-                case StatType.Shield:
-                    return _shieldPoint;
-                default:
-                    return _currentHp;
-            }
-        }
-
-        public void AffectStatByType(StatType type, float value)
-        {
-            switch (type)
-            {
-                case StatType.Energy:
-                    Mathf.Clamp(_currentEnergy + value, 0, _maxEnergy);
-                    break;
-                case StatType.Attack:
-                    if (_attackPoint + value < 0)
-                    {
-                        _attackPoint = 0;
-                    }
-                    else
-                    {
-                        _attackPoint += value;
-                    }
-                    break;
-                case StatType.Shield:
-                    if (_shieldPoint + value < 0)
-                    {
-                        _shieldPoint = 0;
-                    }
-                    else
-                    {
-                        _shieldPoint += value;
-                    }
-                    break;
-                default:
-                    Mathf.Clamp(_currentHp + value, 0, _maxHp);
-                    break;
-            }
-        }
 
         public CombatantType GetSide()
         {
             return _side;
         }
 
-        public void AffectBodyPartByType(BodyPartType part, float value)
-        {
-            // For now, let's keep it so we can only diminish part HP
-            foreach (BodyPart bodyPart in _bodyPartsInventory)
-            {
-                if (bodyPart.bodyPartData.type == part)
-                {
-                    bodyPart.UpdateCurrentHP(value);
-                }
-            }
-            combatantUI.DisplayDamage((int)value);
-        }
-
-        public void AddBodyPart(BodyPart bp)
-        {
-            _bodyPartsInventory.Add(bp);
-        }
-
-        //Damage on the body part -- Rin
-        public float AffectBodyPartByIndex(int index, float value)
-        {
-            float finalVal = value;
-            BodyPart bp = _bodyPartsInventory[index];
-            if (bp.bodyPartData.type == BodyPartType.Body)
-            {
-                finalVal -= _shieldDecrease;
-            }
-            bp.currentHp += finalVal;
-            return finalVal;
-        }
-
         public void SetSlider(Slider s)
         {
             _hpSlider = s;
         }
-        public abstract void UpdateStatus();
 
         // Conditions stuff
         public void AddCondition(ConditionType condition)
@@ -265,68 +187,8 @@ namespace Combatant
             _name = name;
             _id = id;
             _side = CombatantType.ALLIES;
-
         }
 
-        //Add body part to an protagonist's inventory -- Rin
-
-
-        //Update the status (HP) -- Rin
-        public override void UpdateStatus()
-        {
-            _maxHp = 0;
-            _currentHp = 0;
-            _shieldPoint = 0;
-            _attackPoint = 0;
-            //Calculate status -- Rin
-            foreach (BodyPart bd in _bodyPartsInventory)
-            {
-                //Update Hp
-                _maxHp += bd.bodyPartData.maxHp;
-                _currentHp += bd.currentHp;
-
-                //Update attack point
-                _attackPoint += bd.bodyPartData.attackPoint;
-
-                //Update shield point
-                _shieldPoint += bd.bodyPartData.shieldPoint;
-            }
-
-            //Debug.Log("Character Id:" + _id + "Max HP: " + _maxHp + ", Current HP: " + _currentHp);
-
-            if (_currentHp <= 0)
-            {
-                CharacterDie();
-            }
-
-            //Update Slider
-            if (combatantUI != null)
-            {
-                combatantUI.UpdateHPBar(_currentHp / _maxHp);
-            }
-
-        }
-
-        public void CharacterDie()
-        {
-            // Hide character Ui -- Rin
-            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-            //uiManager.characterHpSliderList[_id].gameObject.SetActive(false);
-
-            bool ifEnd = true;
-            // Check Combat End
-            foreach (Protagonist e in CombatantData.partyCharacters)
-            {
-                if (e.isAlive())
-                {
-                    ifEnd = false;
-                }
-            }
-            if (ifEnd)
-            {
-                uiManager.ShowGameOver();
-            }
-        }
     }
 
     [Serializable]
@@ -348,79 +210,16 @@ namespace Combatant
             }
         }
 
-
-        public override void UpdateStatus()
-        {
-
-            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-            if (uiManager.enemyHpSliderList.Count > 0)
-            {
-                _hpSlider = uiManager.enemyHpSliderList[_id];
-            }
-
-
-            _maxHp = 0;
-            _currentHp = 0;
-            _shieldPoint = 0;
-            _attackPoint = 0;
-            _shieldDecrease = 0;
-            //Calculate status -- Rin
-            foreach (BodyPart bd in _bodyPartsInventory)
-            {
-                if (bd.currentHp <= 0)
-                {
-                    _maxHp += bd.GetMaxHp();
-                    _currentHp += bd.currentHp;
-                    _shieldDecrease += (int)bd.bodyPartData.shieldPoint;
-                    continue;
-                }
-
-                //Update Hp
-                _maxHp += bd.bodyPartData.maxHp;
-                _currentHp += bd.currentHp;
-
-                //Update attack point
-                _attackPoint += bd.bodyPartData.attackPoint;
-                _shieldPoint += bd.bodyPartData.shieldPoint;
-            }
-
-            //Enemy Dies
-            if(_currentHp <= 0)
-            {
-                Debug.Log("Enemy is dead");
-                EnemyDie();
-            }
-
-
-            //Update Slider
-            if(combatantUI != null)
-            {
-                combatantUI.UpdateHPBar(_currentHp / _maxHp);
-            }
-
-            
-            
-        }
-
-        public void Reset()
-        {
-            foreach (BodyPart bd in _bodyPartsInventory)
-            {
-                //Update Hp
-                bd.currentHp = bd.GetMaxHp();
-            }
-        }
-
         public Enemy Clone(int id)
         {
             Enemy e = new Enemy(_name, id);
             e._side = CombatantType.ENEMIES;
             e.aiType = aiType;
-            e._bodyPartsInventory = new List<BodyPart>();
+            e._equipment = new Dictionary<BodyPartType,BodyPart>();
             e._powers = new List<Power>();
-            foreach(BodyPart part in _bodyPartsInventory)
+            foreach(KeyValuePair<BodyPartType, BodyPart> kvp in _equipment)
             {
-                e._bodyPartsInventory.Add(part.Clone());
+                e._equipment.Add(kvp.Key, kvp.Value.Clone());
             }
 
             foreach(Power p in _powers)
@@ -439,34 +238,5 @@ namespace Combatant
             }
         }
 
-        // When the enemy dies
-        public void EnemyDie()
-        {
-            // Hide enemy Ui -- Rin
-            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-            //uiManager.enemyHpSliderList[_id].gameObject.SetActive(false);
-            combatantUI.Disable();
-
-            bool ifEnd = true;
-            //Check Combat End
-            foreach(Enemy e in CombatantData.enemies)
-            {
-                if(e.isAlive())
-                {
-                    ifEnd = false;
-                }
-            }
-
-            if(ifEnd)
-            {
-                uiManager.ShowVictory();
-            }
-        }
-
-
-        public void InitializeBodyPart()
-        {
-
-        }
     }
 }

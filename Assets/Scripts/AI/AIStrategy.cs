@@ -4,6 +4,7 @@ namespace Combatant
 {
     public enum AITypes
     {
+        Basic,
         Support,
         Disabler,
         Bruiser,
@@ -32,7 +33,7 @@ namespace Combatant
     {
         public aCombatAction PickAction(aCombatant target);
         public aCombatant PickTarget();
-        public int PickPartIndex(aCombatant target);
+        public BodyPartType PickPart(aCombatant target);
         public void SetCombatant(aCombatant me);
         public Power PickPower(aCombatant targt, CombatActionTargets targetType);
     }
@@ -71,23 +72,21 @@ namespace Combatant
             return chosenAction;
         }
 
-        public int PickPartIndex(aCombatant target)
+        public BodyPartType PickPart(aCombatant target)
         {
             float maxThreat = -1;
-            int finalIndex = 0;
+            BodyPartType finalType = BodyPartType.Body;
 
-            for(int i = 0; i < target._bodyPartsInventory.Count; i++)
+            foreach(KeyValuePair<BodyPartType, BodyPart> kvp  in target._equipment)
             {
-                BodyPart part = target._bodyPartsInventory[i];
-                float currentThreat = CalculatePartThreat(part);
+                float currentThreat = CalculatePartThreat(kvp.Value);
                 if (currentThreat > maxThreat)
                 {
                     maxThreat = currentThreat;
-                    finalIndex = i;
+                    finalType = kvp.Key;
                 }
-
             }
-            return finalIndex;
+            return finalType;
         }
         public aCombatant PickTarget()
         {
@@ -159,7 +158,7 @@ namespace Combatant
 
         protected override float CalculatePartThreat(BodyPart part)
         {
-            return 10 * (1 - (part.currentHp / part.GetMaxHp()));
+            return 10 * (1 - (part.bodyPartStats.remainingHealth));
         }
         protected override float CalculateThreat(aCombatant candidate)
         {
@@ -186,7 +185,7 @@ namespace Combatant
     {
         protected override float EvaluatePower(aCombatant target, Power p)
         {
-            float value = p.effectModifier * myself.GetStatByType(p.statAugmentingThisPower);
+            float value = 0;
             return value;
         }
         protected override CombatActionTypes PickPreferredAction(aCombatant target)
@@ -227,7 +226,7 @@ namespace Combatant
         }
         protected override float CalculatePartThreat(BodyPart part)
         {
-            return 10 * (1 - (part.currentHp / part.GetMaxHp()));
+            return 10 * (1 - (part.bodyPartStats.remainingHealth));
         }
         protected override float CalculateThreat(aCombatant candidate)
         {
@@ -263,7 +262,7 @@ namespace Combatant
         }
         protected override float CalculatePartThreat(BodyPart part)
         {
-            return 10 * (1 - (part.currentHp / part.GetMaxHp()));
+            return 10 * (1 - (part.bodyPartStats.remainingHealth));
         }
         // Still needs to be defined
         protected override float CalculateThreat(aCombatant candidate)
@@ -290,9 +289,8 @@ namespace Combatant
         }
         protected override float CalculatePartThreat(BodyPart part)
         {
-            float healthConsideration = 10 * (1 - (part.currentHp / part.GetMaxHp()));
-            float bonusForStats = part.bodyPartData.attackPoint + part.bodyPartData.shieldPoint;
-            return healthConsideration * bonusForStats;
+            float healthConsideration = 10 * (1 - (part.bodyPartStats.remainingHealth));
+            return healthConsideration;
         }
 
         protected override float CalculateThreat(aCombatant candidate)
