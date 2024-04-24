@@ -6,17 +6,12 @@ using UnityEngine;
 [CreateAssetMenu]
 public class BodyPartData : ScriptableObject
 {
-    public BodyPartType type;
-    public string bodyPartName;
-    //Image show in inventory
-    public Sprite bodyPartImage;
+    public BodyPartStats stats;
 
-    //Stats
-    public float maxHp;
-
-    public float attackPoint;
-
-    public float shieldPoint;
-
-
+    public BodyPartStats Clone()
+    {
+        return new BodyPartStats(
+            stats.effectValue, stats.image, stats.partName, stats.type
+            );
+    }
 }
