@@ -1,4 +1,5 @@
 using Combatant;
+using UnityEngine;
 
 public class EnemyGameObject : aCombatObject
 {
@@ -13,6 +14,7 @@ public class EnemyGameObject : aCombatObject
         // Pick who I want to target
         CombatTarget targetInformation = new();
         aCombatant target = strategy.PickTarget();
+
         targetInformation.actingUnit = _combatantData;
         targetInformation.targetUnit = target;
         targetInformation.sideBeingTargeted = target.GetSide();
@@ -30,7 +32,7 @@ public class EnemyGameObject : aCombatObject
         {
             targetInformation.partType = strategy.PickPart(target);
         }
-
+        
         // Do the thing
         mng.SetAIAction(action);
         mng.SetCombatTarget(targetInformation);

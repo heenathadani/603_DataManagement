@@ -6,10 +6,7 @@ namespace Combatant
     public enum AITypes
     {
         Basic,
-        Support,
-        Disabler,
-        Bruiser,
-        ThreatHunter
+        Bruiser
     }
 
     public static class AIFactory
@@ -18,12 +15,8 @@ namespace Combatant
         {
             switch (type)
             {
-                case AITypes.Disabler:
-                    return new DisablerStrategy();
                 case AITypes.Bruiser:
                     return new BruiserStrategy();
-                case AITypes.ThreatHunter:
-                    return new ThreatHunterStrategy();
                 default:
                     return new BasicStrategy();
             }
@@ -163,12 +156,13 @@ namespace Combatant
 
         protected override float CalculateThreat(aCombatant candidate)
         {
-            float result = 0;
+            // Pick a random target
             if (candidate.GetSide() == CombatantType.ENEMIES)
             {
-                return result;
+                // Ignore other enemies
+                return -1;
             }
-            return result;
+            return UnityEngine.Random.Range(0.0f, 1.0f) * 10;
 
         }
     }
@@ -227,70 +221,6 @@ namespace Combatant
 
             result += 10 * (1 - candidate.GetStatValue(StatType.Armor));
             return result;
-        }
-    }
-
-    // The threat hunter needs to keep a running tally of threat by player actions. This will likely require a separate
-    // analysis method.
-    public class ThreatHunterStrategy : aAIStrategy
-    {
-        protected override CombatActionTypes PickPreferredAction(aCombatant target)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override float EvaluatePower(aCombatant target, Power p)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override CombatActionTargets PickActionTarget(CombatActionTypes type)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override float CalculatePartThreat(BodyPart part)
-        {
-            return 10 * (1 - (part.bodyPartStats.remainingHealth));
-        }
-        // Still needs to be defined
-        protected override float CalculateThreat(aCombatant candidate)
-        {
-            return 0;
-        }
-    }
-
-
-    // The disabler hunts for parts that will diminish player output the most
-    public class DisablerStrategy : aAIStrategy
-    {
-        protected override CombatActionTypes PickPreferredAction(aCombatant target)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override float EvaluatePower(aCombatant target, Power p)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override CombatActionTargets PickActionTarget(CombatActionTypes type)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override float CalculatePartThreat(BodyPart part)
-        {
-            float healthConsideration = 10 * (1 - (part.bodyPartStats.remainingHealth));
-            return healthConsideration;
-        }
-
-        protected override float CalculateThreat(aCombatant candidate)
-        {
-            float result = 0;
-            if (candidate.GetSide() == CombatantType.ENEMIES)
-            {
-                return result;
-            }
-
-
-
-            return result;
-
         }
     }
 }
