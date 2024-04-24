@@ -140,14 +140,17 @@ public class AttackAction : aCombatAction
         // Roll for attack
         float chance = targetInformation.actingUnit.GetStatValue(StatType.HitRate) - targetInformation.targetUnit.GetStatValue(StatType.Evasion);
         bool attackSuccess = Random.Range(0.0f, 1.0f) <= chance;
+        
         // Handle miss
         if (!attackSuccess)
         {
             targetInformation.targetUnit.combatantUI.DisplayMiss();
             return;
         }
+
         // Deal Damage
         float damage = targetInformation.actingUnit.GetStatValue(StatType.Damage) - targetInformation.targetUnit.GetStatValue(StatType.Armor);
+        targetInformation.targetUnit.DamageBodyPart(targetInformation.partType, damage);
     }
 }
 
@@ -179,7 +182,6 @@ public class PowerAction : aCombatAction
     protected override void DoSelf(CombatTarget targetInformation)
     {
         aCombatant target = targetInformation.targetUnit;
-        actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
     }
     protected override void DoMultiTarget(CombatTarget targetInformation)
     {
@@ -204,7 +206,6 @@ public class PowerAction : aCombatAction
             }
             target.combatantUI.DisplayDamage(summedTotal);
         }
-        actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
     }
 
     protected override void DoSingleTarget(CombatTarget targetInformation)
@@ -212,7 +213,6 @@ public class PowerAction : aCombatAction
         aCombatant target = targetInformation.targetUnit;
         int damage = (int) targetInformation.selectedPower.GetTotalEffect(actingAgent);
         ShowActionFeedback(targetInformation, true, damage);
-        actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
     }
 
     protected override void DoSingleBodyPart(CombatTarget targetInformation)
@@ -220,7 +220,6 @@ public class PowerAction : aCombatAction
         aCombatant target = targetInformation.targetUnit;
         int totalEffect = (int) targetInformation.selectedPower.GetTotalEffect(actingAgent);
         ShowActionFeedback(targetInformation, true, totalEffect);
-        actingAgent._currentEnergy -= targetInformation.selectedPower.cost;
     }
 }
 

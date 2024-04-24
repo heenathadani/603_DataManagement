@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Combatant
@@ -24,7 +25,7 @@ namespace Combatant
                 case AITypes.ThreatHunter:
                     return new ThreatHunterStrategy();
                 default:
-                    return new SupportStrategy();
+                    return new BasicStrategy();
             }
         }
     }
@@ -131,51 +132,44 @@ namespace Combatant
         }
     }
 
-    // The support gives priority to its own team
-    public class SupportStrategy : aAIStrategy
+    public class BasicStrategy : aAIStrategy
     {
         protected override CombatActionTypes PickPreferredAction(aCombatant target)
         {
-            if (myself._powers.Count > 0)
-            {
-                return CombatActionTypes.Power;
-            }
-            if (target.GetSide() == CombatantType.ENEMIES)
+            if (target == null)
             {
                 return CombatActionTypes.Defend;
             }
             return CombatActionTypes.Attack;
         }
-
         protected override float EvaluatePower(aCombatant target, Power p)
         {
-            throw new System.NotImplementedException();
+            float value = 0;
+            return value;
         }
         protected override CombatActionTargets PickActionTarget(CombatActionTypes type)
         {
-            throw new System.NotImplementedException();
+            if (type == CombatActionTypes.Defend)
+            {
+                return CombatActionTargets.Self;
+            }
+            return CombatActionTargets.SingleAllyBodyPart;
         }
-
         protected override float CalculatePartThreat(BodyPart part)
         {
-            return 10 * (1 - (part.bodyPartStats.remainingHealth));
+            // Pick a random body part
+            return UnityEngine.Random.Range(0.0f, 1.0f) * 10;
         }
+
         protected override float CalculateThreat(aCombatant candidate)
         {
             float result = 0;
             if (candidate.GetSide() == CombatantType.ENEMIES)
             {
-                result += 10;
-
-            }
-            if (candidate.GetSide() == CombatantType.ALLIES)
-            {
-                if (candidate.isCritical())
-                {
-                    result += 100;
-                }
+                return result;
             }
             return result;
+
         }
     }
 
@@ -193,11 +187,6 @@ namespace Combatant
             if (target == null)
             {
                 return CombatActionTypes.Defend;
-            }
-
-            if (myself._powers.Count > 0 && myself.hasPowersToCast())
-            {
-                return CombatActionTypes.Power;
             }
             return CombatActionTypes.Attack;
         }
@@ -233,13 +222,10 @@ namespace Combatant
             float result = 0;
             if (candidate.GetSide() == CombatantType.ENEMIES)
             {
-                return -2;
+                return -200;
             }
 
-            CombatStats candidateStats = candidate.GetStats();
-            result += 10 * (1 - (candidateStats.currentHp / candidateStats.maxHp));
-            result += candidateStats.attackValue;
-            result -= candidateStats.shieldValue * 0.1f;
+            result += 10 * (1 - candidate.GetStatValue(StatType.Armor));
             return result;
         }
     }

@@ -46,16 +46,9 @@ namespace Combatant
 
     public abstract class aCombatant
     {
-        //Below are the combat related attributes -- Rin
-        protected float _maxHp;
-        [HideInInspector]
-        public float _currentHp;
-        public float _currentEnergy;
-        public float _maxEnergy;
-        public float _attackPoint;
-        public float _shieldPoint;
-        protected float _shieldDecrease;
+
         public abstract string Name { get; }
+        [HideInInspector]
         public CombatEntityUI combatantUI;
 
         [SerializeField]
@@ -87,42 +80,16 @@ namespace Combatant
             return powers;
         }
 
-        public CombatStats GetStats()
-        {
-            return new CombatStats(_maxHp, _currentHp, _attackPoint, _shieldPoint, _maxEnergy, _currentEnergy);
-        }
-
-        public void SetStats(CombatStats values)
-        {
-            _maxHp = values.maxHp;
-            _currentHp = values.currentHp;
-            _attackPoint = values.attackValue;
-            _shieldPoint = values.shieldValue;
-            _currentEnergy = values.currentEnergy;
-            _maxEnergy = values.maxEnergy;
-        }
-
         public bool isAlive()
         {
-            return _currentHp > 0;
-        }
-
-        public bool isCritical()
-        {
-            return _currentHp <= (_maxHp * 0.1);
-        }
-
-        public bool hasPowersToCast()
-        {
-            bool result = false;
-            foreach(Power p in _powers){
-                if (p.cost < _currentHp)
+            foreach(KeyValuePair<BodyPartType, BodyPart> kvp in _equipment)
+            {
+                if (kvp.Value.bodyPartStats.alive)
                 {
                     return true;
                 }
             }
-
-            return result;
+            return false;
         }
 
         public CombatantType GetSide()
@@ -192,6 +159,16 @@ namespace Combatant
             }
             return _equipment[result].bodyPartStats.remainingHealth * _equipment[result].bodyPartStats.effectValue;
         }
+
+        public void DamageBodyPart(BodyPartType type, float value)
+        {
+            _equipment[type].bodyPartStats.remainingHealth -= value;
+            if (_equipment[type].bodyPartStats.remainingHealth <= 0)
+            {
+                _equipment[type].bodyPartStats.alive = false;
+            }
+        }
+
     }
 
     public class Protagonist : aCombatant

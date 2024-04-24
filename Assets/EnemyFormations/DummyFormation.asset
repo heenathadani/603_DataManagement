@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa3e95ad33f6f4548a32a60c0045f11f, type: 3}
-  m_Name: New Enemy Formation
+  m_Name: DummyFormation
   m_EditorClassIdentifier: 
   enemies:
   - _currentHp: 0

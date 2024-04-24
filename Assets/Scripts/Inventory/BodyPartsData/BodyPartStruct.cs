@@ -10,6 +10,7 @@ public struct BodyPartStats
     public Sprite image;
     public string partName;
     public BodyPartType type;
+    public bool alive;
 
     public BodyPartStats(float effect, Sprite sprite, string name, BodyPartType partType)
     {
@@ -18,5 +19,6 @@ public struct BodyPartStats
         image = sprite;
         partName = name;
         type = partType;
+        alive = true;
     }
 }
