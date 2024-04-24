@@ -939,7 +939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ed6bebd12728346bf3c22736f2b27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Attack this enemy's leg
+  tooltipText: Destroying the legs decreases defense
 --- !u!1 &7740894551876994566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1536,7 +1536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ed6bebd12728346bf3c22736f2b27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Attack this enemy's arm
+  tooltipText: Destroying the arm can lower attack power
 --- !u!1 &8709809188446173931
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,7 +48,7 @@ public class CombatManager : MonoBehaviour
         _currentTurn = 0;
     }
 
-    public void DoAction()
+    public void EndTurn()
     {
 
         _currentTurn++;
@@ -78,6 +78,7 @@ public class CombatManager : MonoBehaviour
         // Set up the target information for the action selected by the player
         targetInformation = targetInfo;
         currentAction = action;
+        targetInformation.actingUnit = _activeCombatants[_currentTurn];
         action.SetActingAgent(CombatantData.GetGroup(_activeType)[playerIndex]);
         if (action.GetActionTarget() == CombatActionTargets.Self)
         {
@@ -138,7 +139,7 @@ public class CombatManager : MonoBehaviour
         if (protagonist1 != null && _bodyPartDataList.Count > 0)
         {
             protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));   
+            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
         }
         Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
         if (protagonist2 != null && _bodyPartDataList.Count > 0)
@@ -157,6 +158,7 @@ public class CombatManager : MonoBehaviour
     private void OnEnable()
     {
         uiManager = GetComponent<CombatUIManager>();
+        uiManager.Setup();
         stateMachine = new TurnStateMachine(this);
         activeEnemies = new List<EnemyGameObject>();
         SpawnCharacters();

@@ -141,10 +141,13 @@ public class AttackAction : aCombatAction
         Debug.Log("I "+actingAgent.Name+" am attacking " + targetInformation.targetUnit.Name + " in one of his parts");
 
         //Take Damage -- Rin
-        int attackDamage = (int)-CombatantData.partyCharacters[CombatantData.currentPlayerIndex]._attackPoint;
-        targetInformation.targetUnit.AffectBodyPartByIndex(targetInformation.targetIndex, attackDamage);
+        int partIndex = targetInformation.partIndex;
+        int attackDamage = (int)-targetInformation.actingUnit._attackPoint;
+        aCombatant target = targetInformation.targetUnit;
+        attackDamage = Mathf.Min(0, attackDamage + (int)target._bodyPartsInventory[partIndex].bodyPartData.shieldPoint);
+        float finalDamage = targetInformation.targetUnit.AffectBodyPartByIndex(partIndex, attackDamage);
         targetInformation.targetUnit.UpdateStatus();
-        ShowActionFeedback(targetInformation, true, -attackDamage);
+        ShowActionFeedback(targetInformation, true, (int)-finalDamage);
     }
 }
 

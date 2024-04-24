@@ -21,7 +21,7 @@ public class CombatUIManager : MonoBehaviour
     public GameObject victoryScreen;
     public Tooltip tooltip;
 
-    private void OnEnable()
+    public void Setup()
     {
         playerUIs = new List<CombatEntityUI>();
         enemyUIs = new List<CombatEntityUI>();
@@ -59,11 +59,19 @@ public class CombatUIManager : MonoBehaviour
         victoryScreen.SetActive(true);
     }
 
-    public void ShowPartButtons(int enemy)
+    public void ShowPartButtons(int enemy, aCombatant unit)
     {
-        foreach(EnemyEntityUI enemyEntity in enemyUIs) { enemyEntity.HideOptions(); }   
+        foreach(EnemyEntityUI enemyEntity in enemyUIs) { enemyEntity.HideOptions(); }
         enemyUIs[enemy].ShowOptions();
-
+        List<Button> buttonOptions = enemyUIs[enemy].GetButtons();
+        for (int i = 0; i < unit._bodyPartsInventory.Count; i++)
+        {
+            //Debug.Log(unit._bodyPartsInventory[i].bodyPartData.bodyPartName + " " + unit._bodyPartsInventory[i].currentHp);
+            if (unit._bodyPartsInventory[i].currentHp <= 0)
+            {
+                buttonOptions[i].gameObject.SetActive(false);
+            }
+        }
     }
 
     public void HidePartButtons()
@@ -76,9 +84,13 @@ public class CombatUIManager : MonoBehaviour
     
     public void ShowEnemies()
     {
-        foreach(CombatEntityUI enemy in enemyUIs)
+        List<aCombatant> enemies = CombatantData.GetGroup(CombatantType.ENEMIES);
+        foreach(Enemy enemy in enemies)
         {
-            enemy.ShowButtons();
+            if (enemy.isAlive())
+            {
+                enemy.combatantUI.ShowButtons();
+            }
         }
     }
 

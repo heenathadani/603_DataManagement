@@ -4,9 +4,15 @@ using Combatant;
 public struct CombatTarget
 {
     public aCombatant targetUnit;
+    public aCombatant actingUnit;
     public CombatantType sideBeingTargeted;
     public CombatActionTargets typeOfTarget;
     public Power selectedPower;
     public int targetIndex;
     public int partIndex;
+
+    public override string ToString()
+    {
+        return targetIndex.ToString();
+    }
 }

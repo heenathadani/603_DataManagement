@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class CombatEntityUI : MonoBehaviour
 {
@@ -56,4 +57,5 @@ public class CombatEntityUI : MonoBehaviour
     public virtual void HideOptions() { }
     public virtual void Disable(){}
     public virtual void SetUp(int i) { }
+    public virtual List<Button> GetButtons() { return new List<Button>(); }
 }
