@@ -37,10 +37,6 @@ public class EnemySpawnManager : MonoBehaviour
         spawnedEnemy.GetComponent<EnemyGameObject>().SetUpStrategy();
         spawnedEnemy.transform.parent = transform;
         spawnedEnemy.transform.localPosition = spawnLocation;
-        
-        // Update HP status -- Rin
-        e.UpdateStatus();
-        
 
         counter++;
         return spawnedEnemy;

@@ -34,7 +34,7 @@ public class EnemyEntityUI : CombatEntityUI
 
     public override void SetUp(int i)
     {
-        enemySelectButton.GetComponent<TargetButton>().targetIndex = i;
+        enemySelectButton.GetComponent<ChooseEnemyButton>().unitIndex = i;
     }
 
     public override List<Button> GetButtons()

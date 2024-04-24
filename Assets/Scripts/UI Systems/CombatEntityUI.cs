@@ -31,6 +31,14 @@ public class CombatEntityUI : MonoBehaviour
         StartCoroutine(FloatDamageNumber());
     }
 
+    public void DisplayMiss()
+    {
+        DamageNumbers.gameObject.SetActive(true);
+        DamageNumbers.color = Color.grey;
+        DamageNumbers.text = "Miss";
+        StartCoroutine(FloatDamageNumber());
+    }
+
     protected IEnumerator FloatDamageNumber()
     {
         for(int i = 0; i < damageNumberIterationCycles; i++)

@@ -37,10 +37,10 @@ namespace Combatant
     public enum StatType
     {
         
-        HP,
-        Energy,
-        Attack,
-        Shield
+        Armor,
+        Damage,
+        Evasion,
+        HitRate
         
     }
 
@@ -170,6 +170,28 @@ namespace Combatant
                 _conditions.RemoveAt(i);
             }
         }
+
+        public float GetStatValue(StatType type)
+        {
+            BodyPartType result;
+            switch (type)
+            {
+                case StatType.HitRate:
+                    result = BodyPartType.Head;
+                    break;
+                case StatType.Damage:
+                    result = BodyPartType.Arm;
+                    break;
+                case StatType.Evasion:
+                    result = BodyPartType.Leg;
+                    break;
+                default:
+                    // Return Body By Default
+                    result = BodyPartType.Body;
+                    break;
+            }
+            return _equipment[result].bodyPartStats.remainingHealth * _equipment[result].bodyPartStats.effectValue;
+        }
     }
 
     public class Protagonist : aCombatant
@@ -187,6 +209,16 @@ namespace Combatant
             _name = name;
             _id = id;
             _side = CombatantType.ALLIES;
+        }
+
+        public void Equip(BodyPartType type, BodyPart bodyPart)
+        {
+            BodyPartType inputType = bodyPart.bodyPartStats.type;
+            if (bodyPart.bodyPartStats.type != type)
+            {
+                throw new CombatRuntimeException($"Equipment mismatch. Trying to equip a {inputType} in a {type} slot. Check data config.");
+            }
+            _equipment[type] = bodyPart;
         }
 
     }

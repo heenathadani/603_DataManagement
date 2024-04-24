@@ -9,7 +9,7 @@ public struct CombatTarget
     public CombatActionTargets typeOfTarget;
     public Power selectedPower;
     public int targetIndex;
-    public int partIndex;
+    public BodyPartType partType;
 
     public override string ToString()
     {

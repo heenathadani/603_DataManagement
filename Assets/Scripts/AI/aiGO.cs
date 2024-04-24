@@ -28,7 +28,7 @@ public class EnemyGameObject : aCombatObject
         // Pick a part if necessary
         if (targetInformation.typeOfTarget == CombatActionTargets.SingleEnemyBodyPart || targetInformation.typeOfTarget == CombatActionTargets.SingleAllyBodyPart)
         {
-            targetInformation.targetIndex = strategy.PickPartIndex(target);
+            targetInformation.partType = strategy.PickPart(target);
         }
 
         // Do the thing

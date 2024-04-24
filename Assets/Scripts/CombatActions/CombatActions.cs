@@ -132,12 +132,22 @@ public class AttackAction : aCombatAction
 
     protected override void DoSingleTarget(CombatTarget targetInformation)
     {
-        Debug.Log("I am attacking " + targetInformation.targetUnit.Name);
+
     }
         
     protected override void DoSingleBodyPart(CombatTarget targetInformation)
     {
-
+        // Roll for attack
+        float chance = targetInformation.actingUnit.GetStatValue(StatType.HitRate) - targetInformation.targetUnit.GetStatValue(StatType.Evasion);
+        bool attackSuccess = Random.Range(0.0f, 1.0f) <= chance;
+        // Handle miss
+        if (!attackSuccess)
+        {
+            targetInformation.targetUnit.combatantUI.DisplayMiss();
+            return;
+        }
+        // Deal Damage
+        float damage = targetInformation.actingUnit.GetStatValue(StatType.Damage) - targetInformation.targetUnit.GetStatValue(StatType.Armor);
     }
 }
 

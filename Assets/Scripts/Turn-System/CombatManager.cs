@@ -138,20 +138,26 @@ public class CombatManager : MonoBehaviour
         Protagonist protagonist1 = CombatantData.partyCharacters[0] as Protagonist;
         if (protagonist1 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist1.Equip(BodyPartType.Head, new BodyPart(_bodyPartDataList[0]));
+            protagonist1.Equip(BodyPartType.Body, new BodyPart(_bodyPartDataList[1]));
+            protagonist1.Equip(BodyPartType.Leg, new BodyPart(_bodyPartDataList[2]));
+            protagonist1.Equip(BodyPartType.Arm, new BodyPart(_bodyPartDataList[3]));
         }
         Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
         if (protagonist2 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
-            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
+            protagonist2.Equip(BodyPartType.Head, new BodyPart(_bodyPartDataList[0]));
+            protagonist2.Equip(BodyPartType.Body, new BodyPart(_bodyPartDataList[1]));
+            protagonist2.Equip(BodyPartType.Leg, new BodyPart(_bodyPartDataList[2]));
+            protagonist2.Equip(BodyPartType.Arm, new BodyPart(_bodyPartDataList[3]));
         }
         Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
         if (protagonist3 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
-            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
+            protagonist3.Equip(BodyPartType.Head, new BodyPart(_bodyPartDataList[0]));
+            protagonist3.Equip(BodyPartType.Body, new BodyPart(_bodyPartDataList[1]));
+            protagonist3.Equip(BodyPartType.Leg, new BodyPart(_bodyPartDataList[2]));
+            protagonist3.Equip(BodyPartType.Arm, new BodyPart(_bodyPartDataList[3]));
         }
     }
 
@@ -164,16 +170,6 @@ public class CombatManager : MonoBehaviour
         SpawnCharacters();
         SpawnEnemies();
         SetUPUI();
-        
-        foreach(aCombatant combatant in CombatantData.partyCharacters)
-        {
-            combatant.UpdateStatus();
-        }
-        foreach (aCombatant combatant in CombatantData.enemies)
-        {
-            combatant.UpdateStatus();
-        }
-
 
         // Set up this controller
         _currentTurn = 0;
@@ -236,10 +232,9 @@ public class CombatManager : MonoBehaviour
         stateMachine.Next(TurnStateType.SELECT_PART);
     }
 
-    public void SetPartIndex(int index)
+    public void SetPartType(BodyPartType type)
     {
-        // This will likely need updating once Rin's code is done
-        targetInformation.partIndex = index;
+        targetInformation.partType = type;
         stateMachine.Transition();
     }
 
