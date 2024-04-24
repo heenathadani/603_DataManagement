@@ -57,9 +57,7 @@ namespace Combatant
         //Bind to UI hp slider
         protected Slider _hpSlider;
 
-
         //Store the body part lists in the inventory 
-        [SerializeField]
         public Dictionary<BodyPartType, BodyPart> _equipment = new Dictionary<BodyPartType, BodyPart>();
         protected List<ConditionData> _conditions = new List<ConditionData>();
 
@@ -169,6 +167,12 @@ namespace Combatant
             }
         }
 
+        public void Equip(BodyPart bodyPart)
+        {
+            BodyPartType inputType = bodyPart.bodyPartStats.type;
+            _equipment[inputType] = bodyPart;
+        }
+
     }
 
     public class Protagonist : aCombatant
@@ -188,15 +192,7 @@ namespace Combatant
             _side = CombatantType.ALLIES;
         }
 
-        public void Equip(BodyPartType type, BodyPart bodyPart)
-        {
-            BodyPartType inputType = bodyPart.bodyPartStats.type;
-            if (bodyPart.bodyPartStats.type != type)
-            {
-                throw new CombatRuntimeException($"Equipment mismatch. Trying to equip a {inputType} in a {type} slot. Check data config.");
-            }
-            _equipment[type] = bodyPart;
-        }
+        
 
     }
 
@@ -211,6 +207,7 @@ namespace Combatant
             _name = name;
             _id = id;
             _side = CombatantType.ENEMIES;
+            _equipment = new Dictionary<BodyPartType, BodyPart>();
 
             CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
             if (uiManager.enemyHpSliderList.Count > 0)
@@ -226,11 +223,6 @@ namespace Combatant
             e.aiType = aiType;
             e._equipment = new Dictionary<BodyPartType,BodyPart>();
             e._powers = new List<Power>();
-            foreach(KeyValuePair<BodyPartType, BodyPart> kvp in _equipment)
-            {
-                e._equipment.Add(kvp.Key, kvp.Value.Clone());
-            }
-
             foreach(Power p in _powers)
             {
                 e._powers.Add(p);

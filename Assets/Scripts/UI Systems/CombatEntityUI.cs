@@ -65,5 +65,4 @@ public class CombatEntityUI : MonoBehaviour
     public virtual void HideOptions() { }
     public virtual void Disable(){}
     public virtual void SetUp(int i) { }
-    public virtual List<Button> GetButtons() { return new List<Button>(); }
 }

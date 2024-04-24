@@ -1,5 +1,6 @@
 using Combatant;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -62,8 +63,16 @@ public class CombatUIManager : MonoBehaviour
     public void ShowPartButtons(int enemy, aCombatant unit)
     {
         foreach(EnemyEntityUI enemyEntity in enemyUIs) { enemyEntity.HideOptions(); }
-        enemyUIs[enemy].ShowOptions();
-        List<Button> buttonOptions = enemyUIs[enemy].GetButtons();
+        EnemyEntityUI entityUI = (EnemyEntityUI)enemyUIs[enemy];
+        entityUI.ShowOptions();
+        Dictionary<BodyPartType, Button> buttonOptions = entityUI.GetButtons();
+        foreach(KeyValuePair<BodyPartType, Button> kvp in buttonOptions)
+        {
+            if (!unit._equipment[kvp.Key].bodyPartStats.alive)
+            {
+                kvp.Value.gameObject.SetActive(false);
+            }
+        }
     }
 
     public void HidePartButtons()

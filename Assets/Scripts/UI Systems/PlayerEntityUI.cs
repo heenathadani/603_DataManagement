@@ -25,11 +25,6 @@ public class PlayerEntityUI : CombatEntityUI
         base.HideOptions();
     }
 
-    public override List<Button> GetButtons()
-    {
-        return base.GetButtons();
-    }
-
     public override void Disable()
     {
         foreach (Transform child in actionButtons.transform)

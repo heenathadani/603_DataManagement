@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     remainingHealth: 0
-    effectValue: 0.75
+    effectValue: 0.8
     image: {fileID: 0}
     partName: Basic Head
     type: 3

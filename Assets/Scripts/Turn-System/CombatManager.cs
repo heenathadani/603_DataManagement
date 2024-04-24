@@ -100,6 +100,10 @@ public class CombatManager : MonoBehaviour
         {
 
             Enemy e = spawnFormation.enemies[i].Clone(i);
+            for (int j = 0; j < spawnFormation.enemyInventory[i].data.Length; j++)
+            {
+                e.Equip(new BodyPart(spawnFormation.enemyInventory[i].data[j]));
+            }
             e.SetSlider(uiManager.enemyHpSliderList[i]);
             CombatantData.enemies.Add(e);
             GameObject spawnedEnemy = spawnManager.SpawnEnemy(e);
@@ -138,26 +142,26 @@ public class CombatManager : MonoBehaviour
         Protagonist protagonist1 = CombatantData.partyCharacters[0] as Protagonist;
         if (protagonist1 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist1.Equip(BodyPartType.Head, new BodyPart(_bodyPartDataList[0]));
-            protagonist1.Equip(BodyPartType.Body, new BodyPart(_bodyPartDataList[1]));
-            protagonist1.Equip(BodyPartType.Leg, new BodyPart(_bodyPartDataList[2]));
-            protagonist1.Equip(BodyPartType.Arm, new BodyPart(_bodyPartDataList[3]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[0]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[1]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[2]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[3]));
         }
         Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
         if (protagonist2 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist2.Equip(BodyPartType.Head, new BodyPart(_bodyPartDataList[0]));
-            protagonist2.Equip(BodyPartType.Body, new BodyPart(_bodyPartDataList[1]));
-            protagonist2.Equip(BodyPartType.Leg, new BodyPart(_bodyPartDataList[2]));
-            protagonist2.Equip(BodyPartType.Arm, new BodyPart(_bodyPartDataList[3]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[0]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[1]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[2]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[3]));
         }
         Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
         if (protagonist3 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist3.Equip(BodyPartType.Head, new BodyPart(_bodyPartDataList[0]));
-            protagonist3.Equip(BodyPartType.Body, new BodyPart(_bodyPartDataList[1]));
-            protagonist3.Equip(BodyPartType.Leg, new BodyPart(_bodyPartDataList[2]));
-            protagonist3.Equip(BodyPartType.Arm, new BodyPart(_bodyPartDataList[3]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[0]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[1]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[2]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[3]));
         }
     }
 
@@ -169,7 +173,9 @@ public class CombatManager : MonoBehaviour
         activeEnemies = new List<EnemyGameObject>();
         SpawnCharacters();
         SpawnEnemies();
+        Debug.Log("Enemies spawned");
         SetUPUI();
+        Debug.Log("UI Setup Completed");
 
         // Set up this controller
         _currentTurn = 0;

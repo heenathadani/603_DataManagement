@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     remainingHealth: 0
-    effectValue: 0.2
+    effectValue: 0.1
     image: {fileID: 0}
     partName: Basic Leg
     type: 2

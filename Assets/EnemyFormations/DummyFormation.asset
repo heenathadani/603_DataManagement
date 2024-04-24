@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: DummyFormation
   m_EditorClassIdentifier: 
   enemies:
-  - _currentHp: 0
-    _currentEnergy: 0
-    _maxEnergy: 0
-    _attackPoint: 0
-    _shieldPoint: 0
-    combatantUI: {fileID: 0}
-    _name: 
+  - combatantUI: {fileID: 0}
+    _name: Blanky McBlank
     _id: 0
-    _bodyPartsInventory: []
     _powers: []
     aiType: 0
+  enemyInventory:
+  - data:
+    - {fileID: 11400000, guid: e5f7d3b7fc8c4424fae23735d3368803, type: 2}
+    - {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
+    - {fileID: 11400000, guid: 434665235acec1d4a8963c294a2b228d, type: 2}
+    - {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}

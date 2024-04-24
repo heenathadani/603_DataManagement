@@ -37,12 +37,13 @@ public class EnemyEntityUI : CombatEntityUI
         enemySelectButton.GetComponent<ChooseEnemyButton>().unitIndex = i;
     }
 
-    public override List<Button> GetButtons()
+    public Dictionary<BodyPartType, Button> GetButtons()
     {
-        List<Button> buttons = new List<Button>();
-        foreach(Transform child in targetButtons.transform)
+        Dictionary<BodyPartType, Button> buttons = new Dictionary<BodyPartType, Button>();
+        foreach (Transform child in targetButtons.transform)
         {
-            buttons.Add(child.gameObject.GetComponent<Button>());
+            TargetButton targetButton = child.gameObject.GetComponent<TargetButton>();
+            buttons.Add(targetButton.partType,child.gameObject.GetComponent<Button>());
         }
         return buttons;
     }
