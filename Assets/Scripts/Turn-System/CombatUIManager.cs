@@ -65,6 +65,7 @@ public class CombatUIManager : MonoBehaviour
     {
         if (mng == null || (mng._activeType != CombatantType.ALLIES || !mng.InTargetState()))
         {
+            uiVisible = false;
             return;
         }
 

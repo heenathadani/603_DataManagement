@@ -48,8 +48,10 @@ public class CombatManager : MonoBehaviour
 
     public void EndTurn()
     {
+
         // Check for game over
-        for(int i = 0; i < CombatantData.partyCharacters.Count; i++)
+        bool isGameOver = false;
+        for (int i = 0; i < CombatantData.partyCharacters.Count; i++)
         {
             if (CombatantData.partyCharacters[i].isAlive())
             {
@@ -57,7 +59,7 @@ public class CombatManager : MonoBehaviour
             } else
             {
                 uiManager.ShowGameOver();
-                return;
+                isGameOver = true;
             }
         }
 
@@ -70,10 +72,18 @@ public class CombatManager : MonoBehaviour
             else
             {
                 uiManager.ShowVictory();
-                return;
+                isGameOver = true;
             }
         }
 
+        if (isGameOver)
+        {
+            // Quit out of this loop
+            return;
+        }
+
+
+        // Otherwise, continue with battle
         _currentTurn++;
         if (_currentTurn == _activeCombatants.Count)
         {
@@ -89,15 +99,6 @@ public class CombatManager : MonoBehaviour
 
     public void BeginTurn(int playerIndex, aCombatAction action, CombatTarget targetInfo)
     {
-        if (stateMachine.currentStateType != TurnStateType.TURN_START)
-        {
-            // We need to figure out a way of making sure people can't input other actions once they start
-            // or we need to be flexible enough to handle people changing the type of action they want to do.
-
-            // A cursor, rather than relying on the mouse, would go a long way here.
-            throw new CombatRuntimeException("The turn was already started. This action should not have happened.");
-        }
-
         // Set up the target information for the action selected by the player
         targetInformation = targetInfo;
         currentAction = action;
@@ -200,13 +201,6 @@ public class CombatManager : MonoBehaviour
 
         stateMachine.Next(TurnStateType.TURN_START);
     }
-
-    // Most of the state machine logic relies on having access to what the player is trying to do.
-    public CombatTarget GetCombatTargetInformation()
-    {
-        return targetInformation;
-    }
-
 
     //Pass the turn
     public void StartAITurn()
