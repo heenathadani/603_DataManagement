@@ -8,8 +8,7 @@ public enum TurnStateType
     TURN_START,
     TARGETING_COMPLETE,
     EXECUTING_ACTION,
-    ACTION_DONE,
-    ACTION_CANCELLED
+    ACTION_DONE
 }
 
 // A static factory for creating new states
@@ -19,8 +18,6 @@ public static class StateFactory
     {
         switch (type)
         {
-            case TurnStateType.ACTION_CANCELLED:
-                return new CancelAction(sm);
             case TurnStateType.TARGETING_COMPLETE:
                 return new TargetingCompleteState(sm);
             case TurnStateType.EXECUTING_ACTION:
@@ -50,14 +47,8 @@ public abstract class aTurnState
         OnExit(manager);
     }
 
-    public void Cancel(CombatManager manager)
-    {
-        OnCancel(manager);
-    }
-
     protected abstract void OnEnter(CombatManager manager);
     protected abstract void OnExit(CombatManager manager);
-    protected abstract void OnCancel(CombatManager manager);
 }
 
 // Entry point to the state machine. Resets everything.
@@ -111,10 +102,6 @@ public class TurnStartState : aTurnState
 
 
     }
-    protected override void OnCancel(CombatManager manager)
-    {
-        stateMachine.Next(TurnStateType.ACTION_CANCELLED);
-    }
     protected override void OnExit(CombatManager manager)
     {
         stateMachine.Next(TurnStateType.TARGETING_COMPLETE);
@@ -138,10 +125,6 @@ public class TargetingCompleteState : aTurnState
         uiManager.HideAll();
         Exit(manager);
     }
-    protected override void OnCancel(CombatManager manager)
-    {
-        stateMachine.Next(TurnStateType.ACTION_CANCELLED);
-    }
     protected override void OnExit(CombatManager manager)
     {
         stateMachine.Next(TurnStateType.EXECUTING_ACTION);
@@ -162,10 +145,6 @@ public class ExecutingActionState : aTurnState
         manager.ExecuteCombatAction();
         Exit(manager);
 
-    }
-    protected override void OnCancel(CombatManager manager)
-    {
-        stateMachine.Next(TurnStateType.ACTION_CANCELLED);
     }
     protected override void OnExit(CombatManager manager)
     {
@@ -208,39 +187,10 @@ public class ActionDoneState : aTurnState
         
         Exit(manager);
     }
-    protected override void OnCancel(CombatManager manager)
-    {
-        stateMachine.Next(TurnStateType.ACTION_CANCELLED);
-    }
 
     protected override void OnExit(CombatManager manager)
     {
         manager.EndTurn();
-    }
-}
-
-// Actions can be cancelled (think of when the player might choose to stop attacking altogether).
-// This resets the state machine.
-public class CancelAction : aTurnState
-{
-    public CancelAction(TurnStateMachine sm)
-    {
-        stateMachine = sm;
-        isTargetValidState = false;
-    }
-
-    protected override void OnEnter(CombatManager manager)
-    {
-        manager.ClearTarget();
-        Exit(manager);
-    }
-    protected override void OnCancel(CombatManager manager)
-    {
-
-    }
-    protected override void OnExit(CombatManager manager)
-    {
-        stateMachine.Next(TurnStateType.TURN_START);
     }
 }
 
@@ -258,10 +208,7 @@ public class UpdateConditionState : aTurnState
         who[manager._currentTurn].UpdateActiveConditions();
         Exit(manager);
     }
-    protected override void OnCancel(CombatManager manager)
-    {
-        // This step can't be cancelled and happens automatically
-    }
+
     protected override void OnExit(CombatManager manager)
     {
         stateMachine.Next(TurnStateType.TURN_START);
