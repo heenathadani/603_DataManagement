@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118c099ee76e6184a81ae494722add46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dummyFormation: {fileID: 0}
+  dummyFormation: {fileID: 11400000, guid: 0d27313c3cecb84448dc29a7f60d4336, type: 2}
   spawnManager: {fileID: 0}
   CharacterUIPrefab: {fileID: 4672263861778291627, guid: 695147689ce5464419f888d57b7d2085,
     type: 3}
@@ -654,10 +654,10 @@ MonoBehaviour:
   _currentTurn: 0
   _activeType: 0
   _bodyPartDataList:
-  - {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
+  - {fileID: 11400000, guid: e5f7d3b7fc8c4424fae23735d3368803, type: 2}
   - {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
   - {fileID: 11400000, guid: 434665235acec1d4a8963c294a2b228d, type: 2}
-  - {fileID: 11400000, guid: fdb9260da279f1940b63c95fe7a3fb7d, type: 2}
+  - {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
 --- !u!114 &8223094869536608223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,7 +680,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  endScreen: {fileID: 0}
+  gameOverScreen: {fileID: 0}
+  victoryScreen: {fileID: 0}
   tooltip: {fileID: 7731454640694624157}
 --- !u!1001 &6835171054702186285
 PrefabInstance:

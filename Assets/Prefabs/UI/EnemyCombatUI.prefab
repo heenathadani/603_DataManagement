@@ -925,7 +925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5dc2bd9b4494f478cd89abb1b20417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetIndex: 2
+  partType: 2
   type: 2
 --- !u!114 &6697127511424555963
 MonoBehaviour:
@@ -939,7 +939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ed6bebd12728346bf3c22736f2b27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Destroying the legs decreases defense
+  tooltipText: Attacking the legs reduces an enemy's evasion
 --- !u!1 &7740894551876994566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5dc2bd9b4494f478cd89abb1b20417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetIndex: 0
+  partType: 1
   type: 2
 --- !u!114 &7004269662490682316
 MonoBehaviour:
@@ -1536,7 +1536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ed6bebd12728346bf3c22736f2b27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Destroying the arm can lower attack power
+  tooltipText: Damaging the arms lowers attack power
 --- !u!1 &8709809188446173931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,7 +1626,7 @@ GameObject:
   - component: {fileID: 349682635723196490}
   - component: {fileID: 892180168548779595}
   - component: {fileID: 2060646833035046422}
-  - component: {fileID: 6107054339587778346}
+  - component: {fileID: 1443735172744691405}
   m_Layer: 5
   m_Name: Enemy1_SelectButton
   m_TagString: Untagged
@@ -1737,8 +1737,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6107054339587778346}
-        m_TargetAssemblyTypeName: TargetButton, Assembly-CSharp
+      - m_Target: {fileID: 1443735172744691405}
+        m_TargetAssemblyTypeName: ChooseEnemyButton, Assembly-CSharp
         m_MethodName: DoAction
         m_Mode: 1
         m_Arguments:
@@ -1749,7 +1749,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6107054339587778346
+--- !u!114 &1443735172744691405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1758,11 +1758,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9145077687185742748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc5dc2bd9b4494f478cd89abb1b20417, type: 3}
+  m_Script: {fileID: 11500000, guid: 561ccfb66b8c73d40882972ccc20ce09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetIndex: 0
-  type: 0
+  unitIndex: 0
 --- !u!1 &9152167971816668320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1923,7 +1922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5dc2bd9b4494f478cd89abb1b20417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetIndex: 1
+  partType: 0
   type: 2
 --- !u!114 &8462669264876621868
 MonoBehaviour:
@@ -1937,7 +1936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ed6bebd12728346bf3c22736f2b27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Attack this enemy's body
+  tooltipText: Attacking the body reduces armor
 --- !u!1 &9155437390999635736
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,10 +9,5 @@ public struct CombatTarget
     public CombatActionTargets typeOfTarget;
     public Power selectedPower;
     public int targetIndex;
-    public int partIndex;
-
-    public override string ToString()
-    {
-        return targetIndex.ToString();
-    }
+    public BodyPartType partType;
 }

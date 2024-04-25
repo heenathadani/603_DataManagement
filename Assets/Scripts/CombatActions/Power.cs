@@ -47,10 +47,9 @@ public class Power : ScriptableObject
 
     [Tooltip("What conditions must the target meet for this power to be able to target them")]
     public PowerCondition targetRequirement;
-
-
-    public float GetTotalEffect(aCombatant caster)
+    
+    public float GetTotalEffect(aCombatant who)
     {
-        return caster.GetStatByType(statAugmentingThisPower) * effectModifier;
+        return 0.0f;
     }
 }

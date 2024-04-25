@@ -15,23 +15,12 @@ public class BodyPart
 {
 
     public BodyPartData bodyPartData;
+    public BodyPartStats bodyPartStats;
 
-    public float currentHp;
-
-    public BodyPart(BodyPartData _bodypartdata)
+    public BodyPart(BodyPartData bodyPart)
     {
-        bodyPartData = _bodypartdata;
-        currentHp = _bodypartdata.maxHp;
-    }
-
-    public void UpdateCurrentHP(float value)
-    {
-        currentHp -= value;
-    }
-
-    public float GetMaxHp()
-    {
-        return bodyPartData.maxHp;
+        bodyPartData = bodyPart;
+        bodyPartStats = bodyPart.Clone();
     }
     
     public BodyPart Clone()

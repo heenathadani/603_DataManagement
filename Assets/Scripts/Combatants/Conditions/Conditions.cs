@@ -1,4 +1,5 @@
 using Combatant;
+using System;
 
 public enum ConditionType
 {
@@ -51,8 +52,12 @@ public static class ConditionManager
 // The abstract representation of a condition
 public abstract class aCondition
 {
+    
+    public abstract ConditionType Condition { get; }
     public abstract void ApplyConditionEffect(aCombatant who);
     public abstract void CleanUp(aCombatant who);
+
+    
 }
 
 // Example condition - Defend.
@@ -60,13 +65,20 @@ public abstract class aCondition
 // Removes that bonus on clean up
 public class DefendCondition : aCondition
 {
+    public override ConditionType Condition
+    {
+        get{
+            return ConditionType.Defend;
+        }
+    }
+
     public override void ApplyConditionEffect(aCombatant who)
     {
-        who.AffectStatByType(StatType.Shield, 10);
+        
     }
 
     public override void CleanUp(aCombatant who)
     {
-        who.AffectStatByType(StatType.Shield, -10);
+       
     }
 }

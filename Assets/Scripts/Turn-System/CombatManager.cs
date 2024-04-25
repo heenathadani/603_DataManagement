@@ -1,10 +1,8 @@
 using Combatant;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class CombatManager : MonoBehaviour
 {
@@ -15,25 +13,11 @@ public class CombatManager : MonoBehaviour
     private CombatUIManager uiManager;
     private List<aCombatant> _activeCombatants;
     public GameObject CharacterUIPrefab;
-    public GameObject EnemyUIPrefab;
     
     public int _currentTurn;
     public CombatantType _activeType;
     private CombatTarget targetInformation;
     private aCombatAction currentAction;
-
-    private IEnumerator SlowEnemiesDown()
-    {
-        yield return new WaitForSeconds(1.0f);
-        if (activeEnemies[_currentTurn]._combatantData.isAlive())
-        {
-            activeEnemies[_currentTurn].TakeTurn();
-        }
-        else
-        {
-            AITurnEnd();
-        }
-    }
 
     // Have the combat manager treat combat like a state-based process
     private TurnStateMachine stateMachine;
@@ -41,40 +25,36 @@ public class CombatManager : MonoBehaviour
     //Store the body part data list
     public List<BodyPartData> _bodyPartDataList;
 
+    private void OnEnable()
+    {
+        uiManager = GetComponent<CombatUIManager>();
+        uiManager.Setup(this);
+        stateMachine = new TurnStateMachine(this);
+        activeEnemies = new List<EnemyGameObject>();
+        SpawnCharacters();
+        SpawnEnemies();
+        SetUpUI();
+
+        // Set up this controller
+        _currentTurn = 0;
+        _activeType = CombatantType.ALLIES;
+        _activeCombatants = CombatantData.GetGroup(_activeType);
+
+        stateMachine.Next(TurnStateType.TURN_START);
+    }
+
+
+    // Major turn steps
     public void SwitchSides()
     {
+        // Change who's the active side in combat
         _activeType = CombatantData.GetNext(_activeType);
         _activeCombatants = CombatantData.GetGroup(_activeType);
         _currentTurn = 0;
     }
 
-    public void EndTurn()
-    {
-
-        _currentTurn++;
-        if (_currentTurn == _activeCombatants.Count)
-        {
-            SwitchSides();
-        }
-        stateMachine.Next(TurnStateType.UPDATE_CONDITIONS);
-    }
-
-    public void ExecuteCombatAction()
-    {
-        currentAction.DoAction(targetInformation);
-    }
-
     public void BeginTurn(int playerIndex, aCombatAction action, CombatTarget targetInfo)
     {
-        if (stateMachine.currentStateType != TurnStateType.TURN_START)
-        {
-            // We need to figure out a way of making sure people can't input other actions once they start
-            // or we need to be flexible enough to handle people changing the type of action they want to do.
-
-            // A cursor, rather than relying on the mouse, would go a long way here.
-            throw new CombatRuntimeException("The turn was already started. This action should not have happened.");
-        }
-
         // Set up the target information for the action selected by the player
         targetInformation = targetInfo;
         currentAction = action;
@@ -84,10 +64,60 @@ public class CombatManager : MonoBehaviour
         {
             targetInformation.targetUnit = _activeCombatants[_currentTurn];
         }
-        uiManager.ShowByTarget(targetInformation.typeOfTarget);
         stateMachine.Transition();
     }
 
+    public void ExecuteCombatAction()
+    {
+        currentAction.DoAction(targetInformation);
+    }
+
+    public void EndTurn()
+    {
+        // Check for game over
+        bool isGameOver = false;
+        for (int i = 0; i < CombatantData.partyCharacters.Count; i++)
+        {
+            if (CombatantData.partyCharacters[i].isAlive())
+            {
+                break;
+            } else
+            {
+                uiManager.ShowGameOver();
+                isGameOver = true;
+            }
+        }
+
+        for (int i = 0; i < CombatantData.enemies.Count; i++)
+        {
+            if (CombatantData.enemies[i].isAlive())
+            {
+                break;
+            }
+            else
+            {
+                uiManager.ShowVictory();
+                isGameOver = true;
+            }
+        }
+
+        if (isGameOver)
+        {
+            // Quit out of this loop
+            return;
+        }
+
+
+        // Otherwise, continue with battle
+        _currentTurn++;
+        if (_currentTurn == _activeCombatants.Count)
+        {
+            SwitchSides();
+        }
+        stateMachine.Next(TurnStateType.UPDATE_CONDITIONS);
+    }
+
+    // Combat setup functions
     private void SpawnEnemies()
     {
         EnemyFormation spawnFormation = dummyFormation;
@@ -100,30 +130,28 @@ public class CombatManager : MonoBehaviour
         {
 
             Enemy e = spawnFormation.enemies[i].Clone(i);
-            e.SetSlider(uiManager.enemyHpSliderList[i]);
+            for (int j = 0; j < spawnFormation.enemyInventory[i].data.Length; j++)
+            {
+                e.Equip(new BodyPart(spawnFormation.enemyInventory[i].data[j]));
+            }
             CombatantData.enemies.Add(e);
             GameObject spawnedEnemy = spawnManager.SpawnEnemy(e);
             EnemyGameObject eGO = spawnedEnemy.GetComponent<EnemyGameObject>();
             eGO.SetManager(this);
+            eGO.enemyIndex = i;
             activeEnemies.Add(eGO);
         }
     }
 
-    private void SetUPUI()
+    private void SetUpUI()
     {
-        foreach(EnemyGameObject enemy in activeEnemies)
-        {
-            GameObject enemyUICanvasObject = Instantiate(EnemyUIPrefab, transform);
-            CombatEntityUI entityUI = enemyUICanvasObject.GetComponent<CombatEntityUI>();
-            enemy._combatantData.combatantUI = entityUI;
-            uiManager.AddCombatEntityUI(CombatantType.ENEMIES, entityUI);
-        }
-
         for (int i = 0; i < CombatantData.partyCharacters.Count; i++)
         {
             GameObject playerUICanvasObject = Instantiate(CharacterUIPrefab, transform);
             CombatEntityUI entityUI = playerUICanvasObject.GetComponent<CombatEntityUI>();
+            entityUI.hpBar.value = 1.0f;
             CombatantData.partyCharacters[i].combatantUI = entityUI;
+
             uiManager.AddCombatEntityUI(CombatantType.ALLIES, entityUI);
         }
     }
@@ -138,59 +166,46 @@ public class CombatManager : MonoBehaviour
         Protagonist protagonist1 = CombatantData.partyCharacters[0] as Protagonist;
         if (protagonist1 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
-            protagonist1.AddBodyPart(new BodyPart(_bodyPartDataList[0]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[0]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[1]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[2]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[3]));
         }
+
         Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
         if (protagonist2 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
-            protagonist2.AddBodyPart(new BodyPart(_bodyPartDataList[1]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[0]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[1]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[2]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[3]));
         }
+
         Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
         if (protagonist3 != null && _bodyPartDataList.Count > 0)
         {
-            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
-            protagonist3.AddBodyPart(new BodyPart(_bodyPartDataList[2]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[0]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[1]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[2]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[3]));
         }
     }
 
-    private void OnEnable()
+
+    // Information access methods
+
+    public bool InTargetState()
     {
-        uiManager = GetComponent<CombatUIManager>();
-        uiManager.Setup();
-        stateMachine = new TurnStateMachine(this);
-        activeEnemies = new List<EnemyGameObject>();
-        SpawnCharacters();
-        SpawnEnemies();
-        SetUPUI();
-        
-        foreach(aCombatant combatant in CombatantData.partyCharacters)
-        {
-            combatant.UpdateStatus();
-        }
-        foreach (aCombatant combatant in CombatantData.enemies)
-        {
-            combatant.UpdateStatus();
-        }
-
-
-        // Set up this controller
-        _currentTurn = 0;
-        _activeType = CombatantType.ALLIES;
-        _activeCombatants = CombatantData.GetGroup(_activeType);
-
-        stateMachine.Next(TurnStateType.TURN_START);
+        // Check to see if the currently active state allows mouse-over targeting of enemies.
+        return stateMachine.isActiveTargetState();
     }
 
-    // Most of the state machine logic relies on having access to what the player is trying to do.
-    public CombatTarget GetCombatTargetInformation()
+    public void ClearTarget()
     {
-        return targetInformation;
+        targetInformation = new();
     }
 
-
-    //Pass the turn
+    // AI Utility Methods
     public void StartAITurn()
     {
         StartCoroutine(SlowEnemiesDown());
@@ -222,30 +237,21 @@ public class CombatManager : MonoBehaviour
         
     }
 
-    public void SetCombatTarget(CombatTarget targetInfo)
+    public void SetAICombatTarget(CombatTarget targetInfo)
     {
         targetInformation = targetInfo;
     }
 
-    public void SetTargetUnit(int index)
+    private IEnumerator SlowEnemiesDown()
     {
-        targetInformation.targetIndex = index;
-        targetInformation.targetUnit = CombatantData.enemies[index];
-
-        // We hack the state machine to allow us to transition back into this stage if the player changes targets
-        stateMachine.Next(TurnStateType.SELECT_PART);
-    }
-
-    public void SetPartIndex(int index)
-    {
-        // This will likely need updating once Rin's code is done
-        targetInformation.partIndex = index;
-        stateMachine.Transition();
-    }
-
-    public void ClearTarget()
-    {
-        targetInformation = new();
-        uiManager.HideAll();
+        yield return new WaitForSeconds(1.0f);
+        if (activeEnemies[_currentTurn]._combatantData.isAlive())
+        {
+            activeEnemies[_currentTurn].TakeTurn();
+        }
+        else
+        {
+            AITurnEnd();
+        }
     }
 }
