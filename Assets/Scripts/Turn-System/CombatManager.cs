@@ -13,7 +13,6 @@ public class CombatManager : MonoBehaviour
     private CombatUIManager uiManager;
     private List<aCombatant> _activeCombatants;
     public GameObject CharacterUIPrefab;
-    public GameObject EnemyUIPrefab;
     
     public int _currentTurn;
     public CombatantType _activeType;

@@ -2207,6 +2207,11 @@ PrefabInstance:
       objectReference: {fileID: 1455736358}
     - target: {fileID: 8223094869536608223, guid: a2ecc13deb775d145ab37104e24b055f,
         type: 3}
+      propertyPath: enemyOffset
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8223094869536608223, guid: a2ecc13deb775d145ab37104e24b055f,
+        type: 3}
       propertyPath: EnemyUIPrefab
       value: 
       objectReference: {fileID: 4236685447154299078, guid: 30db32528feea3844834086c17b8f7fa,

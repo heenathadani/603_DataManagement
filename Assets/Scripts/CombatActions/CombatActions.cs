@@ -152,6 +152,7 @@ public class AttackAction : aCombatAction
         float damage = targetInformation.actingUnit.GetStatValue(StatType.Damage) * (1 - targetInformation.targetUnit.GetStatValue(StatType.Armor));
         targetInformation.targetUnit.DamageBodyPart(targetInformation.partType, damage);
         targetInformation.targetUnit.combatantUI.DisplayDamage((int)(damage * 100));
+        ShowActionFeedback(targetInformation, true, (int)(damage * 100));
     }
 }
 

@@ -15,10 +15,6 @@ public class CombatUIManager : MonoBehaviour
     private List<CombatEntityUI> playerUIs;
     private List<CombatEntityUI> enemyUIs;
 
-    //Store all character Hp Sliders
-    public List<Slider> characterHpSliderList;
-    public List<Slider> enemyHpSliderList;
-
     //Temp need to have ui system after playtest1 -- Rin
     public GameObject gameOverScreen;
     public GameObject victoryScreen;
@@ -113,7 +109,7 @@ public class CombatUIManager : MonoBehaviour
         createdUI = Instantiate(EnemyUIPrefab, transform);
         RectTransform rt = createdUI.GetComponent<RectTransform>();
         Vector2 screenPos = Camera.main.WorldToScreenPoint(hoveredEnemyLocation);
-        rt.localPosition = new Vector3(screenPos.x-(Screen.width*0.5f)+40, screenPos.y-(Screen.height*0.5f), 0);
+        rt.localPosition = new Vector3(screenPos.x-(Screen.width*0.5f)+enemyOffset, screenPos.y-(Screen.height*0.5f), 0);
         EnemyEntityUI enemyEntityUI = createdUI.GetComponent<EnemyEntityUI>();
         enemyEntityUI.SetUp(hoveredEnemyIndex);
         CombatantData.enemies[hoveredEnemyIndex].combatantUI = enemyEntityUI;
@@ -128,7 +124,6 @@ public class CombatUIManager : MonoBehaviour
             playerUIs.Add(whatToAdd);
             // Place the UI thingy
             rt.localPosition = new Vector3(x, rt.localPosition.y, rt.localPosition.z);
-
         }
     }
 
