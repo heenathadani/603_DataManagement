@@ -63,7 +63,7 @@ public class CombatUIManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (mng == null || mng._activeType != CombatantType.ALLIES)
+        if (mng == null || (mng._activeType != CombatantType.ALLIES || !mng.InTargetState()))
         {
             return;
         }
@@ -95,6 +95,7 @@ public class CombatUIManager : MonoBehaviour
             } else
             {
                 Destroy(createdUI);
+
             }
             return;
         }
@@ -114,6 +115,7 @@ public class CombatUIManager : MonoBehaviour
         rt.localPosition = new Vector3(screenPos.x-(Screen.width*0.5f)+40, screenPos.y-(Screen.height*0.5f), 0);
         EnemyEntityUI enemyEntityUI = createdUI.GetComponent<EnemyEntityUI>();
         enemyEntityUI.SetUp(hoveredEnemyIndex);
+        CombatantData.enemies[hoveredEnemyIndex].combatantUI = enemyEntityUI;
     }
 
     public void AddCombatEntityUI(CombatantType whichSide, CombatEntityUI whatToAdd)
@@ -126,14 +128,6 @@ public class CombatUIManager : MonoBehaviour
             // Place the UI thingy
             rt.localPosition = new Vector3(x, rt.localPosition.y, rt.localPosition.z);
 
-        } else
-        {
-            RectTransform rt = whatToAdd.GetComponent<RectTransform>();
-            whatToAdd.SetUp(enemyUIs.Count);
-            float x = rt.localPosition.x + enemyUIs.Count * enemyOffset;
-            enemyUIs.Add(whatToAdd);
-            // Place the UI thingy
-            rt.localPosition = new Vector3(x, rt.localPosition.y, rt.localPosition.z);
         }
     }
 
@@ -148,61 +142,11 @@ public class CombatUIManager : MonoBehaviour
         victoryScreen.SetActive(true);
     }
 
-    public void ShowPartButtons(int enemy, aCombatant unit)
-    {
-        foreach(EnemyEntityUI enemyEntity in enemyUIs) { enemyEntity.HideButtons(); }
-        EnemyEntityUI entityUI = (EnemyEntityUI)enemyUIs[enemy];
-        entityUI.ShowButtons();
-        Dictionary<BodyPartType, Button> buttonOptions = entityUI.GetButtons();
-        foreach(KeyValuePair<BodyPartType, Button> kvp in buttonOptions)
-        {
-            if (!unit._equipment[kvp.Key].bodyPartStats.alive)
-            {
-                kvp.Value.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    public void HidePartButtons()
-    {
-        foreach(CombatEntityUI ui in enemyUIs)
-        {
-            ui.HideButtons();
-        }
-    }
-    
-    public void ShowEnemies()
-    {
-        List<aCombatant> enemies = CombatantData.GetGroup(CombatantType.ENEMIES);
-        foreach(Enemy enemy in enemies)
-        {
-            if (enemy.isAlive())
-            {
-                enemy.combatantUI.ShowButtons();
-            }
-        }
-    }
-
     public void HideAll()
     {
         foreach(CombatEntityUI ui in enemyUIs)
         {
             ui.HideButtons();
-        }
-    }
-
-    public void ShowByTarget(CombatActionTargets targetType)
-    {
-        switch (targetType)
-        {
-            case CombatActionTargets.SingleEnemy:
-                ShowEnemies();
-                return;
-            case CombatActionTargets.SingleEnemyBodyPart:
-                ShowEnemies();
-                return;
-            default:
-                return;
         }
     }
 

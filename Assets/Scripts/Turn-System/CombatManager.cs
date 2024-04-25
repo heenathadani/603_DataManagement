@@ -82,7 +82,6 @@ public class CombatManager : MonoBehaviour
         {
             targetInformation.targetUnit = _activeCombatants[_currentTurn];
         }
-        uiManager.ShowByTarget(targetInformation.typeOfTarget);
         stateMachine.Transition();
     }
 
@@ -221,26 +220,9 @@ public class CombatManager : MonoBehaviour
         targetInformation = targetInfo;
     }
 
-    public void SetTargetUnit(int index)
+    public bool InTargetState()
     {
-        targetInformation.targetIndex = index;
-        targetInformation.targetUnit = CombatantData.enemies[index];
-
-        // We hack the state machine to allow us to transition back into this stage if the player changes targets
-        stateMachine.Next(TurnStateType.SELECT_PART);
-    }
-
-    public void SetPartType(BodyPartType type)
-    {
-        targetInformation.partType = type;
-        stateMachine.Transition();
-    }
-
-    public void SetTarget(int enemyIndex, BodyPartType type)
-    {
-        targetInformation.targetUnit = CombatantData.enemies[enemyIndex];
-        targetInformation.partType = type;
-        stateMachine.Transition();
+        return stateMachine.isActiveTargetState();
     }
 
     public void ClearTarget()

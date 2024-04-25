@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partType: 2
-  type: 0
+  actionTarget: 2
 --- !u!114 &8633685065241908756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1797,7 +1797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partType: 0
-  type: 0
+  actionTarget: 2
 --- !u!114 &1189583948928184601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2609,7 +2609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partType: 3
-  type: 0
+  actionTarget: 2
 --- !u!114 &5656853095881525880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2848,7 +2848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partType: 1
-  type: 0
+  actionTarget: 2
 --- !u!114 &6978645158653848434
 MonoBehaviour:
   m_ObjectHideFlags: 0

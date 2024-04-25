@@ -1,18 +1,25 @@
 using UnityEngine;
 
-// Interim logic for UI. This will likely become deprecated or adapted once Annie and Heena unify their UI.
 public class TargetButton : MonoBehaviour
 {
     public BodyPartType partType;
-    public CombatActionTargets type;
+    public CombatActionTargets actionTarget;
     
     public void DoAction()
     {
         EnemyEntityUI entityUI = GetComponentInParent<EnemyEntityUI>();
+        CombatManager cm = GetComponentInParent<CombatManager>();
+        aCombatAction action = CombatActionFactory.MakeAction(CombatActionTypes.Attack, actionTarget);
+        
+        // Set the target information
+        CombatTarget targetInformation = new();
+        targetInformation.typeOfTarget = actionTarget;
+        targetInformation.sideBeingTargeted = Combatant.CombatantType.ENEMIES;
+        targetInformation.targetIndex = entityUI.enemyIndex;
+        targetInformation.targetUnit = CombatantData.enemies[entityUI.enemyIndex];
+        targetInformation.partType = partType;
 
-        if(type == CombatActionTargets.SingleEnemyBodyPart)
-        {
-            GetComponentInParent<CombatManager>().SetTarget(entityUI.enemyIndex, partType);
-        }
+        int playerIndex = cm._currentTurn;
+        cm.BeginTurn(playerIndex, action, targetInformation);
     }
 }

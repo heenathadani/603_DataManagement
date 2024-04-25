@@ -6,6 +6,6 @@ public class ChooseEnemyButton : MonoBehaviour
 
     public void DoAction()
     {
-        GetComponentInParent<CombatManager>().SetTargetUnit(unitIndex);
+       
     }
 }
