@@ -1,6 +1,6 @@
 using Combatant;
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +9,8 @@ public class CombatUIManager : MonoBehaviour
 {
     public float playerUIOffset;
     public float enemyOffset;
+    CombatManager mng;
+
     // This is dummy data - a better UI approach must be developed for this
     private List<CombatEntityUI> playerUIs;
     private List<CombatEntityUI> enemyUIs;
@@ -21,11 +23,97 @@ public class CombatUIManager : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject victoryScreen;
     public Tooltip tooltip;
+    private bool uiVisibleLastFrame = false;
+    private bool uiVisible = false;
+    private Vector3 hoveredEnemyLocation;
+    private int hoveredEnemyIndex;
+    private GameObject createdUI;
+    public GameObject EnemyUIPrefab;
+    Coroutine buttonCoroutine;
+    
+    private IEnumerator ExpandButtons()
+    {
+        yield return new WaitForSeconds(0.1f);
+    }
 
-    public void Setup()
+    private IEnumerator CollapseButtons()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Destroy(createdUI);
+        createdUI = null;
+    }
+
+
+    public void Setup(CombatManager mng)
     {
         playerUIs = new List<CombatEntityUI>();
         enemyUIs = new List<CombatEntityUI>();
+        this.mng = mng;
+    }
+
+    private void Update()
+    {
+        if (uiVisible != uiVisibleLastFrame)
+        {
+            TriggerEnemyUIStateChange(uiVisible);
+        }
+
+        uiVisibleLastFrame = uiVisible;
+    }
+
+    private void FixedUpdate()
+    {
+        if (mng == null || mng._activeType != CombatantType.ALLIES)
+        {
+            return;
+        }
+
+        Vector3 eyePosition = Camera.main.transform.position;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        int layerMask = 1 << LayerMask.NameToLayer("Enemy");
+        if (Physics.Raycast(eyePosition, ray.direction, out hit, 15, layerMask))
+        {
+            uiVisible = true;
+            hoveredEnemyLocation = hit.collider.gameObject.transform.position;
+            EnemyGameObject aiGO = hit.collider.gameObject.GetComponent<EnemyGameObject>();
+            hoveredEnemyIndex = aiGO.enemyIndex;
+        } else
+        {
+            uiVisible = false;
+        }
+    }
+
+    private void TriggerEnemyUIStateChange(bool isVisible)
+    {
+        if (!isVisible)
+        {
+            if (buttonCoroutine != null)
+            {
+                StopCoroutine(buttonCoroutine);
+                buttonCoroutine = StartCoroutine(CollapseButtons());
+            } else
+            {
+                Destroy(createdUI);
+            }
+            return;
+        }
+
+        // Emergency stop if the player is moving too fast
+        if (createdUI != null && buttonCoroutine != null)
+        {
+            StopCoroutine(buttonCoroutine);
+            Destroy(createdUI);
+            createdUI = null;
+        }
+
+
+        createdUI = Instantiate(EnemyUIPrefab, transform);
+        RectTransform rt = createdUI.GetComponent<RectTransform>();
+        Vector2 screenPos = Camera.main.WorldToScreenPoint(hoveredEnemyLocation);
+        rt.localPosition = new Vector3(screenPos.x-(Screen.width*0.5f)+40, screenPos.y-(Screen.height*0.5f), 0);
+        EnemyEntityUI enemyEntityUI = createdUI.GetComponent<EnemyEntityUI>();
+        enemyEntityUI.SetUp(hoveredEnemyIndex);
     }
 
     public void AddCombatEntityUI(CombatantType whichSide, CombatEntityUI whatToAdd)
@@ -62,9 +150,9 @@ public class CombatUIManager : MonoBehaviour
 
     public void ShowPartButtons(int enemy, aCombatant unit)
     {
-        foreach(EnemyEntityUI enemyEntity in enemyUIs) { enemyEntity.HideOptions(); }
+        foreach(EnemyEntityUI enemyEntity in enemyUIs) { enemyEntity.HideButtons(); }
         EnemyEntityUI entityUI = (EnemyEntityUI)enemyUIs[enemy];
-        entityUI.ShowOptions();
+        entityUI.ShowButtons();
         Dictionary<BodyPartType, Button> buttonOptions = entityUI.GetButtons();
         foreach(KeyValuePair<BodyPartType, Button> kvp in buttonOptions)
         {
@@ -79,7 +167,7 @@ public class CombatUIManager : MonoBehaviour
     {
         foreach(CombatEntityUI ui in enemyUIs)
         {
-            ui.HideOptions();
+            ui.HideButtons();
         }
     }
     
@@ -100,7 +188,6 @@ public class CombatUIManager : MonoBehaviour
         foreach(CombatEntityUI ui in enemyUIs)
         {
             ui.HideButtons();
-            ui.HideOptions();
         }
     }
 

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,7 +45,6 @@ namespace Combatant
 
     public abstract class aCombatant
     {
-
         public abstract string Name { get; }
         [HideInInspector]
         public CombatEntityUI combatantUI;

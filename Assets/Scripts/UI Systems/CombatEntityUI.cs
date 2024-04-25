@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
 
 public class CombatEntityUI : MonoBehaviour
 {
@@ -54,15 +53,8 @@ public class CombatEntityUI : MonoBehaviour
         DamageNumbers.gameObject.SetActive(false);
     }
 
-    public void UpdateHPBar(float value)
-    {
-        hpBar.value = value;
-    }
-
     public virtual void ShowButtons() { }
     public virtual void HideButtons() { }
-    public virtual void ShowOptions() { }
-    public virtual void HideOptions() { }
     public virtual void Disable(){}
     public virtual void SetUp(int i) { }
 }

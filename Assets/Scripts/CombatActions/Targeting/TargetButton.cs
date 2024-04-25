@@ -8,9 +8,11 @@ public class TargetButton : MonoBehaviour
     
     public void DoAction()
     {
+        EnemyEntityUI entityUI = GetComponentInParent<EnemyEntityUI>();
+
         if(type == CombatActionTargets.SingleEnemyBodyPart)
         {
-            GetComponentInParent<CombatManager>().SetPartType(partType);
+            GetComponentInParent<CombatManager>().SetTarget(entityUI.enemyIndex, partType);
         }
     }
 }

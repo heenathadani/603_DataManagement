@@ -1,10 +1,8 @@
 using Combatant;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class CombatManager : MonoBehaviour
 {
@@ -104,25 +102,17 @@ public class CombatManager : MonoBehaviour
             {
                 e.Equip(new BodyPart(spawnFormation.enemyInventory[i].data[j]));
             }
-            e.SetSlider(uiManager.enemyHpSliderList[i]);
             CombatantData.enemies.Add(e);
             GameObject spawnedEnemy = spawnManager.SpawnEnemy(e);
             EnemyGameObject eGO = spawnedEnemy.GetComponent<EnemyGameObject>();
             eGO.SetManager(this);
+            eGO.enemyIndex = i;
             activeEnemies.Add(eGO);
         }
     }
 
     private void SetUPUI()
     {
-        foreach(EnemyGameObject enemy in activeEnemies)
-        {
-            GameObject enemyUICanvasObject = Instantiate(EnemyUIPrefab, transform);
-            CombatEntityUI entityUI = enemyUICanvasObject.GetComponent<CombatEntityUI>();
-            enemy._combatantData.combatantUI = entityUI;
-            uiManager.AddCombatEntityUI(CombatantType.ENEMIES, entityUI);
-        }
-
         for (int i = 0; i < CombatantData.partyCharacters.Count; i++)
         {
             GameObject playerUICanvasObject = Instantiate(CharacterUIPrefab, transform);
@@ -168,14 +158,12 @@ public class CombatManager : MonoBehaviour
     private void OnEnable()
     {
         uiManager = GetComponent<CombatUIManager>();
-        uiManager.Setup();
+        uiManager.Setup(this);
         stateMachine = new TurnStateMachine(this);
         activeEnemies = new List<EnemyGameObject>();
         SpawnCharacters();
         SpawnEnemies();
-        Debug.Log("Enemies spawned");
         SetUPUI();
-        Debug.Log("UI Setup Completed");
 
         // Set up this controller
         _currentTurn = 0;
@@ -240,6 +228,13 @@ public class CombatManager : MonoBehaviour
 
     public void SetPartType(BodyPartType type)
     {
+        targetInformation.partType = type;
+        stateMachine.Transition();
+    }
+
+    public void SetTarget(int enemyIndex, BodyPartType type)
+    {
+        targetInformation.targetUnit = CombatantData.enemies[enemyIndex];
         targetInformation.partType = type;
         stateMachine.Transition();
     }

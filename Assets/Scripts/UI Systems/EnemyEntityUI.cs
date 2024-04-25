@@ -2,30 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Combatant;
 
 public class EnemyEntityUI : CombatEntityUI
 {
-    public GameObject enemySelectButton;
+    public int enemyIndex;
     public GameObject targetButtons;
+    private Dictionary<BodyPartType, Slider> hpSliders;
     public override void HideButtons()
     {
-        enemySelectButton.SetActive(false);
+        targetButtons.SetActive(false);
     }
 
     public override void ShowButtons()
     {
-        enemySelectButton.SetActive(true);
-    }
-
-    public override void ShowOptions()
-    {
         targetButtons.SetActive(true);
     }
 
-    public override void HideOptions()
-    {
-        targetButtons.SetActive(false);
-    }
 
     public override void Disable()
     {
@@ -34,7 +27,16 @@ public class EnemyEntityUI : CombatEntityUI
 
     public override void SetUp(int i)
     {
-        enemySelectButton.GetComponent<ChooseEnemyButton>().unitIndex = i;
+        hpSliders = new Dictionary<BodyPartType, Slider>();
+        enemyIndex = i;
+        aCombatant combatant = CombatantData.enemies[i];
+        foreach(Transform child in targetButtons.transform)
+        {
+            MovableButton targetButton = child.gameObject.GetComponent<MovableButton>();
+            float remainingHealth = combatant._equipment[targetButton.button.partType].bodyPartStats.remainingHealth;
+            targetButton.slider.value = remainingHealth;
+            hpSliders.Add(targetButton.button.partType, targetButton.slider);
+        }
     }
 
     public Dictionary<BodyPartType, Button> GetButtons()

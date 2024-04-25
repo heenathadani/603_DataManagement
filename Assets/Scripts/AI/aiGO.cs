@@ -5,6 +5,7 @@ public class EnemyGameObject : aCombatObject
 {
     CombatManager mng;
     ICombatStrategy strategy;
+    public int enemyIndex;
 
     public void TakeTurn()
     {

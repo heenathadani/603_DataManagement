@@ -26,7 +26,8 @@ public class Tooltip : MonoBehaviour
     {
         gameObject.SetActive(true);
         Resolution res = Screen.currentResolution;
-        Vector3 loc = new Vector3(screenPos.x - res.width * 0.5f, screenPos.y - res.height * 0.5f, 0); ;
+        Vector3 loc = new Vector3(screenPos.x - res.width * 0.5f, screenPos.y - res.height * 0.5f, 1);
+        transform.SetAsLastSibling();
         SetLocation(loc);
         tooltipText.text = text;
     }
