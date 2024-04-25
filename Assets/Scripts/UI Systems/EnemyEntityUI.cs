@@ -36,20 +36,15 @@ public class EnemyEntityUI : CombatEntityUI
             MovableButton targetButton = child.gameObject.GetComponent<MovableButton>();
             float remainingHealth = combatant._equipment[targetButton.button.partType].bodyPartStats.remainingHealth;
             totalHealth += remainingHealth;
-            targetButton.slider.value = remainingHealth;
-            hpSliders.Add(targetButton.button.partType, targetButton.slider);
+            if (remainingHealth > 0)
+            {
+                targetButton.slider.value = remainingHealth;
+                hpSliders.Add(targetButton.button.partType, targetButton.slider);
+            } else
+            {
+                targetButton.gameObject.SetActive(false);
+            }
         }
         hpBar.value = totalHealth / 4.0f;
-    }
-
-    public Dictionary<BodyPartType, Button> GetButtons()
-    {
-        Dictionary<BodyPartType, Button> buttons = new Dictionary<BodyPartType, Button>();
-        foreach (Transform child in targetButtons.transform)
-        {
-            TargetButton targetButton = child.gameObject.GetComponent<TargetButton>();
-            buttons.Add(targetButton.partType,child.gameObject.GetComponent<Button>());
-        }
-        return buttons;
     }
 }

@@ -48,6 +48,31 @@ public class CombatManager : MonoBehaviour
 
     public void EndTurn()
     {
+        // Check for game over
+        for(int i = 0; i < CombatantData.partyCharacters.Count; i++)
+        {
+            if (CombatantData.partyCharacters[i].isAlive())
+            {
+                break;
+            } else
+            {
+                uiManager.ShowGameOver();
+                return;
+            }
+        }
+
+        for (int i = 0; i < CombatantData.enemies.Count; i++)
+        {
+            if (CombatantData.enemies[i].isAlive())
+            {
+                break;
+            }
+            else
+            {
+                uiManager.ShowVictory();
+                return;
+            }
+        }
 
         _currentTurn++;
         if (_currentTurn == _activeCombatants.Count)

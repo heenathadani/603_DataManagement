@@ -151,8 +151,10 @@ namespace Combatant
 
         public void DamageBodyPart(BodyPartType type, float value)
         {
-            _equipment[type].bodyPartStats.remainingHealth -= value;
-            if (_equipment[type].bodyPartStats.remainingHealth <= 0)
+            float remainingHealth = _equipment[type].bodyPartStats.remainingHealth;
+            remainingHealth -= value;
+            _equipment[type].bodyPartStats.remainingHealth = Mathf.Max(remainingHealth, 0);
+            if (remainingHealth <= 0)
             {
                 _equipment[type].bodyPartStats.alive = false;
             }
