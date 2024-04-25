@@ -2,7 +2,6 @@ using Combatant;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class CombatUIManager : MonoBehaviour
@@ -13,7 +12,6 @@ public class CombatUIManager : MonoBehaviour
 
     // This is dummy data - a better UI approach must be developed for this
     private List<CombatEntityUI> playerUIs;
-    private List<CombatEntityUI> enemyUIs;
 
     //Temp need to have ui system after playtest1 -- Rin
     public GameObject gameOverScreen;
@@ -27,6 +25,8 @@ public class CombatUIManager : MonoBehaviour
     public GameObject EnemyUIPrefab;
     Coroutine buttonCoroutine;
     
+
+    // Animations for the buttons. Work is underway. - Ed
     private IEnumerator ExpandButtons()
     {
         yield return new WaitForSeconds(0.1f);
@@ -42,8 +42,8 @@ public class CombatUIManager : MonoBehaviour
 
     public void Setup(CombatManager mng)
     {
+        // Avoid race conditions
         playerUIs = new List<CombatEntityUI>();
-        enemyUIs = new List<CombatEntityUI>();
         this.mng = mng;
     }
 
@@ -65,12 +65,14 @@ public class CombatUIManager : MonoBehaviour
             return;
         }
 
+        // Check to see if the player is mousing over an enemy
         Vector3 eyePosition = Camera.main.transform.position;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         int layerMask = 1 << LayerMask.NameToLayer("Enemy");
         if (Physics.Raycast(eyePosition, ray.direction, out hit, 15, layerMask))
         {
+            // Show the UI if they are
             uiVisible = true;
             hoveredEnemyLocation = hit.collider.gameObject.transform.position;
             EnemyGameObject aiGO = hit.collider.gameObject.GetComponent<EnemyGameObject>();
@@ -83,6 +85,10 @@ public class CombatUIManager : MonoBehaviour
 
     private void TriggerEnemyUIStateChange(bool isVisible)
     {
+        // This function triggers the appearance of the Enemy UI. 
+        // Rather than having to constantly repurpose a UI element, it is being created on the fly and set up.
+        // Performance impacts are minimal.
+
         if (!isVisible)
         {
             if (buttonCoroutine != null)
@@ -105,7 +111,7 @@ public class CombatUIManager : MonoBehaviour
             createdUI = null;
         }
 
-
+        // Create the EnemyEntityUI and set it up
         createdUI = Instantiate(EnemyUIPrefab, transform);
         RectTransform rt = createdUI.GetComponent<RectTransform>();
         Vector2 screenPos = Camera.main.WorldToScreenPoint(hoveredEnemyLocation);
@@ -140,10 +146,8 @@ public class CombatUIManager : MonoBehaviour
 
     public void HideAll()
     {
-        foreach(CombatEntityUI ui in enemyUIs)
-        {
-            ui.HideButtons();
-        }
+        // This would be a good place to refresh the UI and do other shenanigans
+        // Keeping it empty until my next PR. - Ed
     }
 
     public void ShowPlayerActionButtons(int playerIndex)

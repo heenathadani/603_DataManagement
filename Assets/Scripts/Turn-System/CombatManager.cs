@@ -19,35 +19,61 @@ public class CombatManager : MonoBehaviour
     private CombatTarget targetInformation;
     private aCombatAction currentAction;
 
-    private IEnumerator SlowEnemiesDown()
-    {
-        yield return new WaitForSeconds(1.0f);
-        if (activeEnemies[_currentTurn]._combatantData.isAlive())
-        {
-            activeEnemies[_currentTurn].TakeTurn();
-        }
-        else
-        {
-            AITurnEnd();
-        }
-    }
-
     // Have the combat manager treat combat like a state-based process
     private TurnStateMachine stateMachine;
 
     //Store the body part data list
     public List<BodyPartData> _bodyPartDataList;
 
+    private void OnEnable()
+    {
+        uiManager = GetComponent<CombatUIManager>();
+        uiManager.Setup(this);
+        stateMachine = new TurnStateMachine(this);
+        activeEnemies = new List<EnemyGameObject>();
+        SpawnCharacters();
+        SpawnEnemies();
+        SetUpUI();
+
+        // Set up this controller
+        _currentTurn = 0;
+        _activeType = CombatantType.ALLIES;
+        _activeCombatants = CombatantData.GetGroup(_activeType);
+
+        stateMachine.Next(TurnStateType.TURN_START);
+    }
+
+
+    // Major turn steps
     public void SwitchSides()
     {
+        // Change who's the active side in combat
         _activeType = CombatantData.GetNext(_activeType);
         _activeCombatants = CombatantData.GetGroup(_activeType);
         _currentTurn = 0;
     }
 
+    public void BeginTurn(int playerIndex, aCombatAction action, CombatTarget targetInfo)
+    {
+        // Set up the target information for the action selected by the player
+        targetInformation = targetInfo;
+        currentAction = action;
+        targetInformation.actingUnit = _activeCombatants[_currentTurn];
+        action.SetActingAgent(CombatantData.GetGroup(_activeType)[playerIndex]);
+        if (action.GetActionTarget() == CombatActionTargets.Self)
+        {
+            targetInformation.targetUnit = _activeCombatants[_currentTurn];
+        }
+        stateMachine.Transition();
+    }
+
+    public void ExecuteCombatAction()
+    {
+        currentAction.DoAction(targetInformation);
+    }
+
     public void EndTurn()
     {
-
         // Check for game over
         bool isGameOver = false;
         for (int i = 0; i < CombatantData.partyCharacters.Count; i++)
@@ -91,25 +117,7 @@ public class CombatManager : MonoBehaviour
         stateMachine.Next(TurnStateType.UPDATE_CONDITIONS);
     }
 
-    public void ExecuteCombatAction()
-    {
-        currentAction.DoAction(targetInformation);
-    }
-
-    public void BeginTurn(int playerIndex, aCombatAction action, CombatTarget targetInfo)
-    {
-        // Set up the target information for the action selected by the player
-        targetInformation = targetInfo;
-        currentAction = action;
-        targetInformation.actingUnit = _activeCombatants[_currentTurn];
-        action.SetActingAgent(CombatantData.GetGroup(_activeType)[playerIndex]);
-        if (action.GetActionTarget() == CombatActionTargets.Self)
-        {
-            targetInformation.targetUnit = _activeCombatants[_currentTurn];
-        }
-        stateMachine.Transition();
-    }
-
+    // Combat setup functions
     private void SpawnEnemies()
     {
         EnemyFormation spawnFormation = dummyFormation;
@@ -183,25 +191,21 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+
+    // Information access methods
+
+    public bool InTargetState()
     {
-        uiManager = GetComponent<CombatUIManager>();
-        uiManager.Setup(this);
-        stateMachine = new TurnStateMachine(this);
-        activeEnemies = new List<EnemyGameObject>();
-        SpawnCharacters();
-        SpawnEnemies();
-        SetUpUI();
-
-        // Set up this controller
-        _currentTurn = 0;
-        _activeType = CombatantType.ALLIES;
-        _activeCombatants = CombatantData.GetGroup(_activeType);
-
-        stateMachine.Next(TurnStateType.TURN_START);
+        // Check to see if the currently active state allows mouse-over targeting of enemies.
+        return stateMachine.isActiveTargetState();
     }
 
-    //Pass the turn
+    public void ClearTarget()
+    {
+        targetInformation = new();
+    }
+
+    // AI Utility Methods
     public void StartAITurn()
     {
         StartCoroutine(SlowEnemiesDown());
@@ -233,19 +237,21 @@ public class CombatManager : MonoBehaviour
         
     }
 
-    public void SetCombatTarget(CombatTarget targetInfo)
+    public void SetAICombatTarget(CombatTarget targetInfo)
     {
         targetInformation = targetInfo;
     }
 
-    public bool InTargetState()
+    private IEnumerator SlowEnemiesDown()
     {
-        return stateMachine.isActiveTargetState();
-    }
-
-    public void ClearTarget()
-    {
-        targetInformation = new();
-        uiManager.HideAll();
+        yield return new WaitForSeconds(1.0f);
+        if (activeEnemies[_currentTurn]._combatantData.isAlive())
+        {
+            activeEnemies[_currentTurn].TakeTurn();
+        }
+        else
+        {
+            AITurnEnd();
+        }
     }
 }

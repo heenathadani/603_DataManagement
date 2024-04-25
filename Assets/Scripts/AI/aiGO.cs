@@ -36,7 +36,7 @@ public class EnemyGameObject : aCombatObject
         
         // Do the thing
         mng.SetAIAction(action);
-        mng.SetCombatTarget(targetInformation);
+        mng.SetAICombatTarget(targetInformation);
         mng.ExecuteCombatAction();
         mng.AITurnEnd();
     }
