@@ -52,8 +52,6 @@ namespace Combatant
         [SerializeField]
         protected string _name;
         public int _id;
-        //Bind to UI hp slider
-        protected Slider _hpSlider;
 
         //Store the body part lists in the inventory 
         public Dictionary<BodyPartType, BodyPart> _equipment = new Dictionary<BodyPartType, BodyPart>();
@@ -91,11 +89,6 @@ namespace Combatant
         public CombatantType GetSide()
         {
             return _side;
-        }
-
-        public void SetSlider(Slider s)
-        {
-            _hpSlider = s;
         }
 
         // Conditions stuff
@@ -163,12 +156,23 @@ namespace Combatant
             {
                 _equipment[type].bodyPartStats.alive = false;
             }
+            UpdateHpBar();
         }
 
         public void Equip(BodyPart bodyPart)
         {
             BodyPartType inputType = bodyPart.bodyPartStats.type;
             _equipment[inputType] = bodyPart;
+        }
+
+        private void UpdateHpBar()
+        {
+            float totalHealth = 0.0f;
+            foreach(KeyValuePair<BodyPartType, BodyPart> kvp in _equipment)
+            {
+                totalHealth += kvp.Value.bodyPartStats.remainingHealth;
+            }
+            combatantUI.hpBar.value = totalHealth / (float)_equipment.Count;
         }
 
     }
@@ -189,9 +193,6 @@ namespace Combatant
             _id = id;
             _side = CombatantType.ALLIES;
         }
-
-        
-
     }
 
     [Serializable]
@@ -206,12 +207,6 @@ namespace Combatant
             _id = id;
             _side = CombatantType.ENEMIES;
             _equipment = new Dictionary<BodyPartType, BodyPart>();
-
-            CombatUIManager uiManager = GameObject.FindAnyObjectByType<CombatUIManager>();
-            if (uiManager.enemyHpSliderList.Count > 0)
-            {
-                _hpSlider = uiManager.enemyHpSliderList[id];
-            }
         }
 
         public Enemy Clone(int id)

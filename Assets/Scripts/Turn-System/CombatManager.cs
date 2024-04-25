@@ -111,13 +111,15 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    private void SetUPUI()
+    private void SetUpUI()
     {
         for (int i = 0; i < CombatantData.partyCharacters.Count; i++)
         {
             GameObject playerUICanvasObject = Instantiate(CharacterUIPrefab, transform);
             CombatEntityUI entityUI = playerUICanvasObject.GetComponent<CombatEntityUI>();
+            entityUI.hpBar.value = 1.0f;
             CombatantData.partyCharacters[i].combatantUI = entityUI;
+
             uiManager.AddCombatEntityUI(CombatantType.ALLIES, entityUI);
         }
     }
@@ -137,6 +139,7 @@ public class CombatManager : MonoBehaviour
             protagonist1.Equip(new BodyPart(_bodyPartDataList[2]));
             protagonist1.Equip(new BodyPart(_bodyPartDataList[3]));
         }
+
         Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
         if (protagonist2 != null && _bodyPartDataList.Count > 0)
         {
@@ -145,6 +148,7 @@ public class CombatManager : MonoBehaviour
             protagonist2.Equip(new BodyPart(_bodyPartDataList[2]));
             protagonist2.Equip(new BodyPart(_bodyPartDataList[3]));
         }
+
         Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
         if (protagonist3 != null && _bodyPartDataList.Count > 0)
         {
@@ -163,7 +167,7 @@ public class CombatManager : MonoBehaviour
         activeEnemies = new List<EnemyGameObject>();
         SpawnCharacters();
         SpawnEnemies();
-        SetUPUI();
+        SetUpUI();
 
         // Set up this controller
         _currentTurn = 0;

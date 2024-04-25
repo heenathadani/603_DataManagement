@@ -30,13 +30,16 @@ public class EnemyEntityUI : CombatEntityUI
         hpSliders = new Dictionary<BodyPartType, Slider>();
         enemyIndex = i;
         aCombatant combatant = CombatantData.enemies[i];
+        float totalHealth = 0.0f;
         foreach(Transform child in targetButtons.transform)
         {
             MovableButton targetButton = child.gameObject.GetComponent<MovableButton>();
             float remainingHealth = combatant._equipment[targetButton.button.partType].bodyPartStats.remainingHealth;
+            totalHealth += remainingHealth;
             targetButton.slider.value = remainingHealth;
             hpSliders.Add(targetButton.button.partType, targetButton.slider);
         }
+        hpBar.value = totalHealth / 4.0f;
     }
 
     public Dictionary<BodyPartType, Button> GetButtons()

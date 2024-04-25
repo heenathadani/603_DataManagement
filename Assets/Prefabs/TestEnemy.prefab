@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc6a85636e726f4e8668053161976aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyIndex: 0
 --- !u!136 &3975437205702412099
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -117,7 +118,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.38
+  m_Radius: 0.63
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0.11, y: 0, z: 0}
