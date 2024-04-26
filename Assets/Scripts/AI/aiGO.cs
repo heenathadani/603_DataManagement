@@ -1,9 +1,11 @@
 using Combatant;
+using UnityEngine;
 
 public class EnemyGameObject : aCombatObject
 {
     CombatManager mng;
     ICombatStrategy strategy;
+    public int enemyIndex;
 
     public void TakeTurn()
     {
@@ -13,6 +15,7 @@ public class EnemyGameObject : aCombatObject
         // Pick who I want to target
         CombatTarget targetInformation = new();
         aCombatant target = strategy.PickTarget();
+
         targetInformation.actingUnit = _combatantData;
         targetInformation.targetUnit = target;
         targetInformation.sideBeingTargeted = target.GetSide();
@@ -28,12 +31,12 @@ public class EnemyGameObject : aCombatObject
         // Pick a part if necessary
         if (targetInformation.typeOfTarget == CombatActionTargets.SingleEnemyBodyPart || targetInformation.typeOfTarget == CombatActionTargets.SingleAllyBodyPart)
         {
-            targetInformation.targetIndex = strategy.PickPartIndex(target);
+            targetInformation.partType = strategy.PickPart(target);
         }
-
+        
         // Do the thing
         mng.SetAIAction(action);
-        mng.SetCombatTarget(targetInformation);
+        mng.SetAICombatTarget(targetInformation);
         mng.ExecuteCombatAction();
         mng.AITurnEnd();
     }

@@ -26,21 +26,21 @@ public class EnemySpawnManager : MonoBehaviour
     public GameObject SpawnEnemy(Enemy e)
     {
         int midPoint = spawnCount / 2 + 1;
+        Vector3 spawnLocation;
         if (spawnCount == 1)
         {
-            midPoint = 0;
+            spawnLocation = Vector3.zero;
+        } else
+        {
+            spawnLocation = new Vector3(0, 0, initialOffset + (zOffset * (counter - midPoint)));
         }
 
-        Vector3 spawnLocation = new Vector3(0, 0, initialOffset + (zOffset * (counter - midPoint)));
         GameObject spawnedEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        spawnedEnemy.transform.rotation = Quaternion.AngleAxis(90, Vector3.up);
         spawnedEnemy.GetComponent<EnemyGameObject>().SetCombatant(e);
         spawnedEnemy.GetComponent<EnemyGameObject>().SetUpStrategy();
         spawnedEnemy.transform.parent = transform;
         spawnedEnemy.transform.localPosition = spawnLocation;
-        
-        // Update HP status -- Rin
-        e.UpdateStatus();
-        
 
         counter++;
         return spawnedEnemy;

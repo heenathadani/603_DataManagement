@@ -22,6 +22,11 @@ public class TurnStateMachine
     {
         currentState.Exit(cm);
     }
+
+    public bool isActiveTargetState()
+    {
+        return currentState.isTargetValidState;
+    }
 }
 
 

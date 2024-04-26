@@ -1,13 +1,12 @@
+using System;
 using System.Collections.Generic;
 
 namespace Combatant
 {
     public enum AITypes
     {
-        Support,
-        Disabler,
-        Bruiser,
-        ThreatHunter
+        Basic,
+        Bruiser
     }
 
     public static class AIFactory
@@ -16,14 +15,10 @@ namespace Combatant
         {
             switch (type)
             {
-                case AITypes.Disabler:
-                    return new DisablerStrategy();
                 case AITypes.Bruiser:
                     return new BruiserStrategy();
-                case AITypes.ThreatHunter:
-                    return new ThreatHunterStrategy();
                 default:
-                    return new SupportStrategy();
+                    return new BasicStrategy();
             }
         }
     }
@@ -32,7 +27,7 @@ namespace Combatant
     {
         public aCombatAction PickAction(aCombatant target);
         public aCombatant PickTarget();
-        public int PickPartIndex(aCombatant target);
+        public BodyPartType PickPart(aCombatant target);
         public void SetCombatant(aCombatant me);
         public Power PickPower(aCombatant targt, CombatActionTargets targetType);
     }
@@ -71,23 +66,21 @@ namespace Combatant
             return chosenAction;
         }
 
-        public int PickPartIndex(aCombatant target)
+        public BodyPartType PickPart(aCombatant target)
         {
             float maxThreat = -1;
-            int finalIndex = 0;
+            BodyPartType finalType = BodyPartType.Body;
 
-            for(int i = 0; i < target._bodyPartsInventory.Count; i++)
+            foreach(KeyValuePair<BodyPartType, BodyPart> kvp  in target._equipment)
             {
-                BodyPart part = target._bodyPartsInventory[i];
-                float currentThreat = CalculatePartThreat(part);
+                float currentThreat = CalculatePartThreat(kvp.Value);
                 if (currentThreat > maxThreat)
                 {
                     maxThreat = currentThreat;
-                    finalIndex = i;
+                    finalType = kvp.Key;
                 }
-
             }
-            return finalIndex;
+            return finalType;
         }
         public aCombatant PickTarget()
         {
@@ -132,51 +125,45 @@ namespace Combatant
         }
     }
 
-    // The support gives priority to its own team
-    public class SupportStrategy : aAIStrategy
+    public class BasicStrategy : aAIStrategy
     {
         protected override CombatActionTypes PickPreferredAction(aCombatant target)
         {
-            if (myself._powers.Count > 0)
-            {
-                return CombatActionTypes.Power;
-            }
-            if (target.GetSide() == CombatantType.ENEMIES)
+            if (target == null)
             {
                 return CombatActionTypes.Defend;
             }
             return CombatActionTypes.Attack;
         }
-
         protected override float EvaluatePower(aCombatant target, Power p)
         {
-            throw new System.NotImplementedException();
+            float value = 0;
+            return value;
         }
         protected override CombatActionTargets PickActionTarget(CombatActionTypes type)
         {
-            throw new System.NotImplementedException();
+            if (type == CombatActionTypes.Defend)
+            {
+                return CombatActionTargets.Self;
+            }
+            return CombatActionTargets.SingleAllyBodyPart;
         }
-
         protected override float CalculatePartThreat(BodyPart part)
         {
-            return 10 * (1 - (part.currentHp / part.GetMaxHp()));
+            // Pick a random body part
+            return UnityEngine.Random.Range(0.0f, 1.0f) * 10;
         }
+
         protected override float CalculateThreat(aCombatant candidate)
         {
-            float result = 0;
+            // Pick a random target
             if (candidate.GetSide() == CombatantType.ENEMIES)
             {
-                result += 10;
+                // Ignore other enemies
+                return -1;
+            }
+            return UnityEngine.Random.Range(0.0f, 1.0f) * 10;
 
-            }
-            if (candidate.GetSide() == CombatantType.ALLIES)
-            {
-                if (candidate.isCritical())
-                {
-                    result += 100;
-                }
-            }
-            return result;
         }
     }
 
@@ -186,7 +173,7 @@ namespace Combatant
     {
         protected override float EvaluatePower(aCombatant target, Power p)
         {
-            float value = p.effectModifier * myself.GetStatByType(p.statAugmentingThisPower);
+            float value = 0;
             return value;
         }
         protected override CombatActionTypes PickPreferredAction(aCombatant target)
@@ -194,11 +181,6 @@ namespace Combatant
             if (target == null)
             {
                 return CombatActionTypes.Defend;
-            }
-
-            if (myself._powers.Count > 0 && myself.hasPowersToCast())
-            {
-                return CombatActionTypes.Power;
             }
             return CombatActionTypes.Attack;
         }
@@ -227,86 +209,18 @@ namespace Combatant
         }
         protected override float CalculatePartThreat(BodyPart part)
         {
-            return 10 * (1 - (part.currentHp / part.GetMaxHp()));
+            return 10 * (1 - (part.bodyPartStats.remainingHealth));
         }
         protected override float CalculateThreat(aCombatant candidate)
         {
             float result = 0;
             if (candidate.GetSide() == CombatantType.ENEMIES)
             {
-                return -2;
+                return -200;
             }
 
-            CombatStats candidateStats = candidate.GetStats();
-            result += 10 * (1 - (candidateStats.currentHp / candidateStats.maxHp));
-            result += candidateStats.attackValue;
-            result -= candidateStats.shieldValue * 0.1f;
+            result += 10 * (1 - candidate.GetStatValue(StatType.Armor));
             return result;
-        }
-    }
-
-    // The threat hunter needs to keep a running tally of threat by player actions. This will likely require a separate
-    // analysis method.
-    public class ThreatHunterStrategy : aAIStrategy
-    {
-        protected override CombatActionTypes PickPreferredAction(aCombatant target)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override float EvaluatePower(aCombatant target, Power p)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override CombatActionTargets PickActionTarget(CombatActionTypes type)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override float CalculatePartThreat(BodyPart part)
-        {
-            return 10 * (1 - (part.currentHp / part.GetMaxHp()));
-        }
-        // Still needs to be defined
-        protected override float CalculateThreat(aCombatant candidate)
-        {
-            return 0;
-        }
-    }
-
-
-    // The disabler hunts for parts that will diminish player output the most
-    public class DisablerStrategy : aAIStrategy
-    {
-        protected override CombatActionTypes PickPreferredAction(aCombatant target)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override float EvaluatePower(aCombatant target, Power p)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override CombatActionTargets PickActionTarget(CombatActionTypes type)
-        {
-            throw new System.NotImplementedException();
-        }
-        protected override float CalculatePartThreat(BodyPart part)
-        {
-            float healthConsideration = 10 * (1 - (part.currentHp / part.GetMaxHp()));
-            float bonusForStats = part.bodyPartData.attackPoint + part.bodyPartData.shieldPoint;
-            return healthConsideration * bonusForStats;
-        }
-
-        protected override float CalculateThreat(aCombatant candidate)
-        {
-            float result = 0;
-            if (candidate.GetSide() == CombatantType.ENEMIES)
-            {
-                return result;
-            }
-
-
-
-            return result;
-
         }
     }
 }

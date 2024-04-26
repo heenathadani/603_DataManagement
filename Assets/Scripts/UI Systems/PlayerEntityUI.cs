@@ -15,21 +15,6 @@ public class PlayerEntityUI : CombatEntityUI
         actionButtons.gameObject.SetActive(true);
     }
 
-    public override void ShowOptions()
-    {
-        base.ShowOptions();
-    }
-
-    public override void HideOptions()
-    {
-        base.HideOptions();
-    }
-
-    public override List<Button> GetButtons()
-    {
-        return base.GetButtons();
-    }
-
     public override void Disable()
     {
         foreach (Transform child in actionButtons.transform)
