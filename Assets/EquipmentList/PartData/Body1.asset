@@ -15,7 +15,7 @@ MonoBehaviour:
   stats:
     remainingHealth: 0
     effectValue: 0.25
-    image: {fileID: 0}
+    image: {fileID: 21300040, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
     partName: Basic Body
     type: 0
     alive: 1

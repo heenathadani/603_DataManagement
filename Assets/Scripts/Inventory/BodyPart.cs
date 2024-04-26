@@ -28,4 +28,10 @@ public class BodyPart
         BodyPart bp = new BodyPart(bodyPartData);
         return bp;
     }
+
+    //Temp
+    public void SetbodyPartStats()
+    {
+        bodyPartStats = bodyPartData.Clone();
+    }
 }

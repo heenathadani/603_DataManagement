@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 4300693536365485724}
   - component: {fileID: 1754427645827465237}
   - component: {fileID: 9204083277315288499}
+  - component: {fileID: 4137822052366755880}
   m_Layer: 5
   m_Name: InventoryUI
   m_TagString: Untagged
@@ -168,7 +169,7 @@ RectTransform:
   m_Children:
   - {fileID: 4910381887989605817}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -238,6 +239,76 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4137822052366755880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253859392206514572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ebe6c4b9465054ba2d8bc30cae9ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryViewportContent: {fileID: 786816966372999441}
+  inventoryItemPrefab: {fileID: 1153971893386518894, guid: 13d466bdbf0f91d459def06ced946a0e,
+    type: 3}
+  headEquipImage: {fileID: 6900431686094897900}
+  armEquipImage: {fileID: 2336600036171944805}
+  bodyEquipImage: {fileID: 3103202789451789807}
+  legEquipImage: {fileID: 2194956311449905358}
+  headEquipText: {fileID: 5559072360626123266}
+  armEquipText: {fileID: 5144837238452583782}
+  bodyEquipText: {fileID: 62658771612705692}
+  legEquipText: {fileID: 948536269805205706}
+  currentViewBodyType: 0
+  currentCharacterId: 0
+  tempBodyPartHead:
+    bodyPartData: {fileID: 11400000, guid: e5f7d3b7fc8c4424fae23735d3368803, type: 2}
+    bodyPartStats:
+      remainingHealth: 0
+      effectValue: 0
+      image: {fileID: 0}
+      partName: 
+      type: 3
+      alive: 0
+  tempBodyPartHead2:
+    bodyPartData: {fileID: 11400000, guid: 97907b5318fb7f54bae7ac139180d782, type: 2}
+    bodyPartStats:
+      remainingHealth: 0
+      effectValue: 0
+      image: {fileID: 0}
+      partName: 
+      type: 0
+      alive: 0
+  tempBodyPartArm:
+    bodyPartData: {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
+    bodyPartStats:
+      remainingHealth: 0
+      effectValue: 0
+      image: {fileID: 0}
+      partName: 
+      type: 1
+      alive: 0
+  tempBodyPartBody:
+    bodyPartData: {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
+    bodyPartStats:
+      remainingHealth: 0
+      effectValue: 0
+      image: {fileID: 0}
+      partName: 
+      type: 0
+      alive: 0
+  tempBodyPartLeg:
+    bodyPartData: {fileID: 11400000, guid: 434665235acec1d4a8963c294a2b228d, type: 2}
+    bodyPartStats:
+      remainingHealth: 0
+      effectValue: 0
+      image: {fileID: 0}
+      partName: 
+      type: 2
+      alive: 0
 --- !u!1 &714996785288039668
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +430,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6076256788503332543}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4137822052366755880}
+        m_TargetAssemblyTypeName: InventoryUIManager, Assembly-CSharp
+        m_MethodName: UpdateArmScollView
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &786816966372999441
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +477,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 47.577, y: 0.000011444092}
+  m_AnchoredPosition: {x: 47.577, y: -0.000061035156}
   m_SizeDelta: {x: -95.1532, y: 1996.3944}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &929811894216348769
@@ -542,7 +625,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 803971492559615838}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4137822052366755880}
+        m_TargetAssemblyTypeName: InventoryUIManager, Assembly-CSharp
+        m_MethodName: UpdateLegScollView
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2070163151345411236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,7 +1443,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1197321203314968421}
   m_HandleRect: {fileID: 9114307472256837459}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 1.0000001
   m_Size: 0.6187154
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1551,7 +1646,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4596998940306968403}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4137822052366755880}
+        m_TargetAssemblyTypeName: InventoryUIManager, Assembly-CSharp
+        m_MethodName: UpdateBodyScollView
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4108818731243349321
 GameObject:
   m_ObjectHideFlags: 0
@@ -2123,7 +2230,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5133041128965630619}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4137822052366755880}
+        m_TargetAssemblyTypeName: InventoryUIManager, Assembly-CSharp
+        m_MethodName: SwitchCharacter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4851089727420872128
 GameObject:
   m_ObjectHideFlags: 0
@@ -2397,7 +2516,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 437917544019943126}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4137822052366755880}
+        m_TargetAssemblyTypeName: InventoryUIManager, Assembly-CSharp
+        m_MethodName: SwitchCharacter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5107573057848315955
 GameObject:
   m_ObjectHideFlags: 0
@@ -2519,7 +2650,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3426161798657757645}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4137822052366755880}
+        m_TargetAssemblyTypeName: InventoryUIManager, Assembly-CSharp
+        m_MethodName: UpdateHeadScollView
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5802493666426958583
 GameObject:
   m_ObjectHideFlags: 0
@@ -2678,7 +2821,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9004322508282885244}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4137822052366755880}
+        m_TargetAssemblyTypeName: InventoryUIManager, Assembly-CSharp
+        m_MethodName: SwitchCharacter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7063731182204295079
 GameObject:
   m_ObjectHideFlags: 0

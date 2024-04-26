@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class CombatantData
 {
@@ -9,13 +10,23 @@ public static class CombatantData
 
 
     // Store player inventory -- Rin
-    public static List<BodyPart> playerHeadInventory = new List<BodyPart>();
+/*    public static List<BodyPart> playerHeadInventory = new List<BodyPart>();
     public static List<BodyPart> playerArmInventory = new List<BodyPart>();
     public static List<BodyPart> playerBodyInventory = new List<BodyPart>();
-    public static List<BodyPart> playerLegInventory = new List<BodyPart>();
+    public static List<BodyPart> playerLegInventory = new List<BodyPart>();*/
+
+    public static Dictionary<BodyPartType, List<BodyPart>> playerInventory = new Dictionary<BodyPartType, List<BodyPart>>();
 
     //Check player index
     public static int currentPlayerIndex = 0;
+
+    public static void InitializeInventory()
+    {
+        playerInventory.Add(BodyPartType.Head, new List<BodyPart>());
+        playerInventory.Add(BodyPartType.Arm, new List<BodyPart>());
+        playerInventory.Add(BodyPartType.Body, new List<BodyPart>());
+        playerInventory.Add(BodyPartType.Leg, new List<BodyPart>());
+    }
 
     public static List<Combatant.aCombatant> GetGroup(Combatant.CombatantType whichOne)
     {
@@ -49,5 +60,15 @@ public static class CombatantData
         partyCharacters.Clear();
         enemies.Clear();
         enemyCombatFormation = null;
+    }
+
+
+    public static void AddBodyPartToPlayerInventory(BodyPart _bodyPart)
+    {
+        //Temp
+        _bodyPart.SetbodyPartStats();
+
+
+        playerInventory[_bodyPart.bodyPartStats.type].Add(_bodyPart);
     }
 }

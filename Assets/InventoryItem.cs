@@ -7,7 +7,7 @@ public class InventoryItem : MonoBehaviour
 
     InventoryUIManager inventoryUIManager;
 
-    public int ItemId;
+    public int itemId;
 
     public void Start()
     {
@@ -16,6 +16,6 @@ public class InventoryItem : MonoBehaviour
 
     public void OnClick()
     {
-
+        inventoryUIManager.ChangeBodyPart(itemId);
     }
 }

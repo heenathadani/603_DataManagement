@@ -15,7 +15,7 @@ MonoBehaviour:
   stats:
     remainingHealth: 0
     effectValue: 0.5
-    image: {fileID: 0}
+    image: {fileID: 21300036, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
     partName: Basic Arm
     type: 1
     alive: 1
