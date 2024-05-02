@@ -15,6 +15,7 @@ public class NPCDialogueTrigger : MonoBehaviour
     public EnemyFormation enemyFormation;
 
     public int combatOptionId;
+    public int combatOptionId2;
     
 
     private void Start()
@@ -31,6 +32,7 @@ public class NPCDialogueTrigger : MonoBehaviour
             uiManager.currentOptionList = optionList;
             uiManager.currentEnemyFormation = enemyFormation;
             uiManager.combatOptionId = combatOptionId;
+            uiManager.combatOptionId2 = combatOptionId2;
             uiManager.currentDialogueAfterOptionList = dialogueAfterOptionList;
             uiManager.currentTalkingNPC = this.gameObject;
             uiManager.ifFinishDialogue = false;
