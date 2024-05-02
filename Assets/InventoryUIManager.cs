@@ -23,6 +23,8 @@ public class InventoryUIManager : MonoBehaviour
     public TextMeshProUGUI bodyEquipText;
     public TextMeshProUGUI legEquipText;
 
+    public TextMeshProUGUI characterName;
+
 
 
 
@@ -32,11 +34,11 @@ public class InventoryUIManager : MonoBehaviour
     public int currentCharacterId = 0;
 
 
-    public BodyPart tempBodyPartHead;
+/*    public BodyPart tempBodyPartHead;
     public BodyPart tempBodyPartHead2;
     public BodyPart tempBodyPartArm;
     public BodyPart tempBodyPartBody;
-    public BodyPart tempBodyPartLeg;
+    public BodyPart tempBodyPartLeg;*/
 
     private void OnEnable()
     {
@@ -48,10 +50,10 @@ public class InventoryUIManager : MonoBehaviour
 
     private void Awake()
     {
-        CombatantData.InitializeInventory();
+        //CombatantData.InitializeInventory();
 
 
-        //Temp-test: Add body part to the inventory
+/*        //Temp-test: Add body part to the inventory
         CombatantData.AddBodyPartToPlayerInventory(tempBodyPartHead);
         CombatantData.AddBodyPartToPlayerInventory(tempBodyPartHead2);
         CombatantData.AddBodyPartToPlayerInventory(tempBodyPartArm);
@@ -61,7 +63,7 @@ public class InventoryUIManager : MonoBehaviour
         CombatantData.AddBodyPartToPlayerInventory(tempBodyPartArm);
         CombatantData.AddBodyPartToPlayerInventory(tempBodyPartBody);
         CombatantData.AddBodyPartToPlayerInventory(tempBodyPartLeg);
-
+*/
 /*        tempBodyPartArm.bodyPartData.Clone();
         tempBodyPartBody.bodyPartData.Clone();
         tempBodyPartHead.bodyPartData.Clone();
@@ -124,6 +126,7 @@ public class InventoryUIManager : MonoBehaviour
     {
         currentCharacterId = id;
         UpdateCharacterEquipment();
+        //Debug.Log(currentCharacterId = id);
     }
 
     public void UpdateInventoryScollView()
@@ -154,6 +157,7 @@ public class InventoryUIManager : MonoBehaviour
 
     public void UpdateCharacterEquipment()
     {
+        characterName.text = CombatantData.partyCharacters[currentCharacterId].Name;
         if(currentCharacterId <= CombatantData.partyCharacters.Count - 1 && currentCharacterId >=0)
         {
             headEquipImage.sprite = CombatantData.partyCharacters[currentCharacterId]._equipment[BodyPartType.Head].bodyPartStats.image;
@@ -167,6 +171,12 @@ public class InventoryUIManager : MonoBehaviour
             legEquipText.text = CombatantData.partyCharacters[currentCharacterId]._equipment[BodyPartType.Leg].bodyPartStats.partName;
         }
 
+    }
+
+
+    public void HideInventory()
+    {
+        this.gameObject.SetActive(false);
     }
 
 }

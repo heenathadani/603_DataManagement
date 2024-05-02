@@ -8,13 +8,6 @@ public static class CombatantData
     public static EnemyFormation enemyCombatFormation = null;
     public static List<Combatant.aCombatant> enemies = new List<Combatant.aCombatant>();
 
-
-    // Store player inventory -- Rin
-/*    public static List<BodyPart> playerHeadInventory = new List<BodyPart>();
-    public static List<BodyPart> playerArmInventory = new List<BodyPart>();
-    public static List<BodyPart> playerBodyInventory = new List<BodyPart>();
-    public static List<BodyPart> playerLegInventory = new List<BodyPart>();*/
-
     public static Dictionary<BodyPartType, List<BodyPart>> playerInventory = new Dictionary<BodyPartType, List<BodyPart>>();
 
     //Check player index
