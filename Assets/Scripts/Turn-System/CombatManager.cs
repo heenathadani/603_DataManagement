@@ -97,6 +97,10 @@ public class CombatManager : MonoBehaviour
             else
             {
                 uiManager.ShowVictory();
+
+                //Loot Function here
+                UpdateLoot();
+
                 isGameOver = true;
             }
         }
@@ -253,5 +257,68 @@ public class CombatManager : MonoBehaviour
         {
             AITurnEnd();
         }
+    }
+
+
+    private void UpdateLoot()
+    {
+        uiManager.lootNameList.text = "";
+
+
+        //Debug.Log("Add loot");
+        //Debug.Log("Enemy EquipCount" + CombatantData.enemies[0]._equipment.Count);
+
+        AddLootBodyPart();
+
+        float randomValue = Random.value;
+
+        if (randomValue < 0.5f)
+        {
+            AddLootBodyPart();
+        }
+
+
+    }
+
+    private void AddLootBodyPart()
+    {
+        BodyPartType currentBodyPartType = GetRandomBodyPartType();
+
+        CombatantData.AddBodyPartToPlayerInventory(CombatantData.enemies[0]._equipment[currentBodyPartType]);
+        uiManager.lootNameList.text += CombatantData.enemies[0]._equipment[currentBodyPartType].bodyPartStats.partName;
+        uiManager.lootNameList.text += " ";
+    }
+
+    private BodyPartType GetRandomBodyPartType()
+    {
+        int randomIndex = Random.Range(0, 4);
+        BodyPartType randomType;
+
+        switch (randomIndex)
+        {
+            case 0:
+                randomType = BodyPartType.Arm;
+                break;
+            case 1:
+                randomType = BodyPartType.Head;
+                break;
+            case 2:
+                randomType = BodyPartType.Body;
+                break;
+            case 3:
+                randomType = BodyPartType.Leg;
+                break;
+            default:
+                randomType = BodyPartType.Body;
+                break;
+        }
+
+        return randomType;
+    }
+
+
+    private void Awake()
+    {
+        CombatantData.InitializeInventory();
     }
 }
