@@ -316,9 +316,4 @@ public class CombatManager : MonoBehaviour
         return randomType;
     }
 
-
-    private void Awake()
-    {
-        CombatantData.InitializeInventory();
-    }
 }

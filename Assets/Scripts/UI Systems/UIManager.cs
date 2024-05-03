@@ -100,6 +100,10 @@ public class UIManager : MonoBehaviour
             if(ifCombat)
             {
                 CombatantData.SetFormation(currentEnemyFormation);
+
+                ExplorationData.SavePlayerLocation(playerMovement.gameObject.transform.position);
+
+
                 SceneManager.LoadScene("Level-1");
                 DestroyCurrentNPC();
             }
@@ -135,6 +139,8 @@ public class UIManager : MonoBehaviour
 
     public void DestroyCurrentNPC()
     {
+        ExplorationDataManager explorationDataManager = FindAnyObjectByType<ExplorationDataManager>();
+        ExplorationData.aliveEnemy[explorationDataManager.npcList.IndexOf(currentTalkingNPC)] = false;
         Destroy(currentTalkingNPC);
     }
 

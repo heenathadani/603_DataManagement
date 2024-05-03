@@ -13,6 +13,11 @@ public static class CombatantData
     //Check player index
     public static int currentPlayerIndex = 0;
 
+    static CombatantData()
+    {
+        InitializeInventory();
+    }
+
     public static void InitializeInventory()
     {
         playerInventory.Add(BodyPartType.Head, new List<BodyPart>());

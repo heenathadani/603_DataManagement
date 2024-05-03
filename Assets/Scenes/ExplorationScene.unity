@@ -406,6 +406,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 520931867}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &916329897 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7923076082127674814, guid: f401ae4d1bcadc94c872e61b4177262c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1678622239761237561}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1010962180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41870,12 +41876,18 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1705163895}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1697702483}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 464c8ddfc59e87d49875871c2a3e8a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1274502136 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4555027906912145765, guid: 012dfc2ad45d4d349891a480641af492,
+    type: 3}
+  m_PrefabInstance: {fileID: 3984384859488151898}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1424233431 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4926809104524414351, guid: 17c60ae26a5d4194b87cbe75cd194957,
@@ -41894,6 +41906,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1697702483 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8960669318648943315, guid: b9582278e87858c49b45724c0240626f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1705163895}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1705163895
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42228,6 +42246,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1915770025 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3257976910319573089, guid: 4ed9b07ca72979a46821abd29515a86f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2247104899737194746}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1923013107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42611,7 +42635,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb9c175dca5e694198560328580e5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1697702483}
+  npcList:
+  - {fileID: 916329897}
+  - {fileID: 1915770025}
+  - {fileID: 1274502136}
 --- !u!1001 &1678622239761237561
 PrefabInstance:
   m_ObjectHideFlags: 0
