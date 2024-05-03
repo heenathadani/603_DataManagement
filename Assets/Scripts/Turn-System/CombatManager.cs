@@ -31,7 +31,10 @@ public class CombatManager : MonoBehaviour
         uiManager.Setup(this);
         stateMachine = new TurnStateMachine(this);
         activeEnemies = new List<EnemyGameObject>();
-        SpawnCharacters();
+        
+        //SpawnCharacters();
+
+
         SpawnEnemies();
         SetUpUI();
 
@@ -160,7 +163,7 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void SpawnCharacters()
+    /*public void SpawnCharacters()
     {
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1", 0));
         CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2", 1));
@@ -193,7 +196,7 @@ public class CombatManager : MonoBehaviour
             protagonist3.Equip(new BodyPart(_bodyPartDataList[2]));
             protagonist3.Equip(new BodyPart(_bodyPartDataList[3]));
         }
-    }
+    }*/
 
 
     // Information access methods
@@ -316,9 +319,4 @@ public class CombatManager : MonoBehaviour
         return randomType;
     }
 
-
-    private void Awake()
-    {
-        CombatantData.InitializeInventory();
-    }
 }

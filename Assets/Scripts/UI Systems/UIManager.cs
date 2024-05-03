@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public GameObject option2Button;
     public GameObject option3Button;
     public GameObject continueButton;
+    public GameObject inventoryUI;
     
 
 
@@ -43,6 +44,7 @@ public class UIManager : MonoBehaviour
     public bool ifFinishDialogue;
     [HideInInspector]
     public bool ifCombat;
+
 
 
 
@@ -107,6 +109,10 @@ public class UIManager : MonoBehaviour
             if(ifCombat)
             {
                 CombatantData.SetFormation(currentEnemyFormation);
+
+                ExplorationData.SavePlayerLocation(playerMovement.gameObject.transform.position);
+
+
                 SceneManager.LoadScene("Level-1");
                 DestroyCurrentNPC();
             }
@@ -143,7 +149,15 @@ public class UIManager : MonoBehaviour
 
     public void DestroyCurrentNPC()
     {
+        ExplorationDataManager explorationDataManager = FindAnyObjectByType<ExplorationDataManager>();
+        ExplorationData.aliveEnemy[explorationDataManager.npcList.IndexOf(currentTalkingNPC)] = false;
         Destroy(currentTalkingNPC);
+    }
+
+
+    public void ShowInventory()
+    {
+        inventoryUI.SetActive(true);
     }
 
 
