@@ -25,9 +25,8 @@ public class PlayerSlot : MonoBehaviour
         actionThree.GetComponent<TMPro.TextMeshProUGUI>().text = BodyPartType.Leg.ToString();
         actionFour.GetComponent<TMPro.TextMeshProUGUI>().text = BodyPartType.Body.ToString();
         FillStrengthOne.GetComponent<Slider>().value = player._equipment[BodyPartType.Head].bodyPartStats.effectValue;
-        FillStrengthOne.GetComponent<Slider>().value = player._equipment[BodyPartType.Head].bodyPartStats.effectValue;
-        FillStrengthTwo.GetComponent<Slider>().value = player._equipment[BodyPartType.Head].bodyPartStats.effectValue;
-        FillStrengthThree.GetComponent<Slider>().value = player._equipment[BodyPartType.Head].bodyPartStats.effectValue;
-        FillStrengthFour.GetComponent<Slider>().value = player._equipment[BodyPartType.Head].bodyPartStats.effectValue;
+        FillStrengthTwo.GetComponent<Slider>().value = player._equipment[BodyPartType.Arm].bodyPartStats.effectValue;
+        FillStrengthThree.GetComponent<Slider>().value = player._equipment[BodyPartType.Leg].bodyPartStats.effectValue;
+        FillStrengthFour.GetComponent<Slider>().value = player._equipment[BodyPartType.Body].bodyPartStats.effectValue;
     }
 }
