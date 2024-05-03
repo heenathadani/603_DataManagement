@@ -15,7 +15,7 @@ MonoBehaviour:
   stats:
     remainingHealth: 0
     effectValue: 0.1
-    image: {fileID: 21300022, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
-    partName: Basic Leg
+    image: {fileID: 21300000, guid: 8d466d62541b61b469e80d35b510323a, type: 3}
+    partName: Factory Mobility Units
     type: 2
     alive: 1

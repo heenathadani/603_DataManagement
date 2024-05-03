@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 721700d5ae9cf5a4a82db65cc92462aa, type: 3}
-  m_Name: Arm1
+  m_Name: Body3
   m_EditorClassIdentifier: 
   stats:
     remainingHealth: 0
-    effectValue: 0.5
-    image: {fileID: 21300000, guid: 4996aaf112377d7459e9e08de792eb17, type: 3}
-    partName: Factory Defense System
-    type: 1
+    effectValue: 0.25
+    image: {fileID: 21300000, guid: 288c38e26a45595479c8aaea68bdc4fe, type: 3}
+    partName: Custom Safety Shell
+    type: 0
     alive: 1

@@ -16,6 +16,6 @@ MonoBehaviour:
     remainingHealth: 0
     effectValue: 0.35
     image: {fileID: 0}
-    partName: Leg Mk II
+    partName: Upgraded Mobility Units
     type: 2
     alive: 1

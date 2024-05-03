@@ -15,7 +15,7 @@ MonoBehaviour:
   stats:
     remainingHealth: 0
     effectValue: 0.8
-    image: {fileID: 1674309279, guid: 2e0f14b4fb3042d47b705f559b7f6167, type: 3}
-    partName: Basic Head
+    image: {fileID: 21300000, guid: dd7c614072b20744eba114a29fd28559, type: 3}
+    partName: Factory Optical Sensor
     type: 3
     alive: 1
