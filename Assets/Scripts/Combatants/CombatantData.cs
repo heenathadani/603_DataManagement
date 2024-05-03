@@ -1,3 +1,4 @@
+using Combatant;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,11 +14,48 @@ public static class CombatantData
     //Check player index
     public static int currentPlayerIndex = 0;
 
+    //public static List<BodyPart> bodyPartsList = new List<BodyPart>();
+
     static CombatantData()
     {
         InitializeInventory();
     }
 
+
+    public static void InitializeCharacters(List<BodyPartData> _bodyPartDataList)
+    {
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1", 0));
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2", 1));
+        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 3", 2));
+
+        // Temp, Check status update -- Rin
+        Protagonist protagonist1 = CombatantData.partyCharacters[0] as Protagonist;
+        if (protagonist1 != null && _bodyPartDataList.Count > 0)
+        {
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[0]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[1]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[2]));
+            protagonist1.Equip(new BodyPart(_bodyPartDataList[3]));
+        }
+
+        Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
+        if (protagonist2 != null && _bodyPartDataList.Count > 0)
+        {
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[0]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[1]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[2]));
+            protagonist2.Equip(new BodyPart(_bodyPartDataList[3]));
+        }
+
+        Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
+        if (protagonist3 != null && _bodyPartDataList.Count > 0)
+        {
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[0]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[1]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[2]));
+            protagonist3.Equip(new BodyPart(_bodyPartDataList[3]));
+        }
+    }
     public static void InitializeInventory()
     {
         playerInventory.Add(BodyPartType.Head, new List<BodyPart>());

@@ -75,7 +75,7 @@ public class InventoryUIManager : MonoBehaviour
     {
         UpdateInventoryScollView();
         UpdateCharacterEquipment();
-        Debug.Log(CombatantData.partyCharacters[currentCharacterId]._equipment.Count);
+        //Debug.Log(CombatantData.partyCharacters[currentCharacterId]._equipment.Count);
     }
 
 
@@ -87,7 +87,7 @@ public class InventoryUIManager : MonoBehaviour
 
         //Debug.Log("CurrentBodyPart" + CombatantData.partyCharacters[currentCharacterId]._equipment[BodyPartType.Head].bodyPartStats.partName);
 
-        Debug.Log(CombatantData.partyCharacters[currentCharacterId]._equipment.Count);
+        //Debug.Log(CombatantData.partyCharacters[currentCharacterId]._equipment.Count);
         if(CombatantData.partyCharacters[currentCharacterId]._equipment[BodyPartType.Head].bodyPartData)
         {
             //Debug.Log("null!");

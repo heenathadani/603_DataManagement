@@ -13,9 +13,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI dialogueContent;
     public TextMeshProUGUI option1Content;
     public TextMeshProUGUI option2Content;
+    public TextMeshProUGUI option3Content;
     public GameObject option1Button;
     public GameObject option2Button;
+    public GameObject option3Button;
     public GameObject continueButton;
+    public GameObject inventoryUI;
     
 
 
@@ -34,11 +37,14 @@ public class UIManager : MonoBehaviour
     [HideInInspector]
     public int combatOptionId;
     [HideInInspector]
+    public int combatOptionId2;
+    [HideInInspector]
     public GameObject currentTalkingNPC;
     [HideInInspector]
     public bool ifFinishDialogue;
     [HideInInspector]
     public bool ifCombat;
+
 
 
 
@@ -82,6 +88,7 @@ public class UIManager : MonoBehaviour
             continueButton.SetActive(true);
             option1Button.SetActive(false);
             option2Button.SetActive(false);
+            option3Button.SetActive(false);
             dialogueContent.text = currentDialogueList[currentDialogueIndex];
             currentDialogueIndex++;
         }
@@ -90,9 +97,11 @@ public class UIManager : MonoBehaviour
             continueButton.SetActive(false);
             option1Button.SetActive(true);
             option2Button.SetActive(true);
+            option3Button.SetActive(true);
             dialogueContent.text = currentDialogueList[currentDialogueIndex];
             option1Content.text = currentOptionList[0];
             option2Content.text = currentOptionList[1];
+            option3Content.text = currentOptionList[2];
             ifFinishDialogue = true;
         }
         else
@@ -119,7 +128,7 @@ public class UIManager : MonoBehaviour
     public void GoToEndDialogue(int buttonId)
     {
         // Combat! -- Rin
-        if (buttonId == combatOptionId)
+        if (buttonId == combatOptionId || buttonId == combatOptionId2)
         {
             ifCombat = true;
 
@@ -133,6 +142,7 @@ public class UIManager : MonoBehaviour
         dialogueContent.text = currentDialogueAfterOptionList[buttonId];
         option1Button.SetActive(false);
         option2Button.SetActive(false);
+        option3Button.SetActive(false);
         continueButton.SetActive(true);
     }
 
@@ -142,6 +152,12 @@ public class UIManager : MonoBehaviour
         ExplorationDataManager explorationDataManager = FindAnyObjectByType<ExplorationDataManager>();
         ExplorationData.aliveEnemy[explorationDataManager.npcList.IndexOf(currentTalkingNPC)] = false;
         Destroy(currentTalkingNPC);
+    }
+
+
+    public void ShowInventory()
+    {
+        inventoryUI.SetActive(true);
     }
 
 
