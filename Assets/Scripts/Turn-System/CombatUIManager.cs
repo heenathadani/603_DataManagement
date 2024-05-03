@@ -1,6 +1,7 @@
 using Combatant;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -16,6 +17,7 @@ public class CombatUIManager : MonoBehaviour
     //Temp need to have ui system after playtest1 -- Rin
     public GameObject gameOverScreen;
     public GameObject victoryScreen;
+    public GameObject inventoryScreen;
     public Tooltip tooltip;
     private bool uiVisibleLastFrame = false;
     private bool uiVisible = false;
@@ -24,6 +26,7 @@ public class CombatUIManager : MonoBehaviour
     private GameObject createdUI;
     public GameObject EnemyUIPrefab;
     Coroutine buttonCoroutine;
+    public TextMeshProUGUI lootNameList;
     
 
     // Animations for the buttons. Work is underway. - Ed
@@ -182,4 +185,11 @@ public class CombatUIManager : MonoBehaviour
                 break;
         }
     }
+
+
+    public void ShowInventory()
+    {
+        inventoryScreen.SetActive(true);
+    }
+
 }
