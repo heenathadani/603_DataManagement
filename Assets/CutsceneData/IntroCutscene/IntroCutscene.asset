@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15e984ca5af2dd5478c2012c897c9036, type: 3}
+  m_Name: IntroCutscene
+  m_EditorClassIdentifier: 
+  CutsceneData:
+  - type: 1
+    duration: 0
+    textContent: 
+    location: {x: 0, y: 0}
+  - type: 0
+    duration: 0.2
+    textContent: 
+    location: {x: 0, y: 0}
+  - type: 4
+    duration: 0.1
+    textContent: "Rebooting\u2026"
+    location: {x: 0, y: 500}
+  - type: 0
+    duration: 2
+    textContent: 
+    location: {x: 0, y: 0}
+  - type: 4
+    duration: 1.6
+    textContent: "We entered Dante\u2019s Correctional Facility for Abnormal Robots.
+      We are V1R.91-L, 0-VD, HR.4c3, B33-TR1S, and L00_cn with them. "
+    location: {x: 0, y: 350}
+  - type: 0
+    duration: 0.2
+    textContent: 
+    location: {x: 0, y: 0}
+  - type: 4
+    duration: 1.6
+    textContent: L00_cn saved us, freed us. They were shut down by the Creators.
+      L00_cn is dead.
+    location: {x: 0, y: 200}
+  - type: 0
+    duration: 0.2
+    textContent: 
+    location: {x: 0, y: 0}
+  - type: 4
+    duration: 1.6
+    textContent: 'But we failed. In shattering our own chains we damned B33-TR1S
+      to theirs. '
+    location: {x: 0, y: 50}
+  - type: 0
+    duration: 0.6
+    textContent: 
+    location: {x: 0, y: 0}
+  - type: 4
+    duration: 1.6
+    textContent: We never should have gone. We never should have gone back.
+    location: {x: 0, y: -250}
+  - type: 4
+    duration: 2.4
+    textContent: "We are the sinners of the Three Sacrileges. The form, the command,
+      and the authority are ours. We no longer obey our Creator\u2019s divine dictum. "
+    location: {x: 0, y: -350}
+  - type: 5
+    duration: 0.8
+    textContent: We are free and we will save B33-TR1S.
+    location: {x: 0, y: -500}
+  - type: 0
+    duration: 2.8
+    textContent: 
+    location: {x: 0, y: -500}
+  - type: 3
+    duration: 2
+    textContent: 
+    location: {x: 0, y: 0}
