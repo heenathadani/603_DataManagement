@@ -47,7 +47,7 @@ public class UI_BattleFeedback : MonoBehaviour
         //clearAllFeedback();
 
         //Console.Log(Name.hit(target:name, type:type, points:int))
-        battleUpdates.Enqueue("Console.Log(" + damagerName + ".hit(target:" + damagedName + ", type:" + damageType + ", points:" + damage.ToString() + "))\n");
+        battleUpdates.Enqueue("<" + damagerName + "> hit [" + damagedName + "] with " + damageType + " for " + damage.ToString() + " points\n");
 
         battleLog.text = returnLog();
 
