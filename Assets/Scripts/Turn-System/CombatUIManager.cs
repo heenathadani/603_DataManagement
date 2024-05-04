@@ -144,6 +144,9 @@ public class CombatUIManager : MonoBehaviour
 
     public void ShowVictory()
     {
+
+        DataTracking dataTracker = (DataTracking)GameObject.FindAnyObjectByType(typeof(DataTracking));
+        dataTracker.Save();
         victoryScreen.SetActive(true);
     }
 
