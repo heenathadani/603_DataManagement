@@ -27,9 +27,9 @@ public class ExplorationDataManager : MonoBehaviour
             {
                 if(!ExplorationData.aliveEnemy[i])
                 {
-                    GameObject npc = npcList[i];
-                    npcList.RemoveAt(i);
-                    Destroy(npc);
+                    //GameObject npc = npcList[i];
+                    //npcList.RemoveAt(i);
+                    Destroy(npcList[i]);
                 }
             }
 
