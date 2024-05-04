@@ -15,7 +15,7 @@ MonoBehaviour:
   stats:
     remainingHealth: 0
     effectValue: 0.8
-    image: {fileID: 21300000, guid: 347580fee54dbdf428887cbb3d821573, type: 3}
-    partName: Custom Optical Sensor
+    image: {fileID: 21300000, guid: 843ab1d76e4bf2840a1b5d37f4ac6e25, type: 3}
+    partName: Personalized Optical Sensor
     type: 3
     alive: 1

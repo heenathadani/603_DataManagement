@@ -15,7 +15,7 @@ MonoBehaviour:
   stats:
     remainingHealth: 0
     effectValue: 0.25
-    image: {fileID: 21300000, guid: 288c38e26a45595479c8aaea68bdc4fe, type: 3}
-    partName: Custom Safety Shell
+    image: {fileID: 21300000, guid: 32b2e719a0fe0fb47ace9ef4d3224593, type: 3}
+    partName: Personalized Safety Shell
     type: 0
     alive: 1
