@@ -43120,6 +43120,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueUI
       objectReference: {fileID: 0}
+    - target: {fileID: 289532800212161488, guid: 17c60ae26a5d4194b87cbe75cd194957,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 504762149615236228, guid: 17c60ae26a5d4194b87cbe75cd194957,
         type: 3}
       propertyPath: m_Color.a
@@ -43159,11 +43164,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.r
       value: 0.42452833
-      objectReference: {fileID: 0}
-    - target: {fileID: 2830147188494224125, guid: 17c60ae26a5d4194b87cbe75cd194957,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -494
       objectReference: {fileID: 0}
     - target: {fileID: 4381533773057188742, guid: 17c60ae26a5d4194b87cbe75cd194957,
         type: 3}
@@ -43240,26 +43240,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5818157851114449726, guid: 17c60ae26a5d4194b87cbe75cd194957,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1898.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 5818157851114449726, guid: 17c60ae26a5d4194b87cbe75cd194957,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 403.3867
-      objectReference: {fileID: 0}
-    - target: {fileID: 5818157851114449726, guid: 17c60ae26a5d4194b87cbe75cd194957,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -403.6934
-      objectReference: {fileID: 0}
-    - target: {fileID: 6508173832071993734, guid: 17c60ae26a5d4194b87cbe75cd194957,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -267.8
       objectReference: {fileID: 0}
     - target: {fileID: 6606484194537853516, guid: 17c60ae26a5d4194b87cbe75cd194957,
         type: 3}
@@ -43774,7 +43754,7 @@ PrefabInstance:
         type: 3}
       propertyPath: enemyFormation
       value: 
-      objectReference: {fileID: 11400000, guid: afe6702d58773bf4aa806dde254cd77d,
+      objectReference: {fileID: 11400000, guid: 15261c27786c2fc40a7d63ce9e694915,
         type: 2}
     - target: {fileID: 7215934329214978524, guid: 4ed9b07ca72979a46821abd29515a86f,
         type: 3}
@@ -43909,7 +43889,7 @@ PrefabInstance:
         type: 3}
       propertyPath: enemyFormation
       value: 
-      objectReference: {fileID: 11400000, guid: afe6702d58773bf4aa806dde254cd77d,
+      objectReference: {fileID: 11400000, guid: 177531addd209484ebaef325a1265f3b,
         type: 2}
     - target: {fileID: 1691666886146938305, guid: 012dfc2ad45d4d349891a480641af492,
         type: 3}

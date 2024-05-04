@@ -108,6 +108,7 @@ public class UIManager : MonoBehaviour
         {
             if(ifCombat)
             {
+                Debug.Log(currentEnemyFormation);
                 CombatantData.SetFormation(currentEnemyFormation);
 
                 ExplorationData.SavePlayerLocation(playerMovement.gameObject.transform.position);

@@ -48,4 +48,12 @@ public static class ExplorationData
         playerLocation = Vector3.zero;
         lastSavedExplorationScene = 0;
     }
+
+    public static void SetUpNPCs(int npcCount)
+    {
+        for (int i = 0; i < npcCount; i++)
+        {
+            aliveEnemy[i] = true;
+        }
+    }
 }

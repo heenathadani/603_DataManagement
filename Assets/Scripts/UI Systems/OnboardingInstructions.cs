@@ -13,6 +13,14 @@ public class OnboardingInstructions : MonoBehaviour
     public Button prevBtn;
     private int currentInstructionIndex;
 
+    private void OnEnable()
+    {
+        if (!CombatantData.showOnboarding)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     private void Start()
     {
         //Instructions
@@ -69,5 +77,11 @@ public class OnboardingInstructions : MonoBehaviour
             playerIndicator.SetActive(false);
         if (currentInstructionIndex == 2)
             enemyIndicator.SetActive(false);
+    }
+
+    public void Dismiss()
+    {
+        CombatantData.showOnboarding = false;
+        gameObject.SetActive(false);
     }
 }

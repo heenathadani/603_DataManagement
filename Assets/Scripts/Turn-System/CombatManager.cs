@@ -130,6 +130,7 @@ public class CombatManager : MonoBehaviour
         EnemyFormation spawnFormation = dummyFormation;
         if (CombatantData.enemyCombatFormation != null)
         {
+            CombatantData.enemies.Clear();
             spawnFormation = CombatantData.enemyCombatFormation;
         }
         spawnManager.SetEnemiesToSpawn(spawnFormation.enemies.Count);
@@ -162,41 +163,6 @@ public class CombatManager : MonoBehaviour
             uiManager.AddCombatEntityUI(CombatantType.ALLIES, entityUI);
         }
     }
-
-    /*public void SpawnCharacters()
-    {
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1", 0));
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2", 1));
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 3", 2));
-
-        // Temp, Check status update -- Rin
-        Protagonist protagonist1 = CombatantData.partyCharacters[0] as Protagonist;
-        if (protagonist1 != null && _bodyPartDataList.Count > 0)
-        {
-            protagonist1.Equip(new BodyPart(_bodyPartDataList[0]));
-            protagonist1.Equip(new BodyPart(_bodyPartDataList[1]));
-            protagonist1.Equip(new BodyPart(_bodyPartDataList[2]));
-            protagonist1.Equip(new BodyPart(_bodyPartDataList[3]));
-        }
-
-        Protagonist protagonist2 = CombatantData.partyCharacters[1] as Protagonist;
-        if (protagonist2 != null && _bodyPartDataList.Count > 0)
-        {
-            protagonist2.Equip(new BodyPart(_bodyPartDataList[0]));
-            protagonist2.Equip(new BodyPart(_bodyPartDataList[1]));
-            protagonist2.Equip(new BodyPart(_bodyPartDataList[2]));
-            protagonist2.Equip(new BodyPart(_bodyPartDataList[3]));
-        }
-
-        Protagonist protagonist3 = CombatantData.partyCharacters[2] as Protagonist;
-        if (protagonist3 != null && _bodyPartDataList.Count > 0)
-        {
-            protagonist3.Equip(new BodyPart(_bodyPartDataList[0]));
-            protagonist3.Equip(new BodyPart(_bodyPartDataList[1]));
-            protagonist3.Equip(new BodyPart(_bodyPartDataList[2]));
-            protagonist3.Equip(new BodyPart(_bodyPartDataList[3]));
-        }
-    }*/
 
 
     // Information access methods
@@ -266,10 +232,6 @@ public class CombatManager : MonoBehaviour
     private void UpdateLoot()
     {
         uiManager.lootNameList.text = "";
-
-
-        //Debug.Log("Add loot");
-        //Debug.Log("Enemy EquipCount" + CombatantData.enemies[0]._equipment.Count);
 
         AddLootBodyPart();
 
