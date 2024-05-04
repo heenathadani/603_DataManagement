@@ -16,8 +16,8 @@ public class NPCDialogueTrigger : MonoBehaviour
 
     public int combatOptionId;
     public int combatOptionId2;
-    
 
+    public bool endGame = false;
     private void Start()
     {
         uiManager = FindAnyObjectByType<UIManager>();
@@ -36,6 +36,7 @@ public class NPCDialogueTrigger : MonoBehaviour
             uiManager.currentDialogueAfterOptionList = dialogueAfterOptionList;
             uiManager.currentTalkingNPC = this.gameObject;
             uiManager.ifFinishDialogue = false;
+            uiManager.endGame = endGame;
             uiManager.ShowDialogue(characterName);
         }
     }
