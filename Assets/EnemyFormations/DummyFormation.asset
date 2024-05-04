@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - combatantUI: {fileID: 0}
-    _name: Blanky McBlank
+    _name: GRD.01
     _id: 0
     _powers: []
     aiType: 0

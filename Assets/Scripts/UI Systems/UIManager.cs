@@ -108,14 +108,13 @@ public class UIManager : MonoBehaviour
         {
             if(ifCombat)
             {
-                Debug.Log(currentEnemyFormation);
+
                 CombatantData.SetFormation(currentEnemyFormation);
 
                 ExplorationData.SavePlayerLocation(playerMovement.gameObject.transform.position);
 
-
-                SceneManager.LoadScene("Level-1");
                 DestroyCurrentNPC();
+                SceneManager.LoadScene("Level-1");
             }
             else
             {
