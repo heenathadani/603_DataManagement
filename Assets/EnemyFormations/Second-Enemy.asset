@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa3e95ad33f6f4548a32a60c0045f11f, type: 3}
-  m_Name: DummyFormation
+  m_Name: Second-Enemy
   m_EditorClassIdentifier: 
   enemies:
   - combatantUI: {fileID: 0}
-    _name: GRD.01
+    _name: GRD.02
     _id: 0
     _powers: []
     aiType: 0
@@ -22,5 +22,5 @@ MonoBehaviour:
   - data:
     - {fileID: 11400000, guid: e5f7d3b7fc8c4424fae23735d3368803, type: 2}
     - {fileID: 11400000, guid: 9c42f6f55636b8942a7ed0dccc12257f, type: 2}
-    - {fileID: 11400000, guid: 434665235acec1d4a8963c294a2b228d, type: 2}
     - {fileID: 11400000, guid: 05bc04dc1e7d427499ec9e5b36f0dbf9, type: 2}
+    - {fileID: 11400000, guid: 434665235acec1d4a8963c294a2b228d, type: 2}

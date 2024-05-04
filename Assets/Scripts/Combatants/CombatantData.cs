@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class CombatantData
 {
-
+    public static bool showOnboarding = true;
     public static List<Combatant.aCombatant> partyCharacters = new List<Combatant.aCombatant>();
     public static EnemyFormation enemyCombatFormation = null;
     public static List<Combatant.aCombatant> enemies = new List<Combatant.aCombatant>();
@@ -96,6 +96,7 @@ public static class CombatantData
         partyCharacters.Clear();
         enemies.Clear();
         enemyCombatFormation = null;
+        showOnboarding = true;
     }
 
 

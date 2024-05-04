@@ -6,13 +6,14 @@ using UnityEngine.SceneManagement;
 public class ExplorationDataManager : MonoBehaviour
 {
     public GameObject player;
-    Camera cam;
-
     public List<GameObject> npcList;
 
 
     private void OnEnable()
     {
+        if (ExplorationData.aliveEnemy.Count == 0){
+            ExplorationData.SetUpNPCs(npcList.Count);
+        }
         //cam = Camera.main;
         Vector3 loadedPosition = ExplorationData.LoadPlayerLocation();
 
@@ -20,15 +21,15 @@ public class ExplorationDataManager : MonoBehaviour
         if (loadedPosition != Vector3.zero)
         {
             //Debug.Log("it no worky");
-            //Vector3 distance = player.transform.position - cam.transform.position;
             player.transform.position = loadedPosition;
-            //cam.transform.position = player.transform.position - distance;
 
-            for(int i = 0; i <ExplorationData.aliveEnemy.Count; i++)
+            for(int i = 0; i < ExplorationData.aliveEnemy.Count; i++)
             {
                 if(!ExplorationData.aliveEnemy[i])
                 {
-                    Destroy(npcList[i]);
+                    GameObject npc = npcList[i];
+                    npcList.RemoveAt(i);
+                    Destroy(npc);
                 }
             }
 
