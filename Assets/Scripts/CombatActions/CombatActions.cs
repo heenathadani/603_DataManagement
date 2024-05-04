@@ -153,6 +153,11 @@ public class AttackAction : aCombatAction
         targetInformation.targetUnit.DamageBodyPart(targetInformation.partType, damage);
         targetInformation.targetUnit.combatantUI.DisplayDamage((int)(damage * 100));
         ShowActionFeedback(targetInformation, true, (int)(damage * 100));
+        if (targetInformation.sideBeingTargeted != CombatantType.ALLIES)
+        {
+            DataTracking dataTracker = (DataTracking) GameObject.FindAnyObjectByType(typeof(DataTracking));
+            dataTracker.DealDamage(targetInformation.actingUnit, (int)(damage * 100));
+        }
     }
 }
 

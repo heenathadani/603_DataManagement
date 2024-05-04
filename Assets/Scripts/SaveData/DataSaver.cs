@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,18 +6,23 @@ using UnityEngine;
 public static class DataSaver
 {
     // Data Saver class adapted from Rob Reddick's work on Apply To The Industry Simulator
-    
-    /// <summary>
-    /// Saves incoming data to a JSON file
-    /// </summary>
-    public static void SaveData(CombatStatsTracker combatData)
+
+    public static void SaveData(Dictionary<string, int> damageByPlayer)
     {
-        // Convert data into json string and push to list
-        string jsonData = JsonUtility.ToJson(combatData, true);
+        List<string> damageStats = new();
+        foreach(KeyValuePair<string, int> kvp in damageByPlayer)
+        {
+            DamageByPlayer dbp = new();
+            dbp.name = kvp.Key;
+            dbp.damage = kvp.Value;
+            string jsonData = JsonUtility.ToJson(dbp, true);
+            damageStats.Add(jsonData);
+        }
+        
         string hashId = GenerateHash();
 
         // Get file path and push all content to json file
-        string filePath = Application.dataPath + "/Data/" + hashId + ".json";
+        string filePath = Application.dataPath + "/Data/" + hashId + "-damage-by-player.json";
 
         // Get the file directory
         string dirPath = System.IO.Path.GetDirectoryName(filePath);
@@ -27,13 +33,14 @@ public static class DataSaver
             System.IO.Directory.CreateDirectory(dirPath);
         }
 
-        System.IO.File.WriteAllLines(filePath, jsonData);
+        System.IO.File.WriteAllLines(filePath, damageStats);
+        Debug.Log("Everything is cool");
     }
 
     private static string GenerateHash()
     {
-        Guid test = Guid.NewGuid();
-        return test.ToString();
+        Guid hash = Guid.NewGuid();
+        return hash.ToString();
     }
 }
 
@@ -43,4 +50,11 @@ public struct CombatStatsTracker
     public int dealtDamage;
     public int receivedDamage;
     public int missedHits;
+}
+
+[System.Serializable]
+public struct DamageByPlayer
+{
+    public string name;
+    public int damage;
 }

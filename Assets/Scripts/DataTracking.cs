@@ -8,6 +8,7 @@ public class DataTracking : MonoBehaviour
 
     public void DealDamage(Combatant.aCombatant player, int damageAmount)
     {
+        Debug.Log("Tracking damage");
         // Track damage by player
         if (damageByPlayer.ContainsKey(player.Name))
         {
@@ -17,6 +18,12 @@ public class DataTracking : MonoBehaviour
         {
             damageByPlayer[player.Name] = damageAmount;
         }
+    }
+
+    public void Save()
+    {
+        Debug.Log("Saving to file");
+        DataSaver.SaveData(damageByPlayer);
     }
 
     public void DisplayDamageStats()
