@@ -24,9 +24,9 @@ public static class CombatantData
 
     public static void InitializeCharacters(List<BodyPartData> _bodyPartDataList)
     {
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 1", 0));
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 2", 1));
-        CombatantData.partyCharacters.Add(new Protagonist("Test Protagonist 3", 2));
+        CombatantData.partyCharacters.Add(new Protagonist("0-VD", 0));
+        CombatantData.partyCharacters.Add(new Protagonist("V1R.91-L", 1));
+        CombatantData.partyCharacters.Add(new Protagonist("HR.4c3", 2));
 
         // Temp, Check status update -- Rin
         Protagonist protagonist1 = CombatantData.partyCharacters[0] as Protagonist;
