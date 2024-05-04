@@ -15,7 +15,7 @@ MonoBehaviour:
   stats:
     remainingHealth: 0
     effectValue: 0.25
-    image: {fileID: 21300040, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
-    partName: Basic Body
+    image: {fileID: 21300000, guid: 288c38e26a45595479c8aaea68bdc4fe, type: 3}
+    partName: Factory Safety Shell
     type: 0
     alive: 1
