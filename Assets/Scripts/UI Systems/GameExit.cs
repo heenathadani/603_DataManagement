@@ -20,4 +20,5 @@ public class GameExit : MonoBehaviour
             Application.Quit();
         #endif
     }
+
 }

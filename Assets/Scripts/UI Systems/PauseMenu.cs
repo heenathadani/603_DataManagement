@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     private void Awake()
     {
         instnace = this;
+        Resume();
     }
 
     void Update()

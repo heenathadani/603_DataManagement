@@ -44,7 +44,8 @@ public class UIManager : MonoBehaviour
     public bool ifFinishDialogue;
     [HideInInspector]
     public bool ifCombat;
-
+    [HideInInspector]
+    public bool endGame;
 
 
 
@@ -149,6 +150,10 @@ public class UIManager : MonoBehaviour
 
     public void DestroyCurrentNPC()
     {
+        if (endGame)
+        {
+            FindAnyObjectByType<EndGame>().activateEndScreen();
+        }
         ExplorationDataManager explorationDataManager = FindAnyObjectByType<ExplorationDataManager>();
         ExplorationData.aliveEnemy[explorationDataManager.npcList.IndexOf(currentTalkingNPC)] = false;
         Destroy(currentTalkingNPC);
