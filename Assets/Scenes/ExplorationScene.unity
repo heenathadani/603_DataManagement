@@ -457,7 +457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 847, y: 420}
+  m_AnchoredPosition: {x: -1171, y: 602}
   m_SizeDelta: {x: 117.9011, y: 111.7214}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &556650991
@@ -529,7 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -635,10 +635,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -42339,8 +42339,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4281479730
+  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -42440,21 +42440,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: -17
       objectReference: {fileID: 0}
-    - target: {fileID: 929811894216348769, guid: 87d11a759fba6a542a50965bd72352b0,
-        type: 3}
-      propertyPath: m_Spacing.y
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 6614223155892805703, guid: 87d11a759fba6a542a50965bd72352b0,
-        type: 3}
-      propertyPath: m_Size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7125796731151158127, guid: 87d11a759fba6a542a50965bd72352b0,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.000091552734
-      objectReference: {fileID: 0}
     - target: {fileID: 9114307472256837459, guid: 87d11a759fba6a542a50965bd72352b0,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -42468,7 +42453,7 @@ PrefabInstance:
     - target: {fileID: 9114307472256837459, guid: 87d11a759fba6a542a50965bd72352b0,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5066607
+      value: 0.3812846
       objectReference: {fileID: 0}
     - target: {fileID: 9202459979258298200, guid: 87d11a759fba6a542a50965bd72352b0,
         type: 3}
